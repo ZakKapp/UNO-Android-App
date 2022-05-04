@@ -98,10 +98,51 @@ public class Card
 		return deck;
 	}
 
-	public static Card cardDraw(Stack<Card> deck) {
-		return deck.pop();
+	public static int getDeckSize()
+	{
+		return deck.size();
+	}
+	public static void cardDraw(Stack<Card> deck, Player player)
+	{
+		//If there are no cards remaining when a draw is attempted, reshuffle the deck first.
+		if(getDeckSize() == 0)
+		{
+			reshuffle();
+		}
+
+		//Draw the card
+		player.getHand().add(deck.pop());
 	}
 
+	public static void cardDrawTwo(Stack<Card> deck, Player player)
+	{
+		for(int i = 0; i < 2; i++)
+		{
+			//If there are no cards remaining when a draw is attempted, reshuffle the deck first.
+			if(getDeckSize() == 0)
+			{
+				reshuffle();
+			}
+
+			//Draw the card
+			player.getHand().add(deck.pop());
+		}
+	}
+
+	public static void cardDrawFour(Stack<Card> deck, Player player)
+	{
+		for(int i = 0; i < 4; i++)
+		{
+			//If there are no cards remaining when a draw is attempted, reshuffle the deck first.
+			if(getDeckSize() == 0)
+			{
+				reshuffle();
+			}
+
+			//Draw the card
+			player.getHand().add(deck.pop());
+		}
+	}
 	public static void cardPlay(Card card) {
 		playField.push(card);
 	}

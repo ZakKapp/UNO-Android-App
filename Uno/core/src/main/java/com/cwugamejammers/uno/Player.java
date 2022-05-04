@@ -2,6 +2,7 @@
 
 package com.cwugamejammers.uno;
 
+import java.util.ArrayList;
 public class Player {
 
 	private int id;
@@ -25,8 +26,8 @@ public class Player {
 		return name;
 	}
 
-	public Hand getHand() {
-		return hand;
+	public ArrayList<Card> getHand() {
+		return hand.getList();
 	}
 
 	public boolean getIsSkipped()

@@ -8,8 +8,6 @@ import java.util.Scanner;
 
 public class GameController {
 
-	private int playerCount;
-
 	private Player p1;
 	private Player p2;
 	private Player p3;
@@ -60,7 +58,19 @@ public class GameController {
 		 //IF SKIP
 		 if(Card.playFieldView().getNumber() == 10)
 		 {
-			 player1.getNext().getNum().setIsSkipped(true);
+			 currentTurn.getNext().getNum().setIsSkipped(true);
+		 }
+		 //IF +2
+		 if(Card.playFieldView().getNumber() == 12)
+		 {
+
+		 	currentTurn.getNext().getNum().setIsSkipped(true);
+		 }
+
+		 //IF +4
+		 if(Card.playFieldView().getNumber() == 14)
+		 {
+			currentTurn.getNext().getNum().setIsSkipped(true);
 		 }
 		 */
 
@@ -180,19 +190,16 @@ public class GameController {
 
 		GameData data = new GameData();
 
-		for (int i = 0; i < playerCount; i++) {
-			for (int j = 0; j < 7; j++) {
-				playerList.get(i).getHand().draw(data);
-			}
+		for (int i = 0; i < 7; i++)
+		{
+				Card.cardDraw(Card.getDeck(), p1);
+				Card.cardDraw(Card.getDeck(), p2);
+				Card.cardDraw(Card.getDeck(), p3);
+				Card.cardDraw(Card.getDeck(), p4);
 		}
 
 		System.out.println(data.getDeck().size());
 	}
-
-	public int getPlayerCount() {
-		return playerCount;
-	}
-
 	public boolean getIsReverse()
 	{
 		return isReverse;
