@@ -1,6 +1,6 @@
-//Beta Build: 4/28
+//Beta Build: 5/3
 
-//package com.cwugamejammers.uno;
+package com.cwugamejammers.uno;
 
 public class Player {
 
@@ -8,10 +8,13 @@ public class Player {
 	private String name;
 	private Hand hand;
 
+	private boolean isSkipped;
+
 	public Player(int player_id, String player_name) {
 		id = player_id;
 		name = player_name;
 		hand = new Hand();
+		isSkipped = false;
 	}
 
 	public int getId() {
@@ -24,6 +27,16 @@ public class Player {
 
 	public Hand getHand() {
 		return hand;
+	}
+
+	public boolean getIsSkipped()
+	{
+		return isSkipped;
+	}
+
+	public void setIsSkipped(boolean flag)
+	{
+		isSkipped = flag;
 	}
 
 }
