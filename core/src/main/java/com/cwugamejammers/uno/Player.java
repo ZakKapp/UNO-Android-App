@@ -4,7 +4,6 @@ package com.cwugamejammers.uno;
 
 import java.util.ArrayList;
 public class Player {
-
 	private int id;
 	private String name;
 	private Hand hand;

@@ -8,7 +8,6 @@ import java.util.Stack;
 public class Card
 
 {
-
 	// Colors
 	private final static String[] color = { "Red", "Blue", "Yellow", "Green", "Black" };
 

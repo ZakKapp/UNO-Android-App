@@ -3,7 +3,7 @@
 package com.cwugamejammers.uno;
 
 import java.util.ArrayList;
-
+//ayy lmao
 public class Hand {
 
 	private ArrayList<Card> hand = new ArrayList<Card>();

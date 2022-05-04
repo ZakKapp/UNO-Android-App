@@ -5,7 +5,6 @@ package com.cwugamejammers.uno;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class GameController {
 
 	private Player p1;
