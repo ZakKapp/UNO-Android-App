@@ -1,6 +1,6 @@
 // Beta Build: 4/28
 
-//package com.cwugamejammers.uno;
+package com.cwugamejammers.uno;
 
 import java.util.Collections;
 import java.util.Stack;
@@ -106,6 +106,10 @@ public class Card
 		playField.push(card);
 	}
 
+	public static Card playFieldView()
+	{
+		return playField.peek();
+	}
 	public static void reshuffle() {
 		// Pushes the top playField card so it is safe for later
 		Card temp = playField.pop();
