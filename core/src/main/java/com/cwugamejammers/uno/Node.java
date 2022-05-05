@@ -5,7 +5,7 @@ package com.cwugamejammers.uno;
 public class Node {
 
     //id stores the player id
-    Player num;
+    int num;
 
     //next and prev store the next and previous nodes
     Node prev;
@@ -14,7 +14,7 @@ public class Node {
 
     // This constructor makes a new node
     // Next and prev are default initialized as null
-    public Node(Player x)
+    public Node(int x)
     {
         num = x;
     }
@@ -39,7 +39,7 @@ public class Node {
         return this.prev;
     }
 
-    public Player getNum()
+    public int getNum()
     {
         return num;
     }

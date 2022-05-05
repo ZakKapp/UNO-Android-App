@@ -6,8 +6,10 @@ import java.util.Stack;
 
 public class GameData {
 
-	public GameData() {
+	private int winnerId;
+	private int currentTurnId;
+	public GameData()
+	{
 		Card.createDeck();
 	}
-
 }

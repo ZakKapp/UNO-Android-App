@@ -12,16 +12,16 @@ public class GameController {
 	private Player p3;
 	private Player p4;
 
-	private boolean isReverse;
+	private boolean reversed;
+	private Node currentTurn;
 	private ArrayList<Player> playerList = new ArrayList<Player>();
 
 	public void run()
 	{
-		//Initalize all 4 player nodes and set the connections
-		Node player1 = new Node(p1);
-		Node player2 = new Node(p2);
-		Node player3 = new Node(p3);
-		Node player4 = new Node(p4);
+		Node player1 = new Node(0);
+		Node player2 = new Node(1);
+		Node player3 = new Node(2);
+		Node player4 = new Node(3);
 
 		//Set connections
 		player1.setPrev(player4);
@@ -33,6 +33,7 @@ public class GameController {
 		player4.setPrev(player3);
 		player4.setNext(player1);
 
+		reversed = false;
 		//Default first player is player1
 		Node currentTurn = player1;
 		/**
@@ -170,21 +171,6 @@ public class GameController {
 
 		}
 
-		//Since we have a constant amount of players, it is easier to initialize each one individually
-		/**
-		for (int i = 0; i < 4; i++) {
-
-			System.out.println("What is your name? 10 characters max");
-			name = scan.nextLine();
-
-			if (name.length() > 10 || name.length() <= 0)
-				System.out.println("Name is invalid, try again");
-
-			Player player = new Player(i, name);
-			playerList.add(player);
-		}
-		 **/
-
 		scan.close();
 
 		GameData data = new GameData();
@@ -197,14 +183,24 @@ public class GameController {
 				Card.cardDraw(Card.getDeck(), p4);
 		}
 	}
-	public boolean getIsReverse()
+
+	public boolean getReversed()
 	{
-		return isReverse;
+		return reversed;
 	}
 
-	public void setIsReverse(boolean flag)
+	public void setReversed(boolean reverse)
 	{
-		isReverse = flag;
+		reversed = reverse;
 	}
 
+	public Node getCurrentTurn()
+	{
+		return currentTurn;
+	}
+
+	public void setCurrentTurn(Node nextPlayer)
+	{
+		currentTurn = nextPlayer;
+	}
 }

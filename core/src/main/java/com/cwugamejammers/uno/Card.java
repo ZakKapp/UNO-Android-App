@@ -110,6 +110,15 @@ public class Card implements Comparable<Card>
 		return deck.size();
 	}
 
+	public void setIndex(int index)
+	{
+		this.index = index;
+	}
+
+	public int getIndex()
+	{
+		return index;
+	}
 	public static void cardDraw(Stack<Card> deck, Player player)
 	{
 		//If there are no cards remaining when a draw is attempted, reshuffle the deck first.
@@ -183,15 +192,5 @@ public class Card implements Comparable<Card>
 		Collections.shuffle(deck);
 		// move our temp back to playField
 		playField.push(temp);
-	}
-
-	public void setIndex(int index)
-	{
-		this.index = index;
-	}
-
-	public int getIndex()
-	{
-		return index;
 	}
 }
