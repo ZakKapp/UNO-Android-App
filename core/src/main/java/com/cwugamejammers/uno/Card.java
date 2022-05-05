@@ -23,7 +23,6 @@ public class Card implements Comparable<Card>
 	// This boolean checks if the card is a special card or not (Draw 4, Draw 2,
 	// Wildcard
 	private boolean isSpecial;
-
 	private int index;
 
 	// Returns the number of the card

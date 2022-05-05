@@ -47,8 +47,8 @@ public class HowToScreen implements Screen, GestureDetector.GestureListener{
         redBackground = new Texture("RedBackground.png");
         blueBackground = new Texture("BlueBackground.png");
         backBanner = new Texture("BackBanner.png");
-        ruleTexture1 = new Texture("1.png");
-        ruleTexture2 = new Texture("2.png");
+        ruleTexture1 = new Texture("GameRules.png");
+        ruleTexture2 = new Texture("ActionCards.png");
         ruleTexture3 = new Texture("3.png");
         ruleTexture4 = new Texture("1.png");
         ruleTexture5 = new Texture("2.png");
@@ -64,15 +64,12 @@ public class HowToScreen implements Screen, GestureDetector.GestureListener{
         rule5 = new Button(ruleTexture5, 0, -Gdx.graphics.getHeight()*4, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         rule6 = new Button(ruleTexture6, 0, -Gdx.graphics.getHeight()*5, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+        //creates arraylist for rules and adds them to list
         rulesList = new ArrayList<Button>();
         rulesList.add(rule1);
         rulesList.add(rule2);
-        rulesList.add(rule3);
-        rulesList.add(rule4);
-        rulesList.add(rule5);
-        rulesList.add(rule6);
 
-
+        //Sets the bounds of rules so they dont go offscreen
         rule1.setBounds(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight()*(rulesList.size() - 1));
     }
 
@@ -102,14 +99,22 @@ public class HowToScreen implements Screen, GestureDetector.GestureListener{
         //Replaces everything from the previous frame with a solid color specified in the previous line
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //Calls the pan function
+        //Calls the pan function to move the rules around
         pan(Gdx.input.getX(), Gdx.input.getY(), Gdx.input.getDeltaX(), Gdx.input.getDeltaY());
 
         //Begins the spritebatch
         game.batch.begin();
 
-        //Loops through the entire arraylist of rule images and draws them
-        game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //sets the background color based on the theme chosen
+        if (game.colortheme == Uno.COLORTHEME.RED){
+            game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
+
+        if (game.colortheme == Uno.COLORTHEME.BLUE){
+            game.batch.draw(blueBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
+
+        //Draws all the rules images to the screen
         for (Button b : rulesList){
             b.draw(game.batch);
         }

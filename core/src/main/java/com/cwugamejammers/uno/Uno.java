@@ -20,11 +20,21 @@ public class Uno extends Game {
 	BitmapFont font;
 
 
+	enum COLORTHEME{
+		RED,
+		BLUE,
+		GREEN,
+		YELLOW
+	}
+	COLORTHEME colortheme;
+
+
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont();
+		colortheme = COLORTHEME.RED;
 
 		setScreen(new MainScreen(this));
 	}

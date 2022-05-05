@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 public class CreditScreen implements Screen {
 
     Uno game;
-    //amonus
 
     private Texture redBackground;
     private Texture backBanner;

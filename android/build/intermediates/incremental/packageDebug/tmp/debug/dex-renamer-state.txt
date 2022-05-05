@@ -1,16 +1,16 @@
-#Sat Apr 30 20:06:39 PDT 2022
-path.4=4/classes.dex
-path.3=15/classes.dex
-path.2=0/classes.dex
-path.1=4/classes.dex
+#Thu May 05 16:10:05 PDT 2022
+base.0=C\:\\Users\\marsh\\Documents\\GitHub\\Uno\\android\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=C\:\\Users\\marsh\\Documents\\GitHub\\Uno\\android\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\4\\classes.dex
+base.2=C\:\\Users\\marsh\\Documents\\GitHub\\Uno\\android\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.3=C\:\\Users\\marsh\\Documents\\GitHub\\Uno\\android\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\15\\classes.dex
+base.4=C\:\\Users\\marsh\\Documents\\GitHub\\Uno\\android\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\4\\classes.dex
 path.0=classes.dex
-base.4=C\:\\Users\\Werto\\Desktop\\Uno\\android\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\4\\classes.dex
-base.3=C\:\\Users\\Werto\\Desktop\\Uno\\android\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\15\\classes.dex
-base.2=C\:\\Users\\Werto\\Desktop\\Uno\\android\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
-base.1=C\:\\Users\\Werto\\Desktop\\Uno\\android\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\4\\classes.dex
-base.0=C\:\\Users\\Werto\\Desktop\\Uno\\android\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
-renamed.3=classes4.dex
-renamed.2=classes3.dex
-renamed.1=classes2.dex
+path.1=4/classes.dex
+path.2=0/classes.dex
+path.3=15/classes.dex
+path.4=4/classes.dex
 renamed.0=classes.dex
+renamed.1=classes2.dex
+renamed.2=classes3.dex
+renamed.3=classes4.dex
 renamed.4=classes5.dex

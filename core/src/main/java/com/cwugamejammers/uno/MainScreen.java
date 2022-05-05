@@ -2,6 +2,7 @@ package com.cwugamejammers.uno;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -10,7 +11,7 @@ public class MainScreen implements Screen {
 
     //Textures for the title screen
     //////////////////////////////////////////////////////////////
-    private Texture menuBackground;
+    private Texture unoTitle;
     private Texture menuStart;
     private Texture menuHowTo;
     private Texture menuQuit;
@@ -29,10 +30,12 @@ public class MainScreen implements Screen {
     private Button creditsButton;
     private Button backButton;
 
+    private Music song;
+
     public MainScreen (Uno game){
         this.game = game;
 
-        menuBackground = new Texture("UnoBackground.png");
+        unoTitle = new Texture("UnoTitle.png");
         menuStart = new Texture("StartGameButton.png");
         menuHowTo = new Texture("HowToPlayButton.png");
         menuQuit = new Texture("QuitButton.png");
@@ -51,6 +54,10 @@ public class MainScreen implements Screen {
         creditsButton = new Button(menuCredits, Gdx.graphics.getWidth() - 200, 0, 200, 200);
         backButton = new Button(0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/10);
 
+        song = Gdx.audio.newMusic(Gdx.files.internal("music/Chill.mp3"));
+        song.play();
+        song.setLooping(true);
+
     }
 
 
@@ -63,23 +70,28 @@ public class MainScreen implements Screen {
     public void update(float dt){
         if (Gdx.input.justTouched()){
             if(startButton.collision(Gdx.input.getX(),Gdx.input.getY())){
+                song.stop();
                 game.setScreen(new PlayScreen(game));
             }
 
             if(howToButton.collision(Gdx.input.getX(),Gdx.input.getY())){
+                song.stop();
                 game.setScreen(new HowToScreen(game));
             }
 
             if(quitButton.collision(Gdx.input.getX(),Gdx.input.getY())){
+                song.stop();
                 Gdx.app.exit();
                 System.exit(0);
             }
 
             if(settingsButton.collision(Gdx.input.getX(),Gdx.input.getY())){
+                song.stop();
                 game.setScreen(new SettingScreen(game));
             }
 
             if(creditsButton.collision(Gdx.input.getX(),Gdx.input.getY())){
+                song.stop();
                 game.setScreen(new CreditScreen(game));
             }
 
@@ -98,11 +110,16 @@ public class MainScreen implements Screen {
         game.batch.begin();
 
 
+        if (game.colortheme == Uno.COLORTHEME.RED){
+            game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
+
+        if (game.colortheme == Uno.COLORTHEME.BLUE){
+            game.batch.draw(blueBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
 
 
-
-
-        game.batch.draw(menuBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.draw(unoTitle, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         startButton.draw(game.batch);
         howToButton.draw(game.batch);
         quitButton.draw(game.batch);
@@ -135,7 +152,7 @@ public class MainScreen implements Screen {
 
     @Override
     public void dispose() {
-        menuBackground.dispose();
+        unoTitle.dispose();
         menuStart.dispose();
         menuHowTo.dispose();
         menuQuit.dispose();
@@ -149,5 +166,6 @@ public class MainScreen implements Screen {
         quitButton.dispose();
         settingsButton.dispose();
         creditsButton.dispose();
+        song.dispose();
     }
 }
