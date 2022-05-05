@@ -46,7 +46,8 @@ public class Hand {
 				yellow.add(hand.get(i));
 			}
 		}
-		for(int i = 0; i < hand.size(); i++)
+		int size = hand.size() - 1;
+		for(int i = size; i >= 0; i--)
 		{
 			hand.remove(i);
 		}
