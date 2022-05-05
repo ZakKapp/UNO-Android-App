@@ -5,8 +5,8 @@ package com.cwugamejammers.uno;
 import java.util.Collections;
 import java.util.Stack;
 
-public class Card
-
+public class Card implements Comparable<Card>
+//ඞ
 {
 	// Colors
 	private final static String[] color = { "Red", "Blue", "Yellow", "Green", "Black" };
@@ -24,6 +24,8 @@ public class Card
 	// Wildcard
 	private boolean isSpecial;
 
+	private int index;
+
 	// Returns the number of the card
 	public int getNumber() {
 		return number;
@@ -39,16 +41,22 @@ public class Card
 		return isSpecial;
 	}
 
+	@Override public int compareTo(Card comparesto)
+	{
+		int compareNum = ((Card)comparesto).getNumber();
+
+		return this.number - compareNum;
+	}
 	// Default constructor
 	public Card(int num, String col, boolean isSpec) {
 		number = num;
 		cardColor = col;
 		isSpecial = isSpec;
+		index = -1;
 	}
 
 	public static Stack<Card> createDeck() {
 		Card card = null;
-		Stack<Card> deck = new Stack<Card>();
 
 		for (int i = 0; i < 4; ++i) {
 			card = new Card(0, color[i], false);
@@ -101,6 +109,7 @@ public class Card
 	{
 		return deck.size();
 	}
+
 	public static void cardDraw(Stack<Card> deck, Player player)
 	{
 		//If there are no cards remaining when a draw is attempted, reshuffle the deck first.
@@ -110,7 +119,9 @@ public class Card
 		}
 
 		//Draw the card
-		player.getHand().add(deck.pop());
+		player.getList().add(deck.pop());
+		//Sort the hand after draw
+		player.getHand().sortHand();
 	}
 
 	public static void cardDrawTwo(Stack<Card> deck, Player player)
@@ -124,8 +135,10 @@ public class Card
 			}
 
 			//Draw the card
-			player.getHand().add(deck.pop());
+			player.getList().add(deck.pop());
 		}
+
+		player.getHand().sortHand();
 	}
 
 	public static void cardDrawFour(Stack<Card> deck, Player player)
@@ -139,8 +152,10 @@ public class Card
 			}
 
 			//Draw the card
-			player.getHand().add(deck.pop());
+			player.getList().add(deck.pop());
 		}
+
+		player.getHand().sortHand();
 	}
 	public static void cardPlay(Card card) {
 		playField.push(card);
@@ -150,6 +165,7 @@ public class Card
 	{
 		return playField.peek();
 	}
+
 	public static void reshuffle() {
 		// Pushes the top playField card so it is safe for later
 		Card temp = playField.pop();
@@ -167,5 +183,15 @@ public class Card
 		Collections.shuffle(deck);
 		// move our temp back to playField
 		playField.push(temp);
+	}
+
+	public void setIndex(int index)
+	{
+		this.index = index;
+	}
+
+	public int getIndex()
+	{
+		return index;
 	}
 }

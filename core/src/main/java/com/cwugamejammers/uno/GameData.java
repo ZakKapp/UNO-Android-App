@@ -6,17 +6,8 @@ import java.util.Stack;
 
 public class GameData {
 
-	private Stack<Card> deck;
-
 	public GameData() {
-		deck = Card.createDeck();
+		Card.createDeck();
 	}
 
-	public Stack<Card> getDeck() {
-		return deck;
-	}
-
-	public Card getTop() {
-		return deck.peek();
-	}
 }

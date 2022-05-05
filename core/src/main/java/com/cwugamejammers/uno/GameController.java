@@ -196,8 +196,6 @@ public class GameController {
 				Card.cardDraw(Card.getDeck(), p3);
 				Card.cardDraw(Card.getDeck(), p4);
 		}
-
-		System.out.println(data.getDeck().size());
 	}
 	public boolean getIsReverse()
 	{
