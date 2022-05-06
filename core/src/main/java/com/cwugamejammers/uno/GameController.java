@@ -16,6 +16,7 @@ public class GameController {
 	private Node currentTurn;
 	private ArrayList<Player> playerList = new ArrayList<Player>();
 
+
 	public GameController()
 	{
 		initialize();
@@ -160,10 +161,10 @@ public class GameController {
 
 		for (int i = 0; i < 7; i++)
 		{
-				Card.cardDraw(Card.getDeck(), p1);
-				Card.cardDraw(Card.getDeck(), p2);
-				Card.cardDraw(Card.getDeck(), p3);
-				Card.cardDraw(Card.getDeck(), p4);
+				Card.draw(p1);
+				Card.draw(p2);
+				Card.draw(p3);
+				Card.draw(p4);
 		}
 	}
 

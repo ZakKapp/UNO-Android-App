@@ -5,8 +5,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import java.util.ArrayList;
 
@@ -20,10 +23,10 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
     private Texture t2;
     private Texture t3;
 
-    Button addCard;
-    Button removeCard;
+    //Button addCard;
+    //Button removeCard;
 
-    Button card1;
+    //Button card1;
     static ArrayList<Button> cardList;
 
     Music song1;
@@ -36,6 +39,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
     private static ArrayList<ArrayList<Texture>> textureList;
 
     GameController controller;
+
 
     public PlayScreen(Uno game) {
         this.game = game;
@@ -80,6 +84,48 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
 
         song1.play();
 
+        //createTextures();
+
+        //TEST STUFF, WILL BE GONE LATER
+        //card1 = new Button(t, 0, 0, Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/3);
+        cardList = new ArrayList<Button>();
+        //cardList.add(card1);
+
+        /*
+        Texture text1 = new Texture("cards/R1.PNG");
+        Texture text2 = new Texture("cards/B2.PNG");
+        Texture text3 = new Texture("cards/Y3.PNG");
+        Texture text4 = new Texture("cards/G4.PNG");
+        Texture text5 = new Texture("cards/W13.PNG");
+        Texture text6 = new Texture("cards/R2.PNG");
+        Texture text7 = new Texture("cards/B2.PNG");
+
+        Button card1 = new Button(text1, 0, 0, Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/3);
+        Button card2 = new Button(text1, 0, 0, Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/3);
+        Button card3 = new Button(text1, 0, 0, Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/3);
+        Button card4 = new Button(text1, 0, 0, Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/3);
+        Button card5 = new Button(text1, 0, 0, Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/3);
+        Button card6 = new Button(text1, 0, 0, Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/3);
+        Button card7 = new Button(text1, 0, 0, Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/3);
+
+        cardList.add(card1);
+        cardList.add(card2);
+        cardList.add(card3);
+        cardList.add(card4);
+        cardList.add(card5);
+        cardList.add(card6);
+        cardList.add(card7);
+        */
+
+        controller = new GameController();
+    }
+
+    public void createTextures()
+    {
+
+        /*
+        textureList = new ArrayList<>();
+
         //Creates 5 separate ArrayLists for the 5 texture lists.
         ArrayList<Texture> red = new ArrayList<Texture>();
 
@@ -97,16 +143,18 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
         textureList.add(green);
         textureList.add(wild);
 
-        for(int i = 1; i < 13; i++)
+
+
+        for(int i = 0; i < 12; i++)
         {
             //red
-            Texture asset = new Texture("cards/R" + Integer.valueOf(i) + ".PNG");
+            Texture asset = new Texture("cards/"+"R" +Integer.valueOf(i + 1)+".PNG");
             //blue
-            Texture asset2 = new Texture("cards/B" + Integer.valueOf(i) +".PNG");
+            Texture asset2 = new Texture("cards/"+"B"+Integer.valueOf(i + 1)+".PNG");
             //yellow
-            Texture asset3 = new Texture("cards/Y" + Integer.valueOf(i) + ".PNG");
+            Texture asset3 = new Texture("cards/"+"Y" + Integer.valueOf(i + 1)+".PNG");
             //green
-            Texture asset4 = new Texture("cards/G" + Integer.valueOf(i) +".PNG");
+            Texture asset4 = new Texture("cards/"+"G" +Integer.valueOf(i + 1)+".PNG");
 
             textureList.get(0).add(asset);
             textureList.get(1).add(asset2);
@@ -117,17 +165,10 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
         Texture wild1 = new Texture("cards/W13.PNG");
         Texture wild2 = new Texture("cards/W14.PNG");
         //wild
+        /*
         textureList.get(4).add(wild1);
         textureList.get(4).add(wild2);
-
-
-
-        //TEST STUFF, WILL BE GONE LATER
-        //card1 = new Button(t, 0, 0, Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/3);
-        //cardList = new ArrayList<Button>();
-        //cardList.add(card1);
-
-        controller = new GameController();
+        */
     }
 
     public ArrayList<ArrayList<Texture>> getTextureList()
@@ -137,6 +178,43 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
 
     public static void createCard(Card card)
     {
+        String fileName = "cards/";
+        if(card.getColor() == "Red")
+        {
+            fileName += "R";
+        }
+
+        if(card.getColor() == "Blue")
+        {
+            fileName += "B";
+        }
+
+        if(card.getColor() == "Yellow")
+        {
+            fileName += "Y";
+        }
+
+        if(card.getColor() == "Green")
+        {
+            fileName += "G";
+        }
+
+        if(card.getColor() == "Wild")
+        {
+            fileName += "W";
+        }
+
+
+
+        fileName += Integer.toString(card.getNumber()) + ".PNG";
+        Texture cardPicture = new Texture(fileName);
+        Button cardButton = new Button(cardPicture, 0, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3);
+        cardList.add(cardButton);
+
+
+
+
+        /*
         int arrayNumber = 0;
 
         int indexNumber = card.getNumber();
@@ -169,6 +247,8 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
         Button cardButton = new Button(textureList.get(arrayNumber).get(indexNumber), 0, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3);
         cardList.add(cardButton);
 
+         */
+
     }
     @Override
     public void show() {
@@ -177,16 +257,16 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
 
     public void update(float dt){
         //Sets hand bounds based on the size of the hand
-        if (cardList.size() <= 0){
+        if (cardList.size() == 0){
 
         }
-        else if (cardList.size() < 2){
-            cardList.get(0).setBounds(0, 0, Gdx.graphics.getWidth() - card1.rect.width, Gdx.graphics.getHeight());
+        else if (cardList.size() < 2 && cardList.size() != 0){
+            cardList.get(0).setBounds(0, 0, Gdx.graphics.getWidth() - cardList.get(0).rect.width, Gdx.graphics.getHeight());
         }
         else{
-            cardList.get(0).setBounds(-card1.rect.width*(cardList.size() - 1), 0, Gdx.graphics.getWidth() - card1.rect.width, Gdx.graphics.getHeight());
+            cardList.get(0).setBounds(-cardList.get(0).rect.width*(cardList.size() - 1), 0, Gdx.graphics.getWidth() - cardList.get(0).rect.width, Gdx.graphics.getHeight());
 
-            /////ALSO PART OF THE FUNCTION THAT NEEDS TO BE MADE
+            //ALSO PART OF THE FUNCTION THAT NEEDS TO BE MADE
             for (int i = 1; i < cardList.size(); i++){
                 cardList.get(i).reposition(cardList.get(i-1).getx() + cardList.get(i).rect.width, cardList.get(i).rect.y);
             }
@@ -227,8 +307,6 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
             }
         }
          */
-
-
 
 
         //depending on the theme draw a specific color background

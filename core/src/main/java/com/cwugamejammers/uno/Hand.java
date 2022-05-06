@@ -10,7 +10,7 @@ public class Hand {
 	private ArrayList<Card> hand = new ArrayList<Card>();
 
 	public void play(Card card) {
-		Card.cardPlay(card);
+		Card.getPlayField().add(card);
 		hand.remove(card);
 	}
 
@@ -22,6 +22,7 @@ public class Hand {
 	// Red Blue Green Yellow
 	public void sortHand()
 	{
+		/*
 		ArrayList<Card> red = new ArrayList<Card>();
 		ArrayList<Card> blue = new ArrayList<Card>();
 		ArrayList<Card> yellow = new ArrayList<Card>();
@@ -66,6 +67,7 @@ public class Hand {
 		{
 			hand.get(i).setIndex(i);
 		}
+		*/
 	}
 
 }
