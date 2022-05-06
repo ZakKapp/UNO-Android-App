@@ -16,6 +16,11 @@ public class GameController {
 	private Node currentTurn;
 	private ArrayList<Player> playerList = new ArrayList<Player>();
 
+	public GameController()
+	{
+		initialize();
+	}
+
 	public void run()
 	{
 		Node player1 = new Node(0);
@@ -80,12 +85,13 @@ public class GameController {
 
 	public void initialize()
 	{
-		Scanner scan = new Scanner(System.in);
+		//Scanner scan = new Scanner(System.in);
 
-		String name;
+		//String name;
 
 		// Consumes the \n
-		scan.nextLine();
+		//scan.nextLine();
+		/*
 		while(true)
 		{
 			System.out.println("What is your name? 10 characters max");
@@ -143,6 +149,12 @@ public class GameController {
 		}
 
 		scan.close();
+		*/
+
+		p1 = new Player(0, "Keane");
+		p2 = new Player(1, "Marshall");
+		p3 = new Player(2, "Zak");
+		p4 = new Player(3, "Jaden");
 
 		GameData data = new GameData();
 

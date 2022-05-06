@@ -56,7 +56,7 @@ public class Card implements Comparable<Card>
 		index = -1;
 	}
 
-	public static Stack<Card> createDeck() {
+	public static void createDeck() {
 		Card card = null;
 
 		for (int i = 0; i < 4; ++i) {
@@ -99,7 +99,6 @@ public class Card implements Comparable<Card>
 
 		// Shuffles
 		Collections.shuffle(deck);
-		return deck;
 	}
 
 	public static Stack<Card> getDeck() {
