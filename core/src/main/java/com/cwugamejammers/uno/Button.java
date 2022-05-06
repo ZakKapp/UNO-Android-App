@@ -18,6 +18,13 @@ public class Button {
         bounds = new Bound(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
+    public Button(String fileName, float x, float y, float w, float h)
+    {
+        texture = new Texture(fileName);
+        rect = new Rectangle(x,y,w,h);
+        bounds = new Bound(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
+
     public Button (float x, float y, float w, float h){
         rect = new Rectangle(x,y,w,h);
     }

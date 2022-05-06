@@ -2,6 +2,8 @@
 
 package com.cwugamejammers.uno;
 
+import com.badlogic.gdx.Gdx;
+
 import java.util.Collections;
 import java.util.Stack;
 
@@ -18,7 +20,7 @@ public class Card implements Comparable<Card>
 
 	// What the number of our card is (0,1,2...9)
 	private int number;
-	// The color of our card (Red, Blue, Yellow, Green, Black)
+	// The color of our card (Red, Blue, Yellow, Green, Wild)
 	private String cardColor;
 	// This boolean checks if the card is a special card or not (Draw 4, Draw 2,
 	// Wildcard
@@ -85,13 +87,13 @@ public class Card implements Comparable<Card>
 
 		// Creates 4 Wild Cards
 		for (int i = 0; i < 4; ++i) {
-			card = new Card(13, "Black", true);
+			card = new Card(13, "Wild", true);
 			deck.push(card);
 		}
 
 		// Creates 4 Wild+4 Cards
 		for (int i = 0; i < 4; ++i) {
-			card = new Card(14, "Black", true);
+			card = new Card(14, "Wild", true);
 			deck.push(card);
 		}
 
@@ -127,13 +129,21 @@ public class Card implements Comparable<Card>
 		}
 
 		//Draw the card
-		player.getList().add(deck.pop());
+		Card draw = deck.pop();
+		player.getList().add(draw);
 		//Sort the hand after draw
-		player.getHand().sortHand();
+		//player.getHand().sortHand();
+
+		if(player.getId() == 0)
+		{
+			//CREATE THE CARD BUTTON
+			PlayScreen.createCard(draw);
+		}
 	}
 
 	public static void cardDrawTwo(Stack<Card> deck, Player player)
 	{
+		/**
 		for(int i = 0; i < 2; i++)
 		{
 			//If there are no cards remaining when a draw is attempted, reshuffle the deck first.
@@ -144,13 +154,17 @@ public class Card implements Comparable<Card>
 
 			//Draw the card
 			player.getList().add(deck.pop());
-		}
 
-		player.getHand().sortHand();
+		}
+		 */
+		cardDraw(deck, player);
+		cardDraw(deck, player);
+		//player.getHand().sortHand();
 	}
 
 	public static void cardDrawFour(Stack<Card> deck, Player player)
 	{
+		/**
 		for(int i = 0; i < 4; i++)
 		{
 			//If there are no cards remaining when a draw is attempted, reshuffle the deck first.
@@ -162,8 +176,12 @@ public class Card implements Comparable<Card>
 			//Draw the card
 			player.getList().add(deck.pop());
 		}
-
-		player.getHand().sortHand();
+		 */
+		cardDraw(deck, player);
+		cardDraw(deck, player);
+		cardDraw(deck, player);
+		cardDraw(deck, player);
+		//player.getHand().sortHand();
 	}
 	public static void cardPlay(Card card) {
 		playField.push(card);

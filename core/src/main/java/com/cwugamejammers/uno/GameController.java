@@ -82,35 +82,6 @@ public class GameController {
 	{
 		Scanner scan = new Scanner(System.in);
 
-		//Since the playerCount will always be 4, there is no need for this block
-		/**
-		// User input for Valid number of players
-		boolean isValid = false;
-		while (!isValid) {
-
-			try {
-				System.out.print("How many players?");
-				playerCount = scan.nextInt();
-			} catch (Exception e) {
-				System.out.println("Error");
-				scan.nextLine();
-			}
-			if (playerCount > 1 && playerCount < 5) {
-				isValid = true;
-			}
-
-		}
-
-		System.out.println("The number of players is: " + playerCount);
-		**/
-
-		/**
-		 * System.out.println("How many players are human?"); while(true) { int
-		 * humanCount = scan.nextInt(); if(humanCount > playerCount)
-		 * System.out.println("You have input too many human players, please try
-		 * again"); else break; }
-		 **/
-
 		String name;
 
 		// Consumes the \n
