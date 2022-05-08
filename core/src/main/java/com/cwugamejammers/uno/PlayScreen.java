@@ -206,7 +206,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
 
 
 
-        fileName += Integer.toString(card.getNumber()) + ".PNG";
+        fileName += Integer.toString(card.getNumber()) + ".jpeg";
         Texture cardPicture = new Texture(fileName);
         Button cardButton = new Button(cardPicture, 0, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3);
         cardList.add(cardButton);
