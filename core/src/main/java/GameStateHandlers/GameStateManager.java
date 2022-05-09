@@ -1,4 +1,4 @@
-package GameStateHandlers;
+/*package GameStateHandlers;
 
 import java.util.ArrayList;
 //Game state manager is the mediator that passes along functions
