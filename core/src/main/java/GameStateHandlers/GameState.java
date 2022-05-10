@@ -1,4 +1,4 @@
-package GameStateHandlers;
+/*package GameStateHandlers;
 //this is just a super class
 //blueprints to set up our other classes
 //add as we see fit
@@ -10,3 +10,4 @@ public abstract class GameState {
     public abstract void buttonPressed(int k);
 
 }
+ */

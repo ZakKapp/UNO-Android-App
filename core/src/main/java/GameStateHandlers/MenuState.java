@@ -1,4 +1,4 @@
-package GameStateHandlers;
+/*package GameStateHandlers;
 
 public class MenuState extends GameState{
 
@@ -15,3 +15,4 @@ public class MenuState extends GameState{
         //add event to switch
     }
 }
+*/
