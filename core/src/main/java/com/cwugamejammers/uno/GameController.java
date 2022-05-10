@@ -151,10 +151,10 @@ public class GameController {
 		scan.close();
 		*/
 
-		p1 = new Player(0, "You");
-		p2 = new Player(1, "AI1");
-		p3 = new Player(2, "AI2");
-		p4 = new Player(3, "AI3");
+		p1 = new Player(0, "You", false);
+		p2 = new Player(1, "AI1", true);
+		p3 = new Player(2, "AI2", true);
+		p4 = new Player(3, "AI3", true);
 
 		GameData data = new GameData();
 
