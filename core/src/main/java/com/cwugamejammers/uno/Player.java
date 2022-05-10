@@ -3,6 +3,7 @@
 package com.cwugamejammers.uno;
 
 import java.util.ArrayList;
+import java.util.Collections;
 public class Player {
 	private int id;
 	private String name;
@@ -12,6 +13,7 @@ public class Player {
 	private boolean isSkipped;
 
 	private boolean noPlay;
+
 
 	public Player(int player_id, String player_name, boolean ai) {
 		id = player_id;
@@ -108,13 +110,16 @@ public class Player {
 		{
 			Card.emptyShuffle();
 		}
-		Card toCreate = Card.getDeck().get(0);
 		getHand().add(Card.getDeck().remove(0));
 
+		int card = getHand().size() - 1;
 		//IF PLAYER IS HUMAN
 		if(getId() == 0)
 		{
-			PlayScreen.createCard(toCreate);
+			//getHand().get(card).createTexture(getHand().get(card));
+			//textureButton = PlayScreen.createCard(getHand().get(getHand().size() - 1));
+			PlayScreen.createCardButton(getHand().get(card).getTextureButton());
+			sortHand();
 		}
 
 	}
@@ -131,6 +136,49 @@ public class Player {
 		draw();
 		draw();
 		draw();
+	}
+
+	public void sortHand()
+	{
+		ArrayList<Card> red = new ArrayList<Card>();
+		ArrayList<Card> blue = new ArrayList<Card>();
+		ArrayList<Card> green = new ArrayList<Card>();
+		ArrayList<Card> yellow = new ArrayList<Card>();
+		ArrayList<Card> black = new ArrayList<Card>();
+
+
+		for(int i = 0; i < getHand().size(); i++)
+		{
+			if(getHand().get(i).getColor() == "Red") red.add(getHand().get(i));
+			if(getHand().get(i).getColor() == "Blue") blue.add(getHand().get(i));
+			if(getHand().get(i).getColor() == "Green") green.add(getHand().get(i));
+			if(getHand().get(i).getColor() == "Yellow") yellow.add(getHand().get(i));
+			if(getHand().get(i).getColor() == "Black") black.add(getHand().get(i));
+		}
+
+		for(int i = 0; i < getHand().size(); i++)
+		{
+			getHand().remove(i);
+		}
+
+		Collections.sort(red);
+		Collections.sort(blue);
+		Collections.sort(green);
+		Collections.sort(yellow);
+		Collections.sort(black);
+
+		getHand().addAll(red);
+		getHand().addAll(blue);
+		getHand().addAll(green);
+		getHand().addAll(yellow);
+		getHand().addAll(black);
+
+		PlayScreen.clearList();
+		for(int i = 0; i < getHand().size(); i++)
+		{
+			PlayScreen.createCardButton(getHand().get(i).getTextureButton());
+		}
+
 	}
 
 }

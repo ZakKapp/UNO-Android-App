@@ -20,8 +20,6 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
     private Texture blueBackground;
 
     private Texture t;
-    private Texture t2;
-    private Texture t3;
 
     //Button addCard;
     //Button removeCard;
@@ -35,6 +33,8 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
     Music song4;
     Music song5;
     ArrayList<Music> musicList;
+
+    static Button cardButton;
 
     private static ArrayList<ArrayList<Texture>> textureList;
 
@@ -85,40 +85,60 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
         return textureList;
     }
 
-    public static void createCard(Card card)
+    public static Texture createTexture(String color, int number)
     {
         String fileName = "cards/";
-        if(card.getColor() == "Red")
+        if(color == "Red")
         {
             fileName += "R";
         }
 
-        if(card.getColor() == "Blue")
+        if(color == "Blue")
         {
             fileName += "B";
         }
 
-        if(card.getColor() == "Yellow")
+        if(color == "Yellow")
         {
             fileName += "Y";
         }
 
-        if(card.getColor() == "Green")
+        if(color == "Green")
         {
             fileName += "G";
         }
 
-        if(card.getColor() == "Wild")
+        if(color == "Wild")
         {
             fileName += "W";
         }
 
 
 
-        fileName += Integer.toString(card.getNumber()) + ".jpeg";
-        Texture cardPicture = new Texture(fileName);
-        Button cardButton = new Button(cardPicture, 0, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3);
+        fileName += Integer.toString(number) + ".jpeg";
+        Texture t = new Texture(fileName);
+        //cardButton = new Button(t, 0, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3);
+        //cardList.add(cardButton);
+
+        return t;
+    }
+
+    public static void createCardButton(Texture tex)
+    {
+        cardButton = new Button(tex, 0, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3);
         cardList.add(cardButton);
+    }
+
+    public static ArrayList<Button> getCardList()
+    {
+        return cardList;
+    }
+    public static void clearList()
+    {
+        for(int i = 0; i < cardList.size(); i++)
+        {
+            cardList.remove(i).dispose();
+        }
     }
     @Override
     public void show() {
@@ -200,6 +220,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
     public void dispose() {
         redBackground.dispose();
         blueBackground.dispose();
+        cardButton.dispose();
 
     }
 

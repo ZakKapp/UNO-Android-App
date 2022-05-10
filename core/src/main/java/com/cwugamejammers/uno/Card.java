@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Stack;
 import java.util.ArrayList;
 import java.util.Random;
-
+import com.badlogic.gdx.graphics.Texture;
 public class Card implements Comparable<Card>
 //ඞ
 {
@@ -50,6 +50,8 @@ public class Card implements Comparable<Card>
 	private static ArrayList<Card> deck = new ArrayList<Card>();
 	private static Random rand;
 
+	private Texture textureButton;
+
 	@Override public int compareTo(Card comparesto)
 	{
 		int compareNum = ((Card)comparesto).getNumber();
@@ -62,6 +64,7 @@ public class Card implements Comparable<Card>
 		cardColor = col;
 		isSpecial = isSpec;
 		index = -1;
+		textureButton = PlayScreen.createTexture(cardColor, number);
 	}
 
 	public static void createDeck() {
@@ -148,5 +151,18 @@ public class Card implements Comparable<Card>
 	public static ArrayList<Card> getDeck()
 	{
 		return deck;
+	}
+
+	/*
+	public void createTexture(Card card)
+	{
+		textureButton = PlayScreen.createTexture(card);
+	}
+
+	*/
+
+	public Texture getTextureButton()
+	{
+		return textureButton;
 	}
 }
