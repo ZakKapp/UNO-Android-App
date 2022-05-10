@@ -132,37 +132,6 @@ public class Card implements Comparable<Card>
 		return deck.size() == 0;
 	}
 
-	public static void draw(Player player)
-	{
-		if(deck.size() == 0)
-		{
-			emptyShuffle();
-		}
-		Card toCreate = deck.get(0);
-		player.getList().add(deck.remove(0));
-
-		//IF PLAYER IS HUMAN
-		if(player.getId() == 0)
-		{
-			PlayScreen.createCard(toCreate);
-		}
-
-	}
-
-	public static void drawTwo(Player player)
-	{
-		draw(player);
-		draw(player);
-	}
-
-	public static void drawFour(Player player)
-	{
-		draw(player);
-		draw(player);
-		draw(player);
-		draw(player);
-	}
-
 	public static void emptyShuffle()
 	{
 		Card temp = deck.get(deck.size() - 1);

@@ -13,7 +13,7 @@ public class GameController {
 	private Player p4;
 
 	private boolean reversed;
-	private Node currentTurn;
+	private int currentTurn;
 	private ArrayList<Player> playerList = new ArrayList<Player>();
 
 
@@ -40,8 +40,7 @@ public class GameController {
 		player4.setNext(player1);
 
 		reversed = false;
-		//Default first player is player1
-		Node currentTurn = player1;
+
 		/**
 		 * Basic idea of this block is, check if the curr node has getSkipped flag set as true, if it does, run a
 		 * yet to be created function named nextTurn, which would change what currentTurn points to and move on.
@@ -152,22 +151,31 @@ public class GameController {
 		scan.close();
 		*/
 
-		p1 = new Player(0, "Keane");
-		p2 = new Player(1, "Marshall");
-		p3 = new Player(2, "Zak");
-		p4 = new Player(3, "Jaden");
+		p1 = new Player(0, "You");
+		p2 = new Player(1, "AI1");
+		p3 = new Player(2, "AI2");
+		p4 = new Player(3, "AI3");
 
 		GameData data = new GameData();
 
 		for (int i = 0; i < 7; i++)
 		{
-				Card.draw(p1);
-				Card.draw(p2);
-				Card.draw(p3);
-				Card.draw(p4);
+				p1.draw();
+				p2.draw();
+				p3.draw();
+				p4.draw();
 		}
 	}
 
+	public void upkeep()
+	{
+		//Check skip flags to see if turn is valid.
+	}
+
+	public void endTurn()
+	{
+		//Check to see if reverse flag is true.
+	}
 	public boolean getReversed()
 	{
 		return reversed;
@@ -178,12 +186,12 @@ public class GameController {
 		reversed = reverse;
 	}
 
-	public Node getCurrentTurn()
+	public int getCurrentTurn()
 	{
 		return currentTurn;
 	}
 
-	public void setCurrentTurn(Node nextPlayer)
+	public void setCurrentTurn(int nextPlayer)
 	{
 		currentTurn = nextPlayer;
 	}
