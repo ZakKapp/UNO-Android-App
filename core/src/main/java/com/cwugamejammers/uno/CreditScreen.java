@@ -1,14 +1,12 @@
-package Front_End;
+package com.cwugamejammers.uno;
 
-import Front_End.Button;
-import Front_End.MainScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.cwugamejammers.uno.Uno;
 
-public class SettingScreen implements Screen {
+public class CreditScreen implements Screen {
+
     Uno game;
 
     private Texture redBackground;
@@ -16,7 +14,7 @@ public class SettingScreen implements Screen {
     private Button backButton;
 
 
-    public SettingScreen(Uno game){
+    public CreditScreen(Uno game){
         this.game = game;
 
         redBackground = new Texture("RedBackground.png");
@@ -30,7 +28,6 @@ public class SettingScreen implements Screen {
     }
 
     public void update(float dt){
-
         if (Gdx.input.justTouched()){
             if (backButton.collision(Gdx.input.getX(), Gdx.input.getY())){
                 game.setScreen(new MainScreen(game));
@@ -52,10 +49,7 @@ public class SettingScreen implements Screen {
         game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         game.batch.draw(backBanner,0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-
         game.batch.end();
-
-
     }
 
     @Override
@@ -84,3 +78,5 @@ public class SettingScreen implements Screen {
         backBanner.dispose();
     }
 }
+
+

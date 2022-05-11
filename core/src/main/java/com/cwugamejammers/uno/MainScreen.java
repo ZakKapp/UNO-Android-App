@@ -1,11 +1,10 @@
-package Front_End;
+package com.cwugamejammers.uno;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.cwugamejammers.uno.Uno;
 
 public class MainScreen implements Screen {
     private Uno game;

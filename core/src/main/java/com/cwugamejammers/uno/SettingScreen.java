@@ -1,15 +1,24 @@
-package Front_End;
+package com.cwugamejammers.uno;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.cwugamejammers.uno.Uno;
+import com.badlogic.gdx.graphics.Texture;
 
-public class ScreenTemplate implements Screen {
+public class SettingScreen implements Screen {
     Uno game;
 
-    public ScreenTemplate(Uno game) {
+    private Texture redBackground;
+    private Texture backBanner;
+    private Button backButton;
+
+
+    public SettingScreen(Uno game){
         this.game = game;
+
+        redBackground = new Texture("RedBackground.png");
+        backBanner = new Texture("BackBanner.png");
+        backButton = new Button(0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/10);
     }
 
     @Override
@@ -17,8 +26,13 @@ public class ScreenTemplate implements Screen {
         // Prepare your screen here.
     }
 
-    public void update(float dt) {
+    public void update(float dt){
 
+        if (Gdx.input.justTouched()){
+            if (backButton.collision(Gdx.input.getX(), Gdx.input.getY())){
+                game.setScreen(new MainScreen(game));
+            }
+        }
     }
 
     @Override
@@ -30,7 +44,15 @@ public class ScreenTemplate implements Screen {
         //Replaces everything from the previous frame with a solid color specified in the previous line
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //Begins the spritebatch
-        //game.batch.begin();
+        game.batch.begin();
+
+        game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.draw(backBanner,0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+
+        game.batch.end();
+
+
     }
 
     @Override
@@ -55,7 +77,7 @@ public class ScreenTemplate implements Screen {
 
     @Override
     public void dispose() {
-        // Destroy screen's assets here.
+        redBackground.dispose();
+        backBanner.dispose();
     }
-
 }

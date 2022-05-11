@@ -1,4 +1,4 @@
-package Front_End;
+package com.cwugamejammers.uno;
 
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;

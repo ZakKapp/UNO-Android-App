@@ -1,4 +1,4 @@
-package Front_End;
+package com.cwugamejammers.uno;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
-import com.cwugamejammers.uno.Uno;
 
 import java.util.ArrayList;
 

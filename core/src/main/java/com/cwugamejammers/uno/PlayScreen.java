@@ -1,6 +1,5 @@
-package Front_End;
+package com.cwugamejammers.uno;
 
-import Front_End.Button;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -8,8 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
-import com.cwugamejammers.uno.GameController;
-import com.cwugamejammers.uno.Uno;
 
 import java.util.ArrayList;
 
@@ -24,6 +21,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
     private static float cardWidth = Gdx.graphics.getWidth()/4;
     private static float cardHeight = Gdx.graphics.getHeight()/4;
     private Button deckButton;
+    private Button pileButton;
 
     //Button addCard;
     //Button removeCard;
@@ -51,7 +49,14 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
         redBackground = new Texture("RedBackground.png");
         blueBackground = new Texture("BlueBackground.png");
         deckTex = new Texture("cards/backCard.PNG");
-        deckButton = new Button(deckTex, Gdx.graphics.getWidth()/4 - cardWidth/2, Gdx.graphics.getHeight()/2, cardWidth, cardHeight);
+
+        //PILEBUTTON TEXTURE WILL BE REPLACED WITH LAST PLAYED CARD
+        deckButton = new Button(deckTex, Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/2, cardWidth, cardHeight);
+        pileButton = new Button(deckTex, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, cardWidth, cardHeight);
+
+        //ALTERNATE DECK PLACEMENTS
+        //deckButton = new Button(deckTex, Gdx.graphics.getWidth()/4 - cardWidth/2, Gdx.graphics.getHeight()/2, cardWidth, cardHeight);
+        //pileButton = new Button(deckTex, Gdx.graphics.getWidth()*3/4 - cardWidth/2 , Gdx.graphics.getHeight()/2, cardWidth, cardHeight);
 
 
 
@@ -187,6 +192,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
             b.draw(game.batch);
         }
         deckButton.draw(game.batch);
+        pileButton.draw(game.batch);
 
         game.batch.end();
     }

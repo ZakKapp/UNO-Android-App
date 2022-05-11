@@ -1,4 +1,4 @@
-package Front_End;
+package com.cwugamejammers.uno;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -84,6 +84,8 @@ public class Button {
     public float getHeight(){
         return rect.getHeight();
     }
+
+    public Texture getTexture(){return texture;}
 
     public void draw(Batch b)
     {
