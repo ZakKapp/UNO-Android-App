@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class Button {
     private Texture texture;
@@ -85,6 +84,8 @@ public class Button {
     public float getHeight(){
         return rect.getHeight();
     }
+
+    public Texture getTexture(){return texture;}
 
     public void draw(Batch b)
     {

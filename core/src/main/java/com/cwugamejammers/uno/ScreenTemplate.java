@@ -3,6 +3,7 @@ package com.cwugamejammers.uno;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.cwugamejammers.uno.Uno;
 
 public class ScreenTemplate implements Screen {
     Uno game;
