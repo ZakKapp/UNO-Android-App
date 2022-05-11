@@ -221,6 +221,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
         redBackground.dispose();
         blueBackground.dispose();
         cardButton.dispose();
+        t.dispose();
 
     }
 
