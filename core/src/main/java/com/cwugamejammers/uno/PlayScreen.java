@@ -18,8 +18,12 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
 
     private Texture redBackground;
     private Texture blueBackground;
-
+    private Texture deckTex;
     private Texture t;
+
+    private static float cardWidth = Gdx.graphics.getWidth()/4;
+    private static float cardHeight = Gdx.graphics.getHeight()/4;
+    private Button deckButton;
 
     //Button addCard;
     //Button removeCard;
@@ -46,6 +50,10 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
 
         redBackground = new Texture("RedBackground.png");
         blueBackground = new Texture("BlueBackground.png");
+        deckTex = new Texture("cards/backCard.PNG");
+        deckButton = new Button(deckTex, Gdx.graphics.getWidth()/4 - cardWidth/2, Gdx.graphics.getHeight()/2, cardWidth, cardHeight);
+
+
 
         song1 = Gdx.audio.newMusic(Gdx.files.internal("music/AndSoItBegins.mp3"));
         song2 = Gdx.audio.newMusic(Gdx.files.internal("music/Branch.mp3"));
@@ -80,6 +88,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
         cardList = new ArrayList<Button>();
         controller = new GameController();
     }
+
     public ArrayList<ArrayList<Texture>> getTextureList()
     {
         return textureList;
@@ -125,7 +134,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
 
     public static void createCardButton(Texture tex)
     {
-        cardButton = new Button(tex, 0, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3);
+        cardButton = new Button(tex, 0, 0, cardWidth, cardHeight);
         cardList.add(cardButton);
     }
 
@@ -147,20 +156,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
 
     public void update(float dt){
         //Sets hand bounds based on the size of the hand
-        if (cardList.size() == 0){
-
-        }
-        else if (cardList.size() < 2 && cardList.size() != 0){
-            cardList.get(0).setBounds(0, 0, Gdx.graphics.getWidth() - cardList.get(0).rect.width, Gdx.graphics.getHeight());
-        }
-        else{
-            cardList.get(0).setBounds(-cardList.get(0).rect.width*(cardList.size() - 1), 0, Gdx.graphics.getWidth() - cardList.get(0).rect.width, Gdx.graphics.getHeight());
-
-            //ALSO PART OF THE FUNCTION THAT NEEDS TO BE MADE
-            for (int i = 1; i < cardList.size(); i++){
-                cardList.get(i).reposition(cardList.get(i-1).getx() + cardList.get(i).rect.width, cardList.get(i).rect.y);
-            }
-        }
+        repositionHand();
 
         //Calls the pan function to drag the cards around
         pan(Gdx.input.getX(), Gdx.input.getY(), Gdx.input.getDeltaX(), Gdx.input.getDeltaY());
@@ -190,6 +186,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
         for (Button b : cardList){
             b.draw(game.batch);
         }
+        deckButton.draw(game.batch);
 
         game.batch.end();
     }
@@ -222,6 +219,23 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
         blueBackground.dispose();
         cardButton.dispose();
 
+    }
+
+    public void repositionHand(){
+        if (cardList.size() == 0){
+
+        }
+        else if (cardList.size() < 2 && cardList.size() != 0){
+            cardList.get(0).setBounds(0, 0, Gdx.graphics.getWidth() - cardList.get(0).rect.width, Gdx.graphics.getHeight());
+        }
+        else{
+            cardList.get(0).setBounds(-cardList.get(0).rect.width*(cardList.size() - 1), 0, Gdx.graphics.getWidth() - cardList.get(0).rect.width, Gdx.graphics.getHeight());
+
+            //ALSO PART OF THE FUNCTION THAT NEEDS TO BE MADE
+            for (int i = 1; i < cardList.size(); i++){
+                cardList.get(i).reposition(cardList.get(i-1).getx() + cardList.get(i).rect.width, cardList.get(i).rect.y);
+            }
+        }
     }
 
     @Override
