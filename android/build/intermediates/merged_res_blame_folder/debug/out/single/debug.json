@@ -1,18 +1,18 @@
 [
     {
-        "merged": "C:\\Users\\Werto\\Desktop\\Uno\\android\\build\\intermediates\\merged_res\\debug\\drawable-mdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\Werto\\Desktop\\Uno\\android\\res\\drawable-mdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\marsh\\Documents\\GitHub\\Uno\\android\\build\\intermediates\\merged_res\\debug\\drawable-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\marsh\\Documents\\GitHub\\Uno\\android\\res\\drawable-xhdpi\\ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\Werto\\Desktop\\Uno\\android\\build\\intermediates\\merged_res\\debug\\drawable-xxhdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\Werto\\Desktop\\Uno\\android\\res\\drawable-xxhdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\marsh\\Documents\\GitHub\\Uno\\android\\build\\intermediates\\merged_res\\debug\\drawable-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\marsh\\Documents\\GitHub\\Uno\\android\\res\\drawable-mdpi\\ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\Werto\\Desktop\\Uno\\android\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\Werto\\Desktop\\Uno\\android\\res\\drawable-hdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\marsh\\Documents\\GitHub\\Uno\\android\\build\\intermediates\\merged_res\\debug\\drawable-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\marsh\\Documents\\GitHub\\Uno\\android\\res\\drawable-xxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "C:\\Users\\Werto\\Desktop\\Uno\\android\\build\\intermediates\\merged_res\\debug\\drawable-xhdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\Werto\\Desktop\\Uno\\android\\res\\drawable-xhdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\marsh\\Documents\\GitHub\\Uno\\android\\build\\intermediates\\merged_res\\debug\\drawable-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\marsh\\Documents\\GitHub\\Uno\\android\\res\\drawable-hdpi\\ic_launcher.png"
     }
 ]

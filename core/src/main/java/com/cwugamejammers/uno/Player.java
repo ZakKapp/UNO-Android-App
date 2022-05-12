@@ -119,7 +119,7 @@ public class Player {
 			//getHand().get(card).createTexture(getHand().get(card));
 			//textureButton = PlayScreen.createCard(getHand().get(getHand().size() - 1));
 			PlayScreen.createCardButton(getHand().get(card).getTextureButton());
-			sortHand();
+			//sortHand();
 		}
 
 	}
