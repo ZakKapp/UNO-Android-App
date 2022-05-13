@@ -1,6 +1,7 @@
 package com.cwugamejammers.uno;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -26,7 +27,7 @@ public class Uno extends Game {
 	public void create() {
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
-		font = new BitmapFont();
+		font = new BitmapFont(Gdx.files.internal("Font/testfont.fnt"));
 		colortheme = COLORTHEME.RED;
 
 		setScreen(new MainScreen(this));

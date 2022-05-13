@@ -195,4 +195,20 @@ public class GameController {
 	{
 		currentTurn = nextPlayer;
 	}
+
+	public Player getP1() {
+		return p1;
+	}
+
+	public Player getP2(){
+		return p2;
+	}
+
+	public Player getP3() {
+		return p3;
+	}
+
+	public Player getP4() {
+		return p4;
+	}
 }

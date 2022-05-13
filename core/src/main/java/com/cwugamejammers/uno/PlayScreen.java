@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 
+import javax.swing.DefaultListSelectionModel;
+
 public class PlayScreen implements Screen, GestureDetector.GestureListener{
     Uno game;
 
@@ -22,6 +24,10 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
     private static float cardHeight = Gdx.graphics.getHeight()/4;
     private Button deckButton;
     private Button pileButton;
+
+    PlayerInfo p2Info;
+    PlayerInfo p3Info;
+    PlayerInfo p4Info;
 
     //Button addCard;
     //Button removeCard;
@@ -92,6 +98,11 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
 
         cardList = new ArrayList<Button>();
         controller = new GameController();
+
+        //Initializes the AI players text info at the top of the screen
+        p2Info = new PlayerInfo(controller.getP2().getName(), controller.getP2().getHandSize(), 10, Gdx.graphics.getHeight()- 10, Gdx.graphics.getWidth()/3, 300);
+        p3Info = new PlayerInfo(controller.getP3().getName(), controller.getP3().getHandSize(), Gdx.graphics.getWidth()/3 + 10, Gdx.graphics.getHeight() - 10, Gdx.graphics.getWidth()/3, 300);
+        p4Info = new PlayerInfo(controller.getP4().getName(), controller.getP4().getHandSize(), Gdx.graphics.getWidth()*2/3 + 10, Gdx.graphics.getHeight() - 10, Gdx.graphics.getWidth()/3, 300);
     }
 
     public ArrayList<ArrayList<Texture>> getTextureList()
@@ -162,9 +173,13 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
     public void update(float dt){
         //Sets hand bounds based on the size of the hand
         repositionHand();
+        //Updates the text at the top of the screen with current card counts
+        updatePlayerInfo();
+        //setPileToPlayedCard();
 
         //Calls the pan function to drag the cards around
         pan(Gdx.input.getX(), Gdx.input.getY(), Gdx.input.getDeltaX(), Gdx.input.getDeltaY());
+
     }
 
     @Override
@@ -191,9 +206,16 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
         for (Button b : cardList){
             b.draw(game.batch);
         }
+        //Draws the back of the deck and the pile to the screen
         deckButton.draw(game.batch);
         pileButton.draw(game.batch);
 
+        //Draws the text of the AIs player info at the top of the screen
+        p2Info.draw(game.batch, game.font);
+        p3Info.draw(game.batch, game.font);
+        p4Info.draw(game.batch, game.font);
+
+        //Flushes the batch and draws everything to the screen
         game.batch.end();
     }
 
@@ -224,6 +246,12 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
         redBackground.dispose();
         blueBackground.dispose();
         cardButton.dispose();
+        song1.dispose();
+        song2.dispose();
+        song3.dispose();
+        song4.dispose();
+        song5.dispose();
+        deckTex.dispose();
 
     }
 
@@ -240,6 +268,22 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
             //ALSO PART OF THE FUNCTION THAT NEEDS TO BE MADE
             for (int i = 1; i < cardList.size(); i++){
                 cardList.get(i).reposition(cardList.get(i-1).getx() + cardList.get(i).rect.width, cardList.get(i).rect.y);
+            }
+        }
+    }
+
+    public void updatePlayerInfo(){
+        p2Info.updateCard(controller.getP2().getHandSize());
+        p3Info.updateCard(controller.getP3().getHandSize());
+        p4Info.updateCard(controller.getP4().getHandSize());
+    }
+
+    public void setPileToPlayedCard(){
+        if (Gdx.input.justTouched()) {
+            for (Button b : cardList) {
+                if (b.collision(Gdx.input.getX(), Gdx.input.getY())) {
+                    pileButton.setTexture(b.getTexture());
+                }
             }
         }
     }

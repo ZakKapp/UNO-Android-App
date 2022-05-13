@@ -34,6 +34,8 @@ public class Player {
 
 	public ArrayList<Card> getHand() { return hand; }
 
+	public int getHandSize(){return hand.size();}
+
 	public boolean getIsSkipped()
 	{
 		return isSkipped;
@@ -119,7 +121,7 @@ public class Player {
 			//getHand().get(card).createTexture(getHand().get(card));
 			//textureButton = PlayScreen.createCard(getHand().get(getHand().size() - 1));
 			PlayScreen.createCardButton(getHand().get(card).getTextureButton());
-			sortHand();
+			//sortHand();
 		}
 
 	}

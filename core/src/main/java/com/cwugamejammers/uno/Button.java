@@ -87,6 +87,10 @@ public class Button {
 
     public Texture getTexture(){return texture;}
 
+    public void setTexture(Texture t){
+        this.texture = t;
+    }
+
     public void draw(Batch b)
     {
         b.draw(texture, rect.x, rect.y, rect.width, rect.height);
