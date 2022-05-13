@@ -175,6 +175,8 @@ public class Player {
 		getHand().addAll(yellow);
 		getHand().addAll(black);
 
+
+		//NEW IDEA: toString the texture's and then sort the cardList
 		PlayScreen.clearList();
 		for(int i = 0; i < getHand().size(); i++)
 		{

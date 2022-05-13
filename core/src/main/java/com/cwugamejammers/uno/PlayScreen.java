@@ -252,6 +252,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
         song4.dispose();
         song5.dispose();
         deckTex.dispose();
+        t.dispose();
 
     }
 
