@@ -1,6 +1,8 @@
 package com.cwugamejammers.uno;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultListSelectionModel;
 
-public class PlayScreen implements Screen, GestureDetector.GestureListener{
+public class PlayScreen implements Screen, GestureDetector.GestureListener, InputProcessor{
     Uno game;
 
     private Texture redBackground;
@@ -52,9 +54,15 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
     public PlayScreen(Uno game) {
         this.game = game;
 
+        InputMultiplexer im = new InputMultiplexer();
+        GestureDetector gd = new GestureDetector(this);
+        im.addProcessor(gd);
+        im.addProcessor(this);
+        Gdx.input.setInputProcessor(im);
+
         redBackground = new Texture("RedBackground.png");
         blueBackground = new Texture("BlueBackground.png");
-        deckTex = new Texture("cards/backCard.PNG");
+        deckTex = new Texture("cards/CardBack.jpeg");
 
         //PILEBUTTON TEXTURE WILL BE REPLACED WITH LAST PLAYED CARD
         deckButton = new Button(deckTex, Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/2, cardWidth, cardHeight);
@@ -175,10 +183,10 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
         repositionHand();
         //Updates the text at the top of the screen with current card counts
         updatePlayerInfo();
-        //setPileToPlayedCard();
+        //touchDown(Gdx.input.getX(),Gdx.input.getY(), 0, 0);
 
         //Calls the pan function to drag the cards around
-        pan(Gdx.input.getX(), Gdx.input.getY(), Gdx.input.getDeltaX(), Gdx.input.getDeltaY());
+        //pan(Gdx.input.getX(), Gdx.input.getY(), Gdx.input.getDeltaX(), Gdx.input.getDeltaY());
 
     }
 
@@ -265,8 +273,6 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
         }
         else{
             cardList.get(0).setBounds(-cardList.get(0).rect.width*(cardList.size() - 1), 0, Gdx.graphics.getWidth() - cardList.get(0).rect.width, Gdx.graphics.getHeight());
-
-            //ALSO PART OF THE FUNCTION THAT NEEDS TO BE MADE
             for (int i = 1; i < cardList.size(); i++){
                 cardList.get(i).reposition(cardList.get(i-1).getx() + cardList.get(i).rect.width, cardList.get(i).rect.y);
             }
@@ -279,12 +285,19 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
         p4Info.updateCard(controller.getP4().getHandSize());
     }
 
-    public void setPileToPlayedCard(){
-        if (Gdx.input.justTouched()) {
-            for (Button b : cardList) {
-                if (b.collision(Gdx.input.getX(), Gdx.input.getY())) {
-                    pileButton.setTexture(b.getTexture());
-                }
+    public void PlayCard(){
+        Button playedCard = null;
+        //IF card is valid// then
+        for (Button b : cardList) {
+            if (b.collision(Gdx.input.getX(), Gdx.input.getY())) {
+                pileButton.setTexture(b.getTexture());
+                playedCard = b;
+            }
+        }
+        if (playedCard != null) {
+            cardList.remove(playedCard);
+            if (cardList.size() > 0) {
+                cardList.get(0).reposition(0, 0);
             }
         }
     }
@@ -297,6 +310,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
 
     @Override
     public boolean tap(float x, float y, int count, int button){
+        PlayCard();
         return true;
     }
 
@@ -356,5 +370,51 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener{
     @Override
     public void pinchStop(){
 
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+
+        return true;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+
+        return true;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+
+        return true;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(float x, float y) {
+        return false;
     }
 }
