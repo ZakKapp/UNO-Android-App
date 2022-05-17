@@ -17,6 +17,8 @@ import javax.swing.DefaultListSelectionModel;
 public class PlayScreen implements Screen, GestureDetector.GestureListener, InputProcessor{
     Uno game;
 
+    static CardAssetManager assMan;
+
     private Texture redBackground;
     private Texture blueBackground;
     private Texture deckTex;
@@ -53,6 +55,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
     public PlayScreen(Uno game) {
         this.game = game;
+        assMan = new CardAssetManager();
+        assMan.loadImages();
+        assMan.finishLoading();
 
         InputMultiplexer im = new InputMultiplexer();
         GestureDetector gd = new GestureDetector(this);
@@ -62,7 +67,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
         redBackground = new Texture("RedBackground.png");
         blueBackground = new Texture("BlueBackground.png");
-        deckTex = new Texture("cards/CardBack.jpeg");
+        deckTex = assMan.manager.get("cards/CardBack.jpeg");
 
         //PILEBUTTON TEXTURE WILL BE REPLACED WITH LAST PLAYED CARD
         deckButton = new Button(deckTex, Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/2, cardWidth, cardHeight);
@@ -149,7 +154,8 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
 
         fileName += Integer.toString(number) + ".jpeg";
-        Texture t = new Texture(fileName);
+        //Texture t = new Texture(fileName);
+        Texture t = assMan.manager.get(fileName);
         //cardButton = new Button(t, 0, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3);
         //cardList.add(cardButton);
 
@@ -261,6 +267,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         song5.dispose();
         deckTex.dispose();
         t.dispose();
+        assMan.dispose();
 
     }
 
@@ -290,6 +297,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         //IF card is valid// then
         for (Button b : cardList) {
             if (b.collision(Gdx.input.getX(), Gdx.input.getY())) {
+                //pileButton.dispose();
                 pileButton.setTexture(b.getTexture());
                 playedCard = b;
             }
@@ -397,13 +405,11 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-
         return false;
     }
 
