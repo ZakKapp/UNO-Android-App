@@ -10,7 +10,7 @@ public class Player {
 	private ArrayList<Card> hand;
 
 	private boolean isAI;
-	private boolean isSkipped;
+	private boolean skipped;
 
 	private boolean noPlay;
 
@@ -18,12 +18,16 @@ public class Player {
 	public Player(int player_id, String player_name, boolean ai) {
 		id = player_id;
 		name = player_name;
-		isSkipped = false;
+		skipped = false;
 		hand = new ArrayList<Card>();
 		isAI = ai;
 		noPlay = false;
 	}
 
+	public boolean getIsAI()
+	{
+		return isAI;
+	}
 	public int getId() {
 		return id;
 	}
@@ -36,14 +40,14 @@ public class Player {
 
 	public int getHandSize(){return hand.size();}
 
-	public boolean getIsSkipped()
+	public boolean getSkipped()
 	{
-		return isSkipped;
+		return skipped;
 	}
 
-	public void setIsSkipped(boolean flag)
+	public void setSkipped(boolean flag)
 	{
-		isSkipped = flag;
+		skipped = flag;
 	}
 
 	public boolean getNoPlay()
@@ -56,49 +60,64 @@ public class Player {
 		noPlay = flag;
 	}
 
-	public boolean getHumanPlay()
+	public void playCard(int index)
 	{
-		int playFieldSize = Card.getPlayField().size();
-		//Checks to see what is top card of play pile, finds a valid card in hand and plays it.
-		for(int i = 0; i < getHand().size(); i++)
-		{
-			//If the color is the same, play the card
-			if(Card.getPlayField().get(playFieldSize - 1).getColor() == getHand().get(i).getColor())
-			{
-				return true;
-			}
-			//If there is a same number, play the card.
-			else if(Card.getPlayField().get(playFieldSize - 1).getNumber() == getHand().get(i).getNumber())
-			{
-				return true;
-			}
-		}
-
-		//If no card in the hand was found, set noPlay flag and return -1;
-		setNoPlay(true);
-		return false;
+		Card.getPlayField().add(hand.remove(index));
 	}
-	public int getAIPlay()
+
+	public boolean validPlay()
 	{
-		int playFieldSize = Card.getPlayField().size();
-		//Checks to see what is top card of play pile, finds a valid card in hand and plays it.
-		for(int i = 0; i < getHand().size(); i++)
+		boolean valid = false;
+		int playFieldSize = Card.getPlayField().size() - 1;
+
+		for(int i = 0; i < hand.size(); i++)
 		{
-			//If the color is the same, play the card
-			if(Card.getPlayField().get(playFieldSize - 1).getColor() == getHand().get(i).getColor())
+			//If the card in hand is a draw 4 or wildcard, it is valid
+			if(hand.get(i).getNumber() == 13 || hand.get(i).getNumber() == 14)
 			{
-				return i;
+				valid = true;
+				//somehow elevate the texture
 			}
-			//If there is a same number, play the card.
-			else if(Card.getPlayField().get(playFieldSize - 1).getNumber() == getHand().get(i).getNumber())
+			//If the card in hand matches the color of the top playField, it is valid
+			else if(hand.get(i).getColor() == Card.getPlayField().get(playFieldSize).getColor())
 			{
-				return i;
+				valid = true;
+				//somehow elevate the texture
+			}
+			//If the card matches the number of the top playField, it is valid
+			else if(hand.get(i).getNumber() == Card.getPlayField().get(playFieldSize).getNumber())
+			{
+				valid = true;
+				//somehow elevate the texture
 			}
 		}
+		return valid;
+	}
 
-		//If no card in the hand was found, set noPlay flag and return -1;
-		setNoPlay(true);
-		return -1;
+	public boolean validPlayAI()
+	{
+		boolean valid = false;
+		int playFieldSize = Card.getPlayField().size() - 1;
+
+		for(int i = 0; i < hand.size(); i++)
+		{
+			//If the card in hand is a draw 4 or wildcard, it is valid
+			if(hand.get(i).getNumber() == 13 || hand.get(i).getNumber() == 14)
+			{
+				valid = true;
+			}
+			//If the card in hand matches the color of the top playField, it is valid
+			else if(hand.get(i).getColor() == Card.getPlayField().get(playFieldSize).getColor())
+			{
+				valid = true;
+			}
+			//If the card matches the number of the top playField, it is valid
+			else if(hand.get(i).getNumber() == Card.getPlayField().get(playFieldSize).getNumber())
+			{
+				valid = true;
+			}
+		}
+		return valid;
 	}
 
 	public void play(int index)

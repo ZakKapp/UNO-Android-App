@@ -29,9 +29,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     private Button deckButton;
     private Button pileButton;
 
+    PlayerInfo p1Info;
     PlayerInfo p2Info;
     PlayerInfo p3Info;
-    PlayerInfo p4Info;
 
     //Button addCard;
     //Button removeCard;
@@ -113,9 +113,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         controller = new GameController();
 
         //Initializes the AI players text info at the top of the screen
-        p2Info = new PlayerInfo(controller.getP2().getName(), controller.getP2().getHandSize(), 10, Gdx.graphics.getHeight()- 10, Gdx.graphics.getWidth()/3, 300);
-        p3Info = new PlayerInfo(controller.getP3().getName(), controller.getP3().getHandSize(), Gdx.graphics.getWidth()/3 + 10, Gdx.graphics.getHeight() - 10, Gdx.graphics.getWidth()/3, 300);
-        p4Info = new PlayerInfo(controller.getP4().getName(), controller.getP4().getHandSize(), Gdx.graphics.getWidth()*2/3 + 10, Gdx.graphics.getHeight() - 10, Gdx.graphics.getWidth()/3, 300);
+        p1Info = new PlayerInfo(controller.getP1().getName(), controller.getP1().getHandSize(), 10, Gdx.graphics.getHeight()- 10, Gdx.graphics.getWidth()/3, 300);
+        p2Info = new PlayerInfo(controller.getP2().getName(), controller.getP2().getHandSize(), Gdx.graphics.getWidth()/3 + 10, Gdx.graphics.getHeight() - 10, Gdx.graphics.getWidth()/3, 300);
+        p3Info = new PlayerInfo(controller.getP3().getName(), controller.getP3().getHandSize(), Gdx.graphics.getWidth()*2/3 + 10, Gdx.graphics.getHeight() - 10, Gdx.graphics.getWidth()/3, 300);
     }
 
     public ArrayList<ArrayList<Texture>> getTextureList()
@@ -225,9 +225,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         pileButton.draw(game.batch);
 
         //Draws the text of the AIs player info at the top of the screen
+        p1Info.draw(game.batch, game.font);
         p2Info.draw(game.batch, game.font);
         p3Info.draw(game.batch, game.font);
-        p4Info.draw(game.batch, game.font);
 
         //Flushes the batch and draws everything to the screen
         game.batch.end();
@@ -287,9 +287,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     }
 
     public void updatePlayerInfo(){
+        p1Info.updateCard(controller.getP1().getHandSize());
         p2Info.updateCard(controller.getP2().getHandSize());
         p3Info.updateCard(controller.getP3().getHandSize());
-        p4Info.updateCard(controller.getP4().getHandSize());
     }
 
     public void PlayCard(){
@@ -300,6 +300,10 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                 //pileButton.dispose();
                 pileButton.setTexture(b.getTexture());
                 playedCard = b;
+
+                //When a card is selected to be played, we move the card in the hand as well
+                int index = cardList.indexOf(b);
+
             }
         }
         if (playedCard != null) {

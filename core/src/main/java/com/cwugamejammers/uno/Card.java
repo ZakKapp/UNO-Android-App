@@ -87,6 +87,7 @@ public class Card implements Comparable<Card>
 
 		for(int j = 0; j < NUMBER_OF_DUPE_SPEC_CARDS; j++)
 		{
+			//10 is Skip, 11 is Reverse, 12 is Draw 2
 			deck.add(new Card(10, "Red", true));
 			deck.add(new Card(10, "Blue", true));
 			deck.add(new Card(10, "Yellow", true));
