@@ -7,10 +7,10 @@ import java.util.Scanner;
 
 public class GameController {
 
-	private Player p0;
-	private Player p1;
-	private Player p2;
-	private Player p3;
+	private static Player p0;
+	private static Player p1;
+	private static Player p2;
+	private static Player p3;
 
 	private boolean reversed;
 	private int currentTurn;
@@ -56,7 +56,7 @@ public class GameController {
 				p3.draw();
 		}
 
-		run();
+		//run();
 	}
 
 	public void upkeep(Player player)
@@ -70,20 +70,27 @@ public class GameController {
 			{
 				boolean valid = player.validPlay();
 
-				//prompt the user to play a card if a valid play is available
+
 				if(valid = true)
 				{
-
+					//prompt the user to play a card if a valid play is available
+				}
+				else
+				{
+					//if the play was not valid, skip the turn
+					player.draw();
+					return;
 				}
 
 				//If no valid play end the turn
-				
+
 			}
 		}
 		//If the player was skipped, flip the flag and move on
 		else
 		{
 			player.setSkipped(!player.getSkipped());
+			return;
 		}
 	}
 
@@ -111,7 +118,7 @@ public class GameController {
 		currentTurn = nextPlayer;
 	}
 
-	public Player getP0() {
+	public static Player getP0() {
 		return p0;
 	}
 

@@ -41,7 +41,12 @@ public class GameData {
 		tracker = Turn.PLAYER0;
 	}
 
-	public Turn getTracker() {
+	public void setTracker(int input)
+	{
+
+	}
+	public Turn getTracker()
+	{
 		return tracker;
 	}
 

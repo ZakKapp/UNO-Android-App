@@ -140,7 +140,7 @@ public class Player {
 			//getHand().get(card).createTexture(getHand().get(card));
 			//textureButton = PlayScreen.createCard(getHand().get(getHand().size() - 1));
 			PlayScreen.createCardButton(getHand().get(card).getTextureButton());
-			//sortHand();
+			sortHand();
 		}
 
 	}
@@ -196,10 +196,18 @@ public class Player {
 
 
 		//NEW IDEA: toString the texture's and then sort the cardList
+		/*
 		PlayScreen.clearList();
 		for(int i = 0; i < getHand().size(); i++)
 		{
 			PlayScreen.createCardButton(getHand().get(i).getTextureButton());
+		}
+		*/
+
+		PlayScreen.clearList();
+		for(int i = 0; i < hand.size(); i++)
+		{
+			PlayScreen.redoHand(hand.get(i).getColor(), hand.get(i).getNumber());
 		}
 
 	}

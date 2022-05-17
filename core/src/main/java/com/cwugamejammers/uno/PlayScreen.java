@@ -172,12 +172,49 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     {
         return cardList;
     }
+    public static void redoHand(String color, int number)
+    {
+        String fileName = "cards/";
+        if(color == "Red")
+        {
+            fileName += "R";
+        }
+
+        if(color == "Blue")
+        {
+            fileName += "B";
+        }
+
+        if(color == "Yellow")
+        {
+            fileName += "Y";
+        }
+
+        if(color == "Green")
+        {
+            fileName += "G";
+        }
+
+        if(color == "Wild")
+        {
+            fileName += "W";
+        }
+
+
+
+        fileName += Integer.toString(number) + ".jpeg";
+        //Texture t = new Texture(fileName);
+        Texture t = assMan.manager.get(fileName);
+
+        cardButton = new Button(t, 0, 0, cardWidth, cardHeight);
+        cardList.add(cardButton);
+        //cardButton = new Button(t, 0, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3);
+        //cardList.add(cardButton);
+    }
+
     public static void clearList()
     {
-        for(int i = 0; i < cardList.size(); i++)
-        {
-            cardList.remove(i).dispose();
-        }
+            cardList.removeAll(cardList);
     }
     @Override
     public void show() {
@@ -303,6 +340,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
                 //When a card is selected to be played, we move the card in the hand as well
                 int index = cardList.indexOf(b);
+                GameController.getP0().play(index);
 
             }
         }
