@@ -126,14 +126,14 @@ public class Card implements Comparable<Card>
 		}
 	}
 
-	public boolean isEmpty()
+	public static boolean isEmpty()
 	{
 		return deck.size() == 0;
 	}
 
 	public static void emptyShuffle()
 	{
-		Card temp = deck.get(deck.size() - 1);
+		Card temp = getPlayField().get(getPlayField().size() - 1);
 		deck.addAll(playField);
 		shuffle();
 		playField.add(temp);

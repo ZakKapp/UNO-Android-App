@@ -108,7 +108,7 @@ public class Player {
 
 	public void draw()
 	{
-		if(Card.getDeck().size() == 0)
+		if(Card.isEmpty() == true)
 		{
 			Card.emptyShuffle();
 		}
