@@ -214,7 +214,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
     public static void clearList()
     {
-            cardList.removeAll(cardList);
+            cardList.clear();
     }
     @Override
     public void show() {
