@@ -112,6 +112,8 @@ public class Card implements Comparable<Card>
 			deck.add(new Card(14, "Wild", true));
 		}
 
+		/////POSSIBLE CARD DUPLICATIONS Fix:  emptyshuffle and shuffle method is also the culprit
+		//Collections.shuffle(deck);
 		shuffle();
 	}
 

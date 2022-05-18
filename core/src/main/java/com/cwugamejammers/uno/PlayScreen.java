@@ -29,6 +29,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     private Button deckButton;
     private Button pileButton;
 
+    PlayerInfo p0Info;
     PlayerInfo p1Info;
     PlayerInfo p2Info;
     PlayerInfo p3Info;
@@ -113,6 +114,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         controller = new GameController();
 
         //Initializes the AI players text info at the top of the screen
+        p0Info = new PlayerInfo(controller.getP1().getName(), controller.getP1().getHandSize(), 10, Gdx.graphics.getHeight()- 400, Gdx.graphics.getWidth()/3, 300);
         p1Info = new PlayerInfo(controller.getP1().getName(), controller.getP1().getHandSize(), 10, Gdx.graphics.getHeight()- 10, Gdx.graphics.getWidth()/3, 300);
         p2Info = new PlayerInfo(controller.getP2().getName(), controller.getP2().getHandSize(), Gdx.graphics.getWidth()/3 + 10, Gdx.graphics.getHeight() - 10, Gdx.graphics.getWidth()/3, 300);
         p3Info = new PlayerInfo(controller.getP3().getName(), controller.getP3().getHandSize(), Gdx.graphics.getWidth()*2/3 + 10, Gdx.graphics.getHeight() - 10, Gdx.graphics.getWidth()/3, 300);
@@ -206,6 +208,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         //Texture t = new Texture(fileName);
         Texture t = assMan.manager.get(fileName);
 
+
         cardButton = new Button(t, 0, 0, cardWidth, cardHeight);
         cardList.add(cardButton);
         //cardButton = new Button(t, 0, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3);
@@ -262,6 +265,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         pileButton.draw(game.batch);
 
         //Draws the text of the AIs player info at the top of the screen
+        //p0Info.draw(game.batch, game.font);
         p1Info.draw(game.batch, game.font);
         p2Info.draw(game.batch, game.font);
         p3Info.draw(game.batch, game.font);
@@ -324,9 +328,11 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     }
 
     public void updatePlayerInfo(){
+        p0Info.updateCard(controller.getP0().getHandSize());
         p1Info.updateCard(controller.getP1().getHandSize());
         p2Info.updateCard(controller.getP2().getHandSize());
         p3Info.updateCard(controller.getP3().getHandSize());
+
     }
 
     public void PlayCard(){

@@ -165,7 +165,7 @@ public class Player {
 		ArrayList<Card> blue = new ArrayList<Card>();
 		ArrayList<Card> green = new ArrayList<Card>();
 		ArrayList<Card> yellow = new ArrayList<Card>();
-		ArrayList<Card> black = new ArrayList<Card>();
+		ArrayList<Card> wild = new ArrayList<Card>();
 
 
 		for(int i = 0; i < getHand().size(); i++)
@@ -174,25 +174,24 @@ public class Player {
 			if(getHand().get(i).getColor() == "Blue") blue.add(getHand().get(i));
 			if(getHand().get(i).getColor() == "Green") green.add(getHand().get(i));
 			if(getHand().get(i).getColor() == "Yellow") yellow.add(getHand().get(i));
-			if(getHand().get(i).getColor() == "Black") black.add(getHand().get(i));
+			if(getHand().get(i).getColor() == "Wild") wild.add(getHand().get(i));
 		}
 
-		for(int i = 0; i < getHand().size(); i++)
-		{
-			getHand().remove(i);
-		}
+
+			getHand().clear();
+
 
 		Collections.sort(red);
 		Collections.sort(blue);
 		Collections.sort(green);
 		Collections.sort(yellow);
-		Collections.sort(black);
+		Collections.sort(wild);
 
 		getHand().addAll(red);
 		getHand().addAll(blue);
 		getHand().addAll(green);
 		getHand().addAll(yellow);
-		getHand().addAll(black);
+		getHand().addAll(wild);
 
 
 		//NEW IDEA: toString the texture's and then sort the cardList
