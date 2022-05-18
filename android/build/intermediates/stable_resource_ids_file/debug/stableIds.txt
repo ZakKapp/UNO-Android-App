@@ -1,3 +1,0 @@
-com.cwugamejammers.uno:style/GdxTheme = 0x7f030000
-com.cwugamejammers.uno:string/app_name = 0x7f020000
-com.cwugamejammers.uno:drawable/ic_launcher = 0x7f010000
