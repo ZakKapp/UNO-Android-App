@@ -12,17 +12,11 @@ public class GameController {
 	private static Player p2;
 	private static Player p3;
 
-	private boolean reversed;
+	private static boolean reversed;
 	private int currentTurn;
 	private ArrayList<Player> playerList = new ArrayList<Player>();
 
-	GameData data;
-
-
-	public GameController()
-	{
-		initialize();
-	}
+	private GameData data;
 
 	public void run()
 	{
@@ -30,7 +24,7 @@ public class GameController {
 		while(data.getState() != GameData.GameState.WINNER)
 		{
 			//Do a switch, cases are whose turn it is
-			switch(data.getTracker())
+			switch(data.getTurn())
 			{
 				case PLAYER0:
 					upkeep(p0);
@@ -74,6 +68,13 @@ public class GameController {
 				if(valid = true)
 				{
 					//prompt the user to play a card if a valid play is available
+					//call some graphic to let them know
+					while(PlayScreen.getIsPlayed() == false)
+					{
+					}
+					checkPlay();
+					PlayScreen.setIsPlayed(false);
+
 				}
 				else
 				{
@@ -98,6 +99,37 @@ public class GameController {
 	{
 		//Check to see if reverse flag is true.
 	}
+
+	public void checkPlay()
+	{
+		Card temp = Card.getPlayField().get(Card.getPlayField().size() - 1);
+
+		//Skip
+		if(temp.getNumber() == 10)
+		{
+
+		}
+		//Reverse
+		if(temp.getNumber() == 11)
+		{
+
+		}
+		//Draw 2
+		if(temp.getNumber() == 12)
+		{
+
+		}
+		//Wild Card
+		if(temp.getNumber() == 13)
+		{
+
+		}
+		//Wild Draw 4
+		if(temp.getNumber() == 14)
+		{
+
+		}
+	}
 	public boolean getReversed()
 	{
 		return reversed;
@@ -116,6 +148,11 @@ public class GameController {
 	public void setCurrentTurn(int nextPlayer)
 	{
 		currentTurn = nextPlayer;
+	}
+
+	public GameData getData()
+	{
+		return data;
 	}
 
 	public static Player getP0() {

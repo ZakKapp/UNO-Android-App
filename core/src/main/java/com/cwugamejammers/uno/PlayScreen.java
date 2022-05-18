@@ -53,6 +53,8 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
     GameController controller;
 
+    private static boolean isPlayed = false;
+
 
     public PlayScreen(Uno game) {
         this.game = game;
@@ -112,6 +114,8 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
         cardList = new ArrayList<Button>();
         controller = new GameController();
+        controller.initialize();
+
 
         //Initializes the AI players text info at the top of the screen
         p0Info = new PlayerInfo(controller.getP1().getName(), controller.getP1().getHandSize(), 10, Gdx.graphics.getHeight()- 400, Gdx.graphics.getWidth()/3, 300);
@@ -218,6 +222,16 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     public static void clearList()
     {
             cardList.clear();
+    }
+
+    public static boolean getIsPlayed()
+    {
+        return isPlayed;
+    }
+
+    public static void setIsPlayed(boolean flag)
+    {
+        isPlayed = flag;
     }
     @Override
     public void show() {
@@ -339,7 +353,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         Button playedCard = null;
         //IF card is valid// then
         for (Button b : cardList) {
-            if (b.collision(Gdx.input.getX(), Gdx.input.getY())) {
+            if (b.collision(Gdx.input.getX(), Gdx.input.getY()) && controller.getData().getTurn() == GameData.Turn.PLAYER0) {
                 //pileButton.dispose();
                 pileButton.setTexture(b.getTexture());
                 playedCard = b;
@@ -347,6 +361,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                 //When a card is selected to be played, we move the card in the hand as well
                 int index = cardList.indexOf(b);
                 GameController.getP0().play(index);
+                setIsPlayed(true);
 
             }
         }

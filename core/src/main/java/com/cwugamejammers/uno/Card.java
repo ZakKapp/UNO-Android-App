@@ -3,6 +3,7 @@
 package com.cwugamejammers.uno;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import com.badlogic.gdx.graphics.Texture;
 public class Card implements Comparable<Card>
@@ -120,6 +121,8 @@ public class Card implements Comparable<Card>
 	public static void shuffle()
 	{
 		//lmao
+		Collections.shuffle(deck);
+		/**
 		for(int i = 0; i < SHUFFLE_FACTOR * deck.size(); i++)
 		{
 			int x = rand.nextInt(deck.size());
@@ -127,6 +130,7 @@ public class Card implements Comparable<Card>
 			Card temp = deck.get(x);
 			deck.set(y, temp);
 		}
+		 */
 	}
 
 	public static boolean isEmpty()

@@ -6,7 +6,7 @@ import java.util.Stack;
 
 public class GameData {
 
-	private Turn tracker;
+	private Turn turn;
 	private GameState state;
 
 	//Turn Tracker
@@ -38,20 +38,28 @@ public class GameData {
 		//Set the GameState to indicate that a game is in progress
 		state = GameState.MIDDLE;
 		//Player1 gets the first move
-		tracker = Turn.PLAYER0;
+		turn = Turn.PLAYER0;
 	}
 
 	public void setTracker(int input)
 	{
 
 	}
-	public Turn getTracker()
+	public Turn getTurn()
 	{
-		return tracker;
+		return turn;
 	}
 
 	public GameState getState()
 	{
 		return state;
+	}
+
+	public Player getNextPlayer()
+	{
+		if(turn == Turn.PLAYER0 && GameController.getReversed() == false)
+		{
+
+		}
 	}
 }
