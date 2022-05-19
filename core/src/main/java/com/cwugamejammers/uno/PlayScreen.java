@@ -1,6 +1,7 @@
 package com.cwugamejammers.uno;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultListSelectionModel;
 
-public class PlayScreen implements Screen, GestureDetector.GestureListener, InputProcessor{
+public class PlayScreen implements Screen, GestureDetector.GestureListener, InputProcessor {
     Uno game;
 
     static CardAssetManager assMan;
@@ -28,6 +29,19 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     private static float cardHeight = Gdx.graphics.getHeight()/4;
     private Button deckButton;
     private Button pileButton;
+
+
+    private Texture rBlank;
+    private Texture bBlank;
+    private Texture gBlank;
+    private Texture yBlank;
+    private Texture uButt;
+
+    private Button wildRed;
+    private Button wildBlue;
+    private Button wildGreen;
+    private Button wildYellow;
+    private Button UnoButton;
 
     PlayerInfo p0Info;
     PlayerInfo p1Info;
@@ -67,6 +81,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         im.addProcessor(gd);
         im.addProcessor(this);
         Gdx.input.setInputProcessor(im);
+        Gdx.input.setCatchKey(Input.Keys.BACK, true);
 
         redBackground = new Texture("RedBackground.png");
         blueBackground = new Texture("BlueBackground.png");
@@ -75,6 +90,18 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         //PILEBUTTON TEXTURE WILL BE REPLACED WITH LAST PLAYED CARD
         deckButton = new Button(deckTex, Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/2, cardWidth, cardHeight);
         pileButton = new Button(deckTex, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, cardWidth, cardHeight);
+
+        bBlank = new Texture("cards/BBlank.jpeg");
+        rBlank = new Texture("cards/RBlank.jpeg");
+        gBlank = new Texture("cards/GBlank.jpeg");
+        yBlank = new Texture("cards/YBlank.jpeg");
+        uButt = new Texture("UNOButton.png");
+
+        wildBlue = new Button(bBlank, Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/2 + 300, cardWidth, cardHeight);
+        wildRed = new Button(rBlank, Gdx.graphics.getWidth()/4 + cardWidth, Gdx.graphics.getHeight()/2 + 300, cardWidth, cardHeight);
+        wildGreen = new Button(gBlank, Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/2 + 300 - cardHeight, cardWidth, cardHeight);
+        wildYellow = new Button(yBlank, Gdx.graphics.getWidth()/4 + cardWidth, Gdx.graphics.getHeight()/2 + 300 - cardHeight, cardWidth, cardHeight);
+        UnoButton = new Button(uButt, Gdx.graphics.getWidth()*4/5 - 100, Gdx.graphics.getHeight()/4 + 30, Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/5);
 
         //ALTERNATE DECK PLACEMENTS
         //deckButton = new Button(deckTex, Gdx.graphics.getWidth()/4 - cardWidth/2, Gdx.graphics.getHeight()/2, cardWidth, cardHeight);
@@ -278,6 +305,12 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         deckButton.draw(game.batch);
         pileButton.draw(game.batch);
 
+        //wildBlue.draw(game.batch);
+        //wildGreen.draw(game.batch);
+        //wildRed.draw(game.batch);
+        //wildYellow.draw(game.batch);
+        UnoButton.draw(game.batch);
+
         //Draws the text of the AIs player info at the top of the screen
         //p0Info.draw(game.batch, game.font);
         p1Info.draw(game.batch, game.font);
@@ -373,6 +406,47 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         }
     }
 
+    public String wildCardPick(){
+        if (wildBlue.collision(Gdx.input.getX(), Gdx.input.getY())){
+            return "cards/W13B.jpeg";
+        }
+
+        else if (wildRed.collision(Gdx.input.getX(), Gdx.input.getY())){
+            return "cards/W13R.jpeg";
+        }
+
+        else if (wildGreen.collision(Gdx.input.getX(), Gdx.input.getY())){
+            return "cards/W13G.jpeg";
+        }
+
+        else if  (wildYellow.collision(Gdx.input.getX(), Gdx.input.getY())){
+            return "cards/W13Y.jpeg";
+        }
+
+        else return null;
+    }
+
+
+    public String wild4CardPick(){
+        if (wildBlue.collision(Gdx.input.getX(), Gdx.input.getY())){
+            return "cards/W14B.jpeg";
+        }
+
+        else if (wildRed.collision(Gdx.input.getX(), Gdx.input.getY())){
+            return "cards/W14R.jpeg";
+        }
+
+        else if (wildGreen.collision(Gdx.input.getX(), Gdx.input.getY())){
+            return "cards/W14G.jpeg";
+        }
+
+        else if  (wildYellow.collision(Gdx.input.getX(), Gdx.input.getY())){
+            return "cards/W14Y.jpeg";
+        }
+        else return null;
+
+    }
+
     @Override
     public boolean touchDown(float x, float y, int pointer, int button){
         return true;
@@ -445,8 +519,12 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
     @Override
     public boolean keyDown(int keycode) {
-
-        return true;
+        if (keycode == Input.Keys.BACK) {
+            for (Music m : musicList) {
+                m.stop();
+            }
+            game.setScreen(new MainScreen(game));
+        }
     }
 
     @Override

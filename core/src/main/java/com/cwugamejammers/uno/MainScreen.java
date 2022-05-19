@@ -67,7 +67,7 @@ public class MainScreen implements Screen {
 
     }
 
-    public void update(float dt){
+    public void update(float dt) {
         if (Gdx.input.justTouched()){
             if(startButton.collision(Gdx.input.getX(),Gdx.input.getY())){
                 song.stop();

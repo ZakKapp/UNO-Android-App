@@ -42,4 +42,12 @@ public class PlayerInfo {
         font.draw(batch, info, rect.x, rect.y);
     }
 
+    public void pDraw(Batch batch, BitmapFont font){
+        info = "Cards Left:" + cardsLeft;
+        font.setColor(fontColor);
+        font.getData().setScale(fontScale);
+        font.draw(batch, info, rect.x, rect.y);
+    }
+
+
 }
