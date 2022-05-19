@@ -19,6 +19,13 @@ public class GameController {
 
 	private GameData data;
 
+	private PlayScreen screen;
+	//not static ref to playScreen
+	public GameController(PlayScreen playscreen)
+	{
+		screen = playscreen;
+	}
+
 	public void run() {
 		//While there is no winner
 		while(data.getState() == GameData.GameState.MIDDLE)
@@ -169,8 +176,27 @@ public class GameController {
 				while(newColor == null)
 				{
 					newColor = PlayScreen.wildCardPick();
+					while(PlayScreen.getCardSelected() == false)
+					{
+					}
 				}
 				Card.getPlayField().get(Card.getPlayField().size() - 1).setColor(newColor);
+				if(newColor == "Red")
+				{
+					screen.setWildCard("W13R.jpeg");
+				}
+				if(newColor == "Blue")
+				{
+					screen.setWildCard("W13B.jpeg");
+				}
+				if(newColor == "Green")
+				{
+					screen.setWildCard("W13G.jpeg");
+				}
+				if(newColor == "Yellow")
+				{
+					screen.setWildCard("W13Y.jpeg");
+				}
 			}
 			else
 			{
@@ -189,18 +215,57 @@ public class GameController {
 				while(newColor == null)
 				{
 					newColor = PlayScreen.wildCardPick();
+					while(PlayScreen.getCardSelected() == false)
+					{
+					}
 				}
 				Card.getPlayField().get(Card.getPlayField().size() - 1).setColor(newColor);
+				if(newColor == "Red")
+				{
+					screen.setWildCard("W14R.jpeg");
+				}
+				if(newColor == "Blue")
+				{
+					screen.setWildCard("W14B.jpeg");
+				}
+				if(newColor == "Green")
+				{
+					screen.setWildCard("W14G.jpeg");
+				}
+				if(newColor == "Yellow")
+				{
+					screen.setWildCard("W14Y.jpeg");
+				}
 			}
 			else
 			{
 				Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
 			}
 		}
-
+		// if statement that check the hand size to see if they win
 		if(player.getHandSize() == 0)
 		{
 			data.setWinner();
+		}
+	}
+	// player object that check who the current player
+	public Player getCurrentPlayer()
+	{
+		if(data.getTurn() == GameData.Turn.PLAYER0)
+		{
+			return p0;
+		}
+		if(data.getTurn() == GameData.Turn.PLAYER1)
+		{
+			return p1;
+		}
+		if(data.getTurn() == GameData.Turn.PLAYER2)
+		{
+			return p2;
+		}
+		else
+		{
+			return p3;
 		}
 	}
 	public static boolean getReversed()

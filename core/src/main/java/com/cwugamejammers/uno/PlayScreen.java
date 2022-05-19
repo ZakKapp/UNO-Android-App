@@ -28,7 +28,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     private static float cardWidth = Gdx.graphics.getWidth()/4;
     private static float cardHeight = Gdx.graphics.getHeight()/4;
     private Button deckButton;
-    private Button pileButton;
+    Button pileButton;
 
 
     private Texture rBlank;
@@ -47,6 +47,8 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     PlayerInfo p1Info;
     PlayerInfo p2Info;
     PlayerInfo p3Info;
+
+    Player currentPlayer;
 
     //Button addCard;
     //Button removeCard;
@@ -68,9 +70,11 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     GameController controller;
 
     private static boolean isPlayed = false;
+    private static boolean cardSelected = false;
+    private static boolean cardJustSelected = false;
 
 
-    public PlayScreen(Uno game) throws InterruptedException {
+    public PlayScreen(Uno game){
         this.game = game;
         assMan = new CardAssetManager();
         assMan.loadImages();
@@ -140,7 +144,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         song1.play();
 
         cardList = new ArrayList<Button>();
-        controller = new GameController();
+        controller = new GameController(this);
         controller.initialize();
 
 
@@ -260,6 +264,16 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     {
         isPlayed = flag;
     }
+
+    public static boolean getCardSelected()
+    {
+        return cardSelected;
+    }
+
+    public static void setCardSelected(boolean flag)
+    {
+        cardSelected = flag;
+    }
     @Override
     public void show() {
         // Prepare your screen here.
@@ -270,7 +284,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         repositionHand();
         //Updates the text at the top of the screen with current card counts
         updatePlayerInfo();
+        
         //touchDown(Gdx.input.getX(),Gdx.input.getY(), 0, 0);
+
 
         //Calls the pan function to drag the cards around
         //pan(Gdx.input.getX(), Gdx.input.getY(), Gdx.input.getDeltaX(), Gdx.input.getDeltaY());
@@ -305,10 +321,13 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         deckButton.draw(game.batch);
         pileButton.draw(game.batch);
 
-        //wildBlue.draw(game.batch);
-        //wildGreen.draw(game.batch);
-        //wildRed.draw(game.batch);
-        //wildYellow.draw(game.batch);
+        if (cardSelected) {
+            wildBlue.draw(game.batch);
+            wildGreen.draw(game.batch);
+            wildRed.draw(game.batch);
+            wildYellow.draw(game.batch);
+        }
+
         UnoButton.draw(game.batch);
 
         //Draws the text of the AIs player info at the top of the screen
@@ -316,6 +335,17 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         p1Info.draw(game.batch, game.font);
         p2Info.draw(game.batch, game.font);
         p3Info.draw(game.batch, game.font);
+
+        currentPlayer = controller.getCurrentPlayer();
+
+        if (currentPlayer.getId() == 0){
+            String info = "Your Turn!";
+            game.font.draw(game.batch, info, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/4+ 30);
+        }
+        else {
+            String info = currentPlayer.getName() + "'s Turn";
+            game.font.draw(game.batch, info, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/4+ 30);
+        }
 
         //Flushes the batch and draws everything to the screen
         game.batch.end();
@@ -356,6 +386,10 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         deckTex.dispose();
         t.dispose();
         assMan.dispose();
+        bBlank.dispose();
+        rBlank.dispose();
+        gBlank.dispose();
+        yBlank.dispose();
 
     }
 
@@ -393,7 +427,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
                 //When a card is selected to be played, we move the card in the hand as well
                 int index = cardList.indexOf(b);
-                GameController.getP0().play(index);
+                controller.getP0().play(index);
                 setIsPlayed(true);
 
             }
@@ -408,28 +442,42 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
     public static String wildCardPick(){
         if (wildBlue.collision(Gdx.input.getX(), Gdx.input.getY())){
+            cardSelected = true;
+            cardJustSelected = true;
             return "Blue";
+
         }
 
         else if (wildRed.collision(Gdx.input.getX(), Gdx.input.getY())){
+            cardSelected = true;
+            cardJustSelected = true;
             return "Red";
         }
 
         else if (wildGreen.collision(Gdx.input.getX(), Gdx.input.getY())){
+            cardSelected = true;
+            cardJustSelected = true;
             return "Green";
         }
 
         else if  (wildYellow.collision(Gdx.input.getX(), Gdx.input.getY())){
+            cardSelected = true;
+            cardJustSelected = true;
             return "Yellow";
         }
 
         else return null;
     }
 
-    //CREATE A FUNCTION TO DISPLAY A MESSAGE NOTIFYING THE PLAYER THAT IT IS THEIR TURN, NO INPUT/RETURN NEEDED
 
+    public void setWildCard(String s)
+    {
+        pileButton.setTexture(assMan.manager.get(s));
+    }
     //CREATE A FUNCTION THAT TAKES A PLAYER AS INPUT, AND THEN DISPLAYS A WIN/LOSS MESSAGE DEPENDING ON THE PLAYER,
     //NO RETURN NEEDED
+
+
     @Override
     public boolean touchDown(float x, float y, int pointer, int button){
         return true;
@@ -439,6 +487,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     @Override
     public boolean tap(float x, float y, int count, int button){
         PlayCard();
+        if (cardSelected) {
+            wildCardPick();
+        }
         return true;
     }
 
