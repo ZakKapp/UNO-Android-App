@@ -37,11 +37,11 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     private Texture yBlank;
     private Texture uButt;
 
-    private Button wildRed;
-    private Button wildBlue;
-    private Button wildGreen;
-    private Button wildYellow;
-    private Button UnoButton;
+    private static Button wildRed;
+    private  static Button wildBlue;
+    private static Button wildGreen;
+    private static Button wildYellow;
+    private static Button UnoButton;
 
     PlayerInfo p0Info;
     PlayerInfo p1Info;
@@ -406,47 +406,30 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         }
     }
 
-    public String wildCardPick(){
+    public static String wildCardPick(){
         if (wildBlue.collision(Gdx.input.getX(), Gdx.input.getY())){
-            return "cards/W13B.jpeg";
+            return "Blue";
         }
 
         else if (wildRed.collision(Gdx.input.getX(), Gdx.input.getY())){
-            return "cards/W13R.jpeg";
+            return "Red";
         }
 
         else if (wildGreen.collision(Gdx.input.getX(), Gdx.input.getY())){
-            return "cards/W13G.jpeg";
+            return "Green";
         }
 
         else if  (wildYellow.collision(Gdx.input.getX(), Gdx.input.getY())){
-            return "cards/W13Y.jpeg";
+            return "Yellow";
         }
 
         else return null;
     }
 
+    //CREATE A FUNCTION TO DISPLAY A MESSAGE NOTIFYING THE PLAYER THAT IT IS THEIR TURN, NO INPUT/RETURN NEEDED
 
-    public String wild4CardPick(){
-        if (wildBlue.collision(Gdx.input.getX(), Gdx.input.getY())){
-            return "cards/W14B.jpeg";
-        }
-
-        else if (wildRed.collision(Gdx.input.getX(), Gdx.input.getY())){
-            return "cards/W14R.jpeg";
-        }
-
-        else if (wildGreen.collision(Gdx.input.getX(), Gdx.input.getY())){
-            return "cards/W14G.jpeg";
-        }
-
-        else if  (wildYellow.collision(Gdx.input.getX(), Gdx.input.getY())){
-            return "cards/W14Y.jpeg";
-        }
-        else return null;
-
-    }
-
+    //CREATE A FUNCTION THAT TAKES A PLAYER AS INPUT, AND THEN DISPLAYS A WIN/LOSS MESSAGE DEPENDING ON THE PLAYER,
+    //NO RETURN NEEDED
     @Override
     public boolean touchDown(float x, float y, int pointer, int button){
         return true;
@@ -525,6 +508,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             }
             game.setScreen(new MainScreen(game));
         }
+        return true;
     }
 
     @Override

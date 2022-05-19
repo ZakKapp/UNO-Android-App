@@ -19,7 +19,7 @@ public class GameController {
 
 	private GameData data;
 
-	public void run() throws InterruptedException {
+	public void run() {
 		//While there is no winner
 		while(data.getState() == GameData.GameState.MIDDLE)
 		{
@@ -43,7 +43,7 @@ public class GameController {
 		}
 	}
 
-	public void initialize() throws InterruptedException {
+	public void initialize(){
 		p0 = new Player(0, "You", false);
 		p1 = new Player(1, "AI1", true);
 		p2 = new Player(2, "AI2", true);
@@ -62,7 +62,7 @@ public class GameController {
 		run();
 	}
 
-	public void upkeep(Player player) throws InterruptedException {
+	public void upkeep(Player player) {
 		//Check skip flags to see if turn is valid.
 		//If player is not skipped, run the turn
 		if(player.getSkipped() == false)
@@ -108,7 +108,6 @@ public class GameController {
 				{
 					//prompt the user to play a card if a valid play is available
 					//call some graphic to let them know
-					TimeUnit.SECONDS.sleep(2);
 					boolean foundPlay = false;
 					while(foundPlay == false)
 					{
@@ -163,25 +162,39 @@ public class GameController {
 		//Wild Card
 		if(temp.getNumber() == 13)
 		{
-			//Call the method for the Wildcard selection
-			String newColor = null;
-			while(newColor == null)
+			if(data.getTurn() == GameData.Turn.PLAYER0)
 			{
-				//re call method here, they didn't pick
+				//Call the method for the Wildcard selection
+				String newColor = PlayScreen.wildCardPick();
+				while(newColor == null)
+				{
+					newColor = PlayScreen.wildCardPick();
+				}
+				Card.getPlayField().get(Card.getPlayField().size() - 1).setColor(newColor);
 			}
-			//Card.getPlayField().get(Card.getPlayField().size() - 1).setColor(newColor);
-
+			else
+			{
+				Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
+			}
 		}
 		//Wild Draw 4
 		if(temp.getNumber() == 14)
 		{
 			data.getNextPlayer().setSkipped(true);
 			data.getNextPlayer().drawFour();
-			//Call the method for the Wildcard selection
-			String newColor = null;
-			while(newColor == null)
+			if(data.getTurn() == GameData.Turn.PLAYER0)
 			{
-
+				//Call the method for the Wildcard selection
+				String newColor = PlayScreen.wildCardPick();
+				while(newColor == null)
+				{
+					newColor = PlayScreen.wildCardPick();
+				}
+				Card.getPlayField().get(Card.getPlayField().size() - 1).setColor(newColor);
+			}
+			else
+			{
+				Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
 			}
 		}
 
