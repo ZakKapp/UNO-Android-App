@@ -14,9 +14,9 @@ public class Card implements Comparable<Card>
 	private static ArrayList<Card> playField = new ArrayList<Card>();
 
 	// What the number of our card is (0,1,2...9)
-	private int number;
+	private static int number;
 	// The color of our card (Red, Blue, Yellow, Green, Wild)
-	private String cardColor;
+	private static String cardColor;
 	// This boolean checks if the card is a special card or not (Draw 4, Draw 2,
 	// Wildcard
 	private boolean isSpecial;
@@ -30,11 +30,6 @@ public class Card implements Comparable<Card>
 	// Returns the color of the card
 	public String getColor() {
 		return cardColor;
-	}
-
-	// Returns true if card is special, false if not
-	public boolean getIsSpecial() {
-		return isSpecial;
 	}
 
 	public static final int NUMBER_OF_DUPE_REG_CARDS = 2;
@@ -56,10 +51,9 @@ public class Card implements Comparable<Card>
 		return this.number - compareNum;
 	}
 	// Default constructor
-	public Card(int num, String col, boolean isSpec) {
+	public Card(int num, String col) {
 		number = num;
 		cardColor = col;
-		isSpecial = isSpec;
 		index = -1;
 		textureButton = PlayScreen.createTexture(cardColor, number);
 	}
@@ -71,46 +65,46 @@ public class Card implements Comparable<Card>
 		{
 			for(int j = 0; j < NUMBER_OF_DUPE_REG_CARDS; j++)
 			{
-				deck.add(new Card(i, "Red", false));
-				deck.add(new Card(i, "Blue", false));
-				deck.add(new Card(i, "Yellow", false));
-				deck.add(new Card(i, "Green", false));
+				deck.add(new Card(i, "Red"));
+				deck.add(new Card(i, "Blue"));
+				deck.add(new Card(i, "Yellow"));
+				deck.add(new Card(i, "Green"));
 			}
 		}
 
 		for(int j = 0; j< NUMBER_OF_DUPE_ZERO_CARDS; j++)
 		{
-			deck.add(new Card(0, "Red", false));
-			deck.add(new Card(0, "Blue", false));
-			deck.add(new Card(0, "Yellow", false));
-			deck.add(new Card(0, "Green", false));
+			deck.add(new Card(0, "Red"));
+			deck.add(new Card(0, "Blue"));
+			deck.add(new Card(0, "Yellow"));
+			deck.add(new Card(0, "Green"));
 		}
 
 		for(int j = 0; j < NUMBER_OF_DUPE_SPEC_CARDS; j++)
 		{
 			//10 is Skip, 11 is Reverse, 12 is Draw 2
-			deck.add(new Card(10, "Red", true));
-			deck.add(new Card(10, "Blue", true));
-			deck.add(new Card(10, "Yellow", true));
-			deck.add(new Card(10, "Green", true));
-			deck.add(new Card(11, "Red", true));
-			deck.add(new Card(11, "Blue", true));
-			deck.add(new Card(11, "Yellow", true));
-			deck.add(new Card(11, "Green", true));
-			deck.add(new Card(12, "Red", true));
-			deck.add(new Card(12, "Blue", true));
-			deck.add(new Card(12, "Yellow", true));
-			deck.add(new Card(12, "Green", true));
+			deck.add(new Card(10, "Red"));
+			deck.add(new Card(10, "Blue"));
+			deck.add(new Card(10, "Yellow"));
+			deck.add(new Card(10, "Green"));
+			deck.add(new Card(11, "Red"));
+			deck.add(new Card(11, "Blue"));
+			deck.add(new Card(11, "Yellow"));
+			deck.add(new Card(11, "Green"));
+			deck.add(new Card(12, "Red"));
+			deck.add(new Card(12, "Blue"));
+			deck.add(new Card(12, "Yellow"));
+			deck.add(new Card(12, "Green"));
 		}
 
 		for(int i = 0; i < NUMBER_OF_WILD_CARDS; i++)
 		{
-			deck.add(new Card(13, "Wild", true));
+			deck.add(new Card(13, "Wild"));
 		}
 
 		for(int i = 0; i < NUMBER_OF_WILD_D4_CARDS; i++)
 		{
-			deck.add(new Card(14, "Wild", true));
+			deck.add(new Card(14, "Wild"));
 		}
 
 		/////POSSIBLE CARD DUPLICATIONS Fix:  emptyshuffle and shuffle method is also the culprit
@@ -120,17 +114,8 @@ public class Card implements Comparable<Card>
 
 	public static void shuffle()
 	{
-		//lmao
+		//ඞ
 		Collections.shuffle(deck);
-		/**
-		for(int i = 0; i < SHUFFLE_FACTOR * deck.size(); i++)
-		{
-			int x = rand.nextInt(deck.size());
-			int y = rand.nextInt(deck.size());
-			Card temp = deck.get(x);
-			deck.set(y, temp);
-		}
-		 */
 	}
 
 	public static boolean isEmpty()
@@ -154,6 +139,11 @@ public class Card implements Comparable<Card>
 	public static ArrayList<Card> getDeck()
 	{
 		return deck;
+	}
+
+	public static void setColor(String newColor)
+	{
+		cardColor = newColor;
 	}
 
 	/*

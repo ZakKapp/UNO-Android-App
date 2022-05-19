@@ -56,7 +56,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     private static boolean isPlayed = false;
 
 
-    public PlayScreen(Uno game) {
+    public PlayScreen(Uno game) throws InterruptedException {
         this.game = game;
         assMan = new CardAssetManager();
         assMan.loadImages();

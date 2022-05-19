@@ -60,14 +60,10 @@ public class Player {
 		noPlay = flag;
 	}
 
-	public void playCard(int index)
+	public int[] validPlay()
 	{
-		Card.getPlayField().add(hand.remove(index));
-	}
+		int[] valid = new int[hand.size()];
 
-	public boolean validPlay()
-	{
-		boolean valid = false;
 		int playFieldSize = Card.getPlayField().size() - 1;
 
 		for(int i = 0; i < hand.size(); i++)
@@ -75,28 +71,28 @@ public class Player {
 			//If the card in hand is a draw 4 or wildcard, it is valid
 			if(hand.get(i).getNumber() == 13 || hand.get(i).getNumber() == 14)
 			{
-				valid = true;
+				valid[i]++;
 				//somehow elevate the texture
 			}
 			//If the card in hand matches the color of the top playField, it is valid
 			else if(hand.get(i).getColor() == Card.getPlayField().get(playFieldSize).getColor())
 			{
-				valid = true;
+				valid[i]++;
 				//somehow elevate the texture
 			}
 			//If the card matches the number of the top playField, it is valid
 			else if(hand.get(i).getNumber() == Card.getPlayField().get(playFieldSize).getNumber())
 			{
-				valid = true;
+				valid[i]++;
 				//somehow elevate the texture
 			}
 		}
 		return valid;
 	}
 
-	public boolean validPlayAI()
+	public int[] validPlayAI()
 	{
-		boolean valid = false;
+		int[] valid = new int[hand.size()];
 		int playFieldSize = Card.getPlayField().size() - 1;
 
 		for(int i = 0; i < hand.size(); i++)
@@ -104,17 +100,17 @@ public class Player {
 			//If the card in hand is a draw 4 or wildcard, it is valid
 			if(hand.get(i).getNumber() == 13 || hand.get(i).getNumber() == 14)
 			{
-				valid = true;
+				valid[i]++;
 			}
 			//If the card in hand matches the color of the top playField, it is valid
 			else if(hand.get(i).getColor() == Card.getPlayField().get(playFieldSize).getColor())
 			{
-				valid = true;
+				valid[i]++;
 			}
 			//If the card matches the number of the top playField, it is valid
 			else if(hand.get(i).getNumber() == Card.getPlayField().get(playFieldSize).getNumber())
 			{
-				valid = true;
+				valid[i]++;
 			}
 		}
 		return valid;
@@ -145,13 +141,13 @@ public class Player {
 
 	}
 
-	public void drawTwo(Player player)
+	public void drawTwo()
 	{
 		draw();
 		draw();
 	}
 
-	public void drawFour(Player player)
+	public void drawFour()
 	{
 		draw();
 		draw();

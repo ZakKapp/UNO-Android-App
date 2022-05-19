@@ -26,7 +26,12 @@ public class GameData {
 
 	//States for WINNER, LOSER, or in progress
 	enum GameState {
-		WINNER,
+		PLAYER0,
+		PLAYER1,
+
+		PLAYER2,
+
+		PLAYER3,
 		MIDDLE
 	}
 
@@ -41,9 +46,60 @@ public class GameData {
 		turn = Turn.PLAYER0;
 	}
 
-	public void setTracker(int input)
+	public void setWinner()
 	{
+		if(turn == Turn.PLAYER0)
+		{
+			state = GameState.PLAYER0;
+		}
+		if(turn == Turn.PLAYER1)
+		{
+			state = GameState.PLAYER1;
+		}
+		if(turn == Turn.PLAYER2)
+		{
+			state = GameState.PLAYER2;
+		}
+		if(turn == Turn.PLAYER3)
+		{
+			state = GameState.PLAYER3;
+		}
+	}
 
+	public void setTracker()
+	{
+		if(turn == Turn.PLAYER0 && GameController.getReversed() == false)
+		{
+			turn = Turn.PLAYER1;
+		}
+		if(turn == Turn.PLAYER0 && GameController.getReversed() == true)
+		{
+			turn = Turn.PLAYER3;
+		}
+		if(turn == Turn.PLAYER1 && GameController.getReversed() == false)
+		{
+			turn = Turn.PLAYER2;
+		}
+		if(turn == Turn.PLAYER1 && GameController.getReversed() == true)
+		{
+			turn = Turn.PLAYER0;
+		}
+		if(turn == Turn.PLAYER2 && GameController.getReversed() == false)
+		{
+			turn = Turn.PLAYER3;
+		}
+		if(turn == Turn.PLAYER2 && GameController.getReversed() == true)
+		{
+			turn = Turn.PLAYER2;
+		}
+		if(turn == Turn.PLAYER3 && GameController.getReversed() == false)
+		{
+			turn = Turn.PLAYER0;
+		}
+		if(turn == Turn.PLAYER3 && GameController.getReversed() == true)
+		{
+			turn = Turn.PLAYER2;
+		}
 	}
 	public Turn getTurn()
 	{
@@ -59,7 +115,36 @@ public class GameData {
 	{
 		if(turn == Turn.PLAYER0 && GameController.getReversed() == false)
 		{
-
+			return GameController.getP1();
 		}
+		if(turn == Turn.PLAYER0 && GameController.getReversed() == true)
+		{
+			return GameController.getP3();
+		}
+		if(turn == Turn.PLAYER1 && GameController.getReversed() == false)
+		{
+			return GameController.getP2();
+		}
+		if(turn == Turn.PLAYER1 && GameController.getReversed() == true)
+		{
+			return GameController.getP0();
+		}
+		if(turn == Turn.PLAYER2 && GameController.getReversed() == false)
+		{
+			return GameController.getP3();
+		}
+		if(turn == Turn.PLAYER2 && GameController.getReversed() == true)
+		{
+			return GameController.getP1();
+		}
+		if(turn == Turn.PLAYER3 && GameController.getReversed() == false)
+		{
+			return GameController.getP0();
+		}
+		if(turn == Turn.PLAYER3 && GameController.getReversed() == true)
+		{
+			return GameController.getP2();
+		}
+		return GameController.getP0();
 	}
 }
