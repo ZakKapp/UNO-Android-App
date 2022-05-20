@@ -28,9 +28,7 @@ public class GameData {
 	enum GameState {
 		PLAYER0,
 		PLAYER1,
-
 		PLAYER2,
-
 		PLAYER3,
 		MIDDLE
 	}

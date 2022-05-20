@@ -1,4 +1,5 @@
-//Beta Build: 5/3
+
+//Beta Build: 5/19
 
 package com.cwugamejammers.uno;
 
@@ -28,11 +29,9 @@ public class GameController {
 
 	public void run() {
 		//While there is no winner
-		while(data.getState() == GameData.GameState.MIDDLE)
-		{
+
 			//Do a switch, cases are whose turn it is
-			switch(data.getTurn())
-			{
+			switch(data.getTurn()) {
 				case PLAYER0:
 					upkeep(p0);
 				case PLAYER1:
@@ -42,11 +41,19 @@ public class GameController {
 				case PLAYER3:
 					upkeep(p3);
 			}
-		}
+
+
 		//Check who won and display the correct message
 		switch(data.getState())
 		{
-
+			case PLAYER0:
+				//winner is you
+			case PLAYER1:
+				// winner is AI1
+			case PLAYER2:
+				// winner is AI2
+			case PLAYER3:
+				// winner is AI3
 		}
 	}
 
@@ -66,8 +73,18 @@ public class GameController {
 				p3.draw();
 		}
 
-		run();
+		//run();
 	}
+
+	public void playerUpkeep(int index){
+		p0.play(index);
+		checkPlay(p0);
+		if (p0.getHandSize() == 0){
+			data.setWinner();
+		}
+	}
+
+
 
 	public void upkeep(Player player) {
 		//Check skip flags to see if turn is valid.
@@ -84,13 +101,17 @@ public class GameController {
 					if(validPlays[i] == 1) valid = true;
 				}
 
-				if(valid = true)
+				if(valid == true)
 				{
 					//prompt the user to play a card if a valid play is available
 					//call some graphic to let them know
-					while(PlayScreen.getIsPlayed() == false)
+					/*while(PlayScreen.getIsPlayed() == false)
 					{
-					}
+
+					}*/
+
+
+
 					checkPlay(player);
 					PlayScreen.setIsPlayed(false);
 				}
@@ -111,7 +132,7 @@ public class GameController {
 					if(validPlays[i] == 1) valid = true;
 				}
 
-				if(valid = true)
+				if(valid == true)
 				{
 					//prompt the user to play a card if a valid play is available
 					//call some graphic to let them know
@@ -146,6 +167,36 @@ public class GameController {
 		data.setTracker();
 	}
 
+
+	// method that check if the card is valid
+	public boolean isValidCard(int index){
+		// variable to check if valid
+		boolean esValid = false;
+		//top card of the play pile
+		Card temp = Card.getPlayField().get(Card.getPlayField().size() - 1);
+		// card that being compared
+		Card comp = p0.getHand().get(index);
+		// if statement that compare the number or color
+		if(temp.getNumber() == comp.getNumber() || temp.getColor() == comp.getColor()){
+			esValid = true;
+		}
+		// return the variable
+		return esValid;
+	}
+
+	//yoink
+	public boolean playableCards()
+	{
+		int[] validPlays = p0.validPlay();
+		boolean valid = false;
+		for(int i = 0; i < p0.getHandSize(); i++)
+		{
+			if(validPlays[i] == 1) valid = true;
+		}
+		return valid;
+	}
+
+
 	public void checkPlay(Player player)
 	{
 		Card temp = Card.getPlayField().get(Card.getPlayField().size() - 1);
@@ -154,11 +205,13 @@ public class GameController {
 		if(temp.getNumber() == 10)
 		{
 			data.getNextPlayer().setSkipped(true);
+			return;
 		}
 		//Reverse
 		if(temp.getNumber() == 11)
 		{
 			setReversed(!getReversed());
+			return;
 		}
 		//Draw 2
 		if(temp.getNumber() == 12)
@@ -248,6 +301,7 @@ public class GameController {
 			data.setWinner();
 		}
 	}
+
 	// player object that check who the current player
 	public Player getCurrentPlayer()
 	{

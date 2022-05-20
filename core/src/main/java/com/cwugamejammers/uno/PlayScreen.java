@@ -69,9 +69,26 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
     GameController controller;
 
+    GameData.GameState GS;
+    GameData.Turn turn;
+
     private static boolean isPlayed = false;
     private static boolean cardSelected = false;
     private static boolean cardJustSelected = false;
+    private static boolean newTurn = false;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public PlayScreen(Uno game){
@@ -147,6 +164,10 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         controller = new GameController(this);
         controller.initialize();
 
+        GS = controller.getData().getState();
+        turn = controller.getData().getTurn();
+
+
 
         //Initializes the AI players text info at the top of the screen
         p0Info = new PlayerInfo(controller.getP1().getName(), controller.getP1().getHandSize(), 10, Gdx.graphics.getHeight()- 400, Gdx.graphics.getWidth()/3, 300);
@@ -155,135 +176,47 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         p3Info = new PlayerInfo(controller.getP3().getName(), controller.getP3().getHandSize(), Gdx.graphics.getWidth()*2/3 + 10, Gdx.graphics.getHeight() - 10, Gdx.graphics.getWidth()/3, 300);
     }
 
-    public ArrayList<ArrayList<Texture>> getTextureList()
-    {
-        return textureList;
-    }
-
-    public static Texture createTexture(String color, int number)
-    {
-        String fileName = "cards/";
-        if(color == "Red")
-        {
-            fileName += "R";
-        }
-
-        if(color == "Blue")
-        {
-            fileName += "B";
-        }
-
-        if(color == "Yellow")
-        {
-            fileName += "Y";
-        }
-
-        if(color == "Green")
-        {
-            fileName += "G";
-        }
-
-        if(color == "Wild")
-        {
-            fileName += "W";
-        }
 
 
 
-        fileName += Integer.toString(number) + ".jpeg";
-        //Texture t = new Texture(fileName);
-        Texture t = assMan.manager.get(fileName);
-        //cardButton = new Button(t, 0, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3);
-        //cardList.add(cardButton);
-
-        return t;
-    }
-
-    public static void createCardButton(Texture tex)
-    {
-        cardButton = new Button(tex, 0, 0, cardWidth, cardHeight);
-        cardList.add(cardButton);
-    }
-
-    public static ArrayList<Button> getCardList()
-    {
-        return cardList;
-    }
-    public static void redoHand(String color, int number)
-    {
-        String fileName = "cards/";
-        if(color == "Red")
-        {
-            fileName += "R";
-        }
-
-        if(color == "Blue")
-        {
-            fileName += "B";
-        }
-
-        if(color == "Yellow")
-        {
-            fileName += "Y";
-        }
-
-        if(color == "Green")
-        {
-            fileName += "G";
-        }
-
-        if(color == "Wild")
-        {
-            fileName += "W";
-        }
 
 
 
-        fileName += Integer.toString(number) + ".jpeg";
-        //Texture t = new Texture(fileName);
-        Texture t = assMan.manager.get(fileName);
 
 
-        cardButton = new Button(t, 0, 0, cardWidth, cardHeight);
-        cardList.add(cardButton);
-        //cardButton = new Button(t, 0, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3);
-        //cardList.add(cardButton);
-    }
-
-    public static void clearList()
-    {
-            cardList.clear();
-    }
-
-    public static boolean getIsPlayed()
-    {
-        return isPlayed;
-    }
-
-    public static void setIsPlayed(boolean flag)
-    {
-        isPlayed = flag;
-    }
-
-    public static boolean getCardSelected()
-    {
-        return cardSelected;
-    }
-
-    public static void setCardSelected(boolean flag)
-    {
-        cardSelected = flag;
-    }
     @Override
     public void show() {
         // Prepare your screen here.
     }
 
-    public void update(float dt){
+    public void update(float dt){   //called every frame
         //Sets hand bounds based on the size of the hand
         repositionHand();
         //Updates the text at the top of the screen with current card counts
         updatePlayerInfo();
+        // variable for current player
+        currentPlayer = controller.getCurrentPlayer();
+
+        if (turn != controller.getData().getTurn()){
+            newTurn = true;
+            turn = controller.getData().getTurn();
+        }
+
+        if (newTurn && currentPlayer.getIsAI()){    //if new turn and if AI
+            controller.run();   //run AI move
+            newTurn = false;
+        }
+
+        if (currentPlayer.getId() == 0 && newTurn){    //if current player is human and is new turn
+            if (!controller.playableCards())            //if the player does not have playable cards
+            {
+                currentPlayer.draw();                   //draws card if no playable cards
+                controller.getData().setTracker();      //set next turn
+                newTurn = false;
+            }
+        }
+
+
         
         //touchDown(Gdx.input.getX(),Gdx.input.getY(), 0, 0);
 
@@ -336,7 +269,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         p2Info.draw(game.batch, game.font);
         p3Info.draw(game.batch, game.font);
 
-        currentPlayer = controller.getCurrentPlayer();
+
 
         if (currentPlayer.getId() == 0){
             String info = "Your Turn!";
@@ -418,26 +351,28 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
     public void PlayCard(){
         Button playedCard = null;
-        //IF card is valid// then
-        for (Button b : cardList) {
-            if (b.collision(Gdx.input.getX(), Gdx.input.getY()) && controller.getData().getTurn() == GameData.Turn.PLAYER0) {
-                //pileButton.dispose();
-                pileButton.setTexture(b.getTexture());
-                playedCard = b;
+            for (Button b : cardList) {
+                if (b.collision(Gdx.input.getX(), Gdx.input.getY()) && controller.getData().getTurn() == GameData.Turn.PLAYER0) {
+                    if (controller.isValidCard(cardList.indexOf(b))) {
+                        pileButton.setTexture(b.getTexture());
+                        playedCard = b;
 
-                //When a card is selected to be played, we move the card in the hand as well
-                int index = cardList.indexOf(b);
-                controller.getP0().play(index);
-                setIsPlayed(true);
+                        //When a card is selected to be played, we move the card in the hand as well
+                        int index = cardList.indexOf(b);
+                        controller.getP0().play(index);
+                        newTurn = true;
+                        controller.getData().setTracker();
+                        //setIsPlayed(true);
+                    }
+                }
+            }
+            if (playedCard != null) {
+                cardList.remove(playedCard);
+                if (cardList.size() > 0) {
+                    cardList.get(0).reposition(0, 0);
+                }
+            }
 
-            }
-        }
-        if (playedCard != null) {
-            cardList.remove(playedCard);
-            if (cardList.size() > 0) {
-                cardList.get(0).reposition(0, 0);
-            }
-        }
     }
 
     public static String wildCardPick(){
@@ -478,6 +413,131 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     //NO RETURN NEEDED
 
 
+    public ArrayList<ArrayList<Texture>> getTextureList()
+    {
+        return textureList;
+    }
+
+    public static Texture createTexture(String color, int number)
+    {
+        String fileName = "cards/";
+        if(color == "Red")
+        {
+            fileName += "R";
+        }
+
+        if(color == "Blue")
+        {
+            fileName += "B";
+        }
+
+        if(color == "Yellow")
+        {
+            fileName += "Y";
+        }
+
+        if(color == "Green")
+        {
+            fileName += "G";
+        }
+
+        if(color == "Wild")
+        {
+            fileName += "W";
+        }
+
+
+
+        fileName += Integer.toString(number) + ".jpeg";
+        //Texture t = new Texture(fileName);
+        Texture t = assMan.manager.get(fileName);
+        //cardButton = new Button(t, 0, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3);
+        //cardList.add(cardButton);
+
+        return t;
+    }
+
+    public static void createCardButton(Texture tex)
+    {
+        cardButton = new Button(tex, 0, 0, cardWidth, cardHeight);
+        cardList.add(cardButton);
+    }
+
+
+
+
+    public static ArrayList<Button> getCardList()
+    {
+        return cardList;
+    }
+
+
+    public static void redoHand(String color, int number)
+    {
+        String fileName = "cards/";
+        if(color == "Red")
+        {
+            fileName += "R";
+        }
+
+        if(color == "Blue")
+        {
+            fileName += "B";
+        }
+
+        if(color == "Yellow")
+        {
+            fileName += "Y";
+        }
+
+        if(color == "Green")
+        {
+            fileName += "G";
+        }
+
+        if(color == "Wild")
+        {
+            fileName += "W";
+        }
+
+
+
+        fileName += Integer.toString(number) + ".jpeg";
+        //Texture t = new Texture(fileName);
+        Texture t = assMan.manager.get(fileName);
+
+
+        cardButton = new Button(t, 0, 0, cardWidth, cardHeight);
+        cardList.add(cardButton);
+        //cardButton = new Button(t, 0, 0, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 3);
+        //cardList.add(cardButton);
+    }
+
+    public static void clearList()
+    {
+        cardList.clear();
+    }
+
+    public static boolean getIsPlayed()
+    {
+        return isPlayed;
+    }
+
+    public static void setIsPlayed(boolean flag)
+    {
+        isPlayed = flag;
+    }
+
+    public static boolean getCardSelected()
+    {
+        return cardSelected;
+    }
+
+    public static void setCardSelected(boolean flag)
+    {
+        cardSelected = flag;
+    }
+
     @Override
     public boolean touchDown(float x, float y, int pointer, int button){
         return true;
@@ -486,9 +546,12 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
     @Override
     public boolean tap(float x, float y, int count, int button){
-        PlayCard();
-        if (cardSelected) {
-            wildCardPick();
+        if (currentPlayer.getId() == 0) {
+
+            PlayCard();
+            if (cardSelected) {
+                wildCardPick();
+            }
         }
         return true;
     }
