@@ -129,7 +129,7 @@ public class Player {
 		}
 		getHand().add(Card.getDeck().remove(0));
 
-		int card = getHand().size() - 1;
+		int card = getHand().size() - 1;	//-----------------------------------------------------------------------------------------------------
 		//IF PLAYER IS HUMAN
 		if(getId() == 0)
 		{

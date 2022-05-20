@@ -75,7 +75,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     private static boolean isPlayed = false;
     private static boolean cardSelected = false;
     private static boolean cardJustSelected = false;
-    private static boolean newTurn = false;
+    private static boolean newTurn = true;
 
 
 
@@ -180,10 +180,6 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
 
 
-
-
-
-
     @Override
     public void show() {
         // Prepare your screen here.
@@ -273,11 +269,11 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
         if (currentPlayer.getId() == 0){
             String info = "Your Turn!";
-            game.font.draw(game.batch, info, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/4+ 30);
+            game.font.draw(game.batch, info, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/4+ 60);
         }
         else {
             String info = currentPlayer.getName() + "'s Turn";
-            game.font.draw(game.batch, info, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/4+ 30);
+            game.font.draw(game.batch, info, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/4+ 60);
         }
 
         //Flushes the batch and draws everything to the screen
