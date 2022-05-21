@@ -37,6 +37,19 @@ public class GameData {
 		//Create the deck, and then place the top card of the deck into the playField.
 		Card.createDeck();
 		Card.getPlayField().add(Card.getDeck().remove(0));
+		Card temp = Card.getPlayField().get(0);
+		String name = "cards/";
+		if(temp.getColor().equals("Red")) name += "R";
+		if(temp.getColor().equals("Blue")) name += "B";
+		if(temp.getColor().equals("Yellow")) name += "Y";
+		if(temp.getColor().equals("Green")) name += "G";
+		if(temp.getColor().equals("Wild")) name += "W";
+
+		name += Integer.toString(temp.getNumber());
+
+		name += ".jpeg";
+
+		PlayScreen.setPlayPileTex(name);
 
 		//Set the GameState to indicate that a game is in progress
 		state = GameState.MIDDLE;

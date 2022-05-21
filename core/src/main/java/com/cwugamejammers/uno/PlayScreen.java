@@ -28,7 +28,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     private static float cardWidth = Gdx.graphics.getWidth()/4;
     private static float cardHeight = Gdx.graphics.getHeight()/4;
     private Button deckButton;
-    Button pileButton;
+    static Button pileButton;
 
 
     private Texture rBlank;
@@ -166,7 +166,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
         GS = controller.getData().getState();
         turn = controller.getData().getTurn();
-
+        currentPlayer = new Player()
 
 
         //Initializes the AI players text info at the top of the screen
@@ -208,7 +208,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             {
                 currentPlayer.draw();                   //draws card if no playable cards
                 controller.getData().setTracker();      //set next turn
-                newTurn = false;
+                newTurn = true;
             }
         }
 
@@ -337,6 +337,11 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         }
     }
 
+
+    public static void setPlayPileTex(String s){
+        pileButton.setTexture(assMan.manager.get(s));
+    }
+
     public void updatePlayerInfo(){
         p0Info.updateCard(controller.getP0().getHandSize());
         p1Info.updateCard(controller.getP1().getHandSize());
@@ -356,6 +361,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                         //When a card is selected to be played, we move the card in the hand as well
                         int index = cardList.indexOf(b);
                         controller.getP0().play(index);
+                        controller.checkPlay(currentPlayer);
                         newTurn = true;
                         controller.getData().setTracker();
                         //setIsPlayed(true);

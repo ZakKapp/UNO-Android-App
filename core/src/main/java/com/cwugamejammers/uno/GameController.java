@@ -4,6 +4,7 @@
 package com.cwugamejammers.uno;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -32,18 +33,19 @@ public class GameController {
 
 			//Do a switch, cases are whose turn it is
 			switch(data.getTurn()) {
-				case PLAYER0:
-					upkeep(p0);
+				case PLAYER0:	//How do we decide what the player does?
+					break;
 				case PLAYER1:
-					upkeep(p1);
+					aiPlay(p1);
 				case PLAYER2:
-					upkeep(p2);
+					aiPlay(p2);
 				case PLAYER3:
-					upkeep(p3);
+					aiPlay(p3);
 			}
 
 
 		//Check who won and display the correct message
+		/*
 		switch(data.getState())
 		{
 			case PLAYER0:
@@ -55,6 +57,7 @@ public class GameController {
 			case PLAYER3:
 				// winner is AI3
 		}
+		*/
 	}
 
 	public void initialize(){
@@ -84,8 +87,60 @@ public class GameController {
 		}
 	}
 
+	public void aiPlay(Player player)
+	{
+		//Check if player was skipped
+		if(!player.getSkipped())
+		{
+			//Call validPlayAI to see if the AI has a valid move (resulting array will have 1's in valid move positions)
+			int[] validPlays = player.validPlayAI();
+			boolean foundPlay = false;
+			boolean validPlay = false;
+
+			//Check if the valid play array detected a valid play
+			for(int i = 0; i < player.getHandSize(); i++)
+			{
+				if(validPlays[i] == 1)
+				{
+					validPlay = true;
+				}
+			}
+			//If a valid play was found, pick a random valid play and play it
+			if(validPlay)
+			{
+				//Create Random, select from 0 to hand size, if that index is 1, play it, otherwise loop
+				while(!foundPlay)
+				{
+					Random r = new Random();
+					int high = validPlays.length;
+					int result = r.nextInt(high);
+					if(validPlays[result] == 1)
+					{
+						player.play(result);
+						checkPlay(player);
+						foundPlay = true;
+						//make a string from the card played
+
+					}
+				}
+			}
+			//If no valid play was found, draw and end turn
+			else
+			{
+				player.draw();
+			}
+		}
+
+		//If the player was skipped, flip the flag
+		else
+		{
+			player.setSkipped(!player.getSkipped());
+		}
 
 
+	}
+
+	/*
 	public void upkeep(Player player) {
 		//Check skip flags to see if turn is valid.
 		//If player is not skipped, run the turn
@@ -108,7 +163,7 @@ public class GameController {
 					/*while(PlayScreen.getIsPlayed() == false)
 					{
 
-					}*/
+					}
 
 
 
@@ -119,7 +174,6 @@ public class GameController {
 				{
 					//if the play was not valid, skip the turn
 					player.draw();
-					return;
 				}
 			}
 
@@ -154,7 +208,6 @@ public class GameController {
 				{
 					//if the play was not valid, skip the turn
 					player.draw();
-					return;
 				}
 			}
 		}
@@ -167,6 +220,7 @@ public class GameController {
 		data.setTracker();
 	}
 
+	*/
 
 	// method that check if the card is valid
 	public boolean isValidCard(int index){
@@ -177,14 +231,14 @@ public class GameController {
 		// card that being compared
 		Card comp = p0.getHand().get(index);
 		// if statement that compare the number or color
-		if(temp.getNumber() == comp.getNumber() || temp.getColor() == comp.getColor()){
+		if(temp.getNumber() == comp.getNumber() || Objects.equals(temp.getColor(), comp.getColor())){
 			esValid = true;
 		}
 		// return the variable
 		return esValid;
 	}
 
-	//yoink
+	//yoink(simpler version of checkPlay)
 	public boolean playableCards()
 	{
 		int[] validPlays = p0.validPlay();
@@ -234,19 +288,19 @@ public class GameController {
 					}
 				}
 				Card.getPlayField().get(Card.getPlayField().size() - 1).setColor(newColor);
-				if(newColor == "Red")
+				if(newColor.equals("Red"))
 				{
 					screen.setWildCard("W13R.jpeg");
 				}
-				if(newColor == "Blue")
+				if(newColor.equals("Blue"))
 				{
 					screen.setWildCard("W13B.jpeg");
 				}
-				if(newColor == "Green")
+				if(newColor.equals("Green"))
 				{
 					screen.setWildCard("W13G.jpeg");
 				}
-				if(newColor == "Yellow")
+				if(newColor.equals("Yellow"))
 				{
 					screen.setWildCard("W13Y.jpeg");
 				}
@@ -273,19 +327,19 @@ public class GameController {
 					}
 				}
 				Card.getPlayField().get(Card.getPlayField().size() - 1).setColor(newColor);
-				if(newColor == "Red")
+				if(newColor.equals("Red"))
 				{
 					screen.setWildCard("W14R.jpeg");
 				}
-				if(newColor == "Blue")
+				if(newColor.equals("Blue"))
 				{
 					screen.setWildCard("W14B.jpeg");
 				}
-				if(newColor == "Green")
+				if(newColor.equals("Green"))
 				{
 					screen.setWildCard("W14G.jpeg");
 				}
-				if(newColor == "Yellow")
+				if(newColor.equals("Yellow"))
 				{
 					screen.setWildCard("W14Y.jpeg");
 				}

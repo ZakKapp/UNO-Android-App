@@ -4,11 +4,12 @@ package com.cwugamejammers.uno;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
+
 public class Player {
 	private int id;
 	private String name;
 	private ArrayList<Card> hand;
-
 	private boolean isAI;
 	private boolean skipped;
 
@@ -20,8 +21,8 @@ public class Player {
 		name = player_name;
 		skipped = false;
 		hand = new ArrayList<Card>();
-		isAI = ai;
 		noPlay = false;
+		isAI = ai;
 	}
 
 	public boolean getIsAI()
@@ -75,7 +76,7 @@ public class Player {
 				//somehow elevate the texture
 			}
 			//If the card in hand matches the color of the top playField, it is valid
-			else if(hand.get(i).getColor() == Card.getPlayField().get(playFieldSize).getColor())
+			else if(Objects.equals(hand.get(i).getColor(), Card.getPlayField().get(playFieldSize).getColor()))	//removed ==
 			{
 				valid[i]++;
 				//somehow elevate the texture
@@ -103,7 +104,7 @@ public class Player {
 				valid[i]++;
 			}
 			//If the card in hand matches the color of the top playField, it is valid
-			else if(hand.get(i).getColor() == Card.getPlayField().get(playFieldSize).getColor())
+			else if(Objects.equals(hand.get(i).getColor(), Card.getPlayField().get(playFieldSize).getColor()))	//removed ==
 			{
 				valid[i]++;
 			}
@@ -165,16 +166,16 @@ public class Player {
 
 
 		for(int i = 0; i < getHand().size(); i++)
-		{
-			if(getHand().get(i).getColor() == "Red") red.add(getHand().get(i));
-			if(getHand().get(i).getColor() == "Blue") blue.add(getHand().get(i));
-			if(getHand().get(i).getColor() == "Green") green.add(getHand().get(i));
-			if(getHand().get(i).getColor() == "Yellow") yellow.add(getHand().get(i));
-			if(getHand().get(i).getColor() == "Wild") wild.add(getHand().get(i));
+		{	//these were all ==
+			if(Objects.equals(getHand().get(i).getColor(), "Red")) red.add(getHand().get(i));
+			if(Objects.equals(getHand().get(i).getColor(), "Blue")) blue.add(getHand().get(i));
+			if(Objects.equals(getHand().get(i).getColor(), "Green")) green.add(getHand().get(i));
+			if(Objects.equals(getHand().get(i).getColor(), "Yellow")) yellow.add(getHand().get(i));
+			if(Objects.equals(getHand().get(i).getColor(), "Wild")) wild.add(getHand().get(i));
 		}
 
 
-			getHand().clear();
+		getHand().clear();
 
 
 		Collections.sort(red);
