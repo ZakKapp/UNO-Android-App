@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -76,7 +77,6 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     private static boolean cardSelected = false;
     private static boolean cardJustSelected = false;
     private static boolean newTurn = true;
-
 
 
 
@@ -166,7 +166,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
         GS = controller.getData().getState();
         turn = controller.getData().getTurn();
-        currentPlayer = new Player()
+        currentPlayer = controller.getCurrentPlayer();
 
 
         //Initializes the AI players text info at the top of the screen
@@ -192,6 +192,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         updatePlayerInfo();
         // variable for current player
         currentPlayer = controller.getCurrentPlayer();
+        GS = controller.getData().getState();
 
         if (turn != controller.getData().getTurn()){
             newTurn = true;
@@ -233,48 +234,63 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         //Begins the spritebatch
         game.batch.begin();
 
-        //depending on the theme draw a specific color background
-        if (game.colortheme == Uno.COLORTHEME.RED){
+        if (GS == GameData.GameState.MIDDLE) {
+            //depending on the theme draw a specific color background
+            if (game.colortheme == Uno.COLORTHEME.RED) {
+                game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            }
+
+            if (game.colortheme == Uno.COLORTHEME.BLUE) {
+                game.batch.draw(blueBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            }
+
+            //Draws the cards
+            for (Button b : cardList) {
+                b.draw(game.batch);
+            }
+            //Draws the back of the deck and the pile to the screen
+            deckButton.draw(game.batch);
+            pileButton.draw(game.batch);
+
+            if (cardSelected) {
+                wildBlue.draw(game.batch);
+                wildGreen.draw(game.batch);
+                wildRed.draw(game.batch);
+                wildYellow.draw(game.batch);
+            }
+
+            UnoButton.draw(game.batch);
+
+            //Draws the text of the AIs player info at the top of the screen
+            //p0Info.draw(game.batch, game.font);
+            p1Info.draw(game.batch, game.font);
+            p2Info.draw(game.batch, game.font);
+            p3Info.draw(game.batch, game.font);
+
+
+            if (currentPlayer.getId() == 0) {
+                String info = "Your Turn!";
+                game.font.draw(game.batch, info, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 4 + 60);
+            } else {
+                String info = currentPlayer.getName() + "'s Turn";
+                game.font.draw(game.batch, info, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 4 + 60);
+            }
+        }
+
+        if (GS == GameData.GameState.PLAYER0){
+            game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
+        if (GS == GameData.GameState.PLAYER1){
+            game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
+        if (GS == GameData.GameState.PLAYER2){
+            game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
+        if (GS == GameData.GameState.PLAYER3){
             game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         }
 
-        if (game.colortheme == Uno.COLORTHEME.BLUE){
-            game.batch.draw(blueBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        }
 
-        //Draws the cards
-        for (Button b : cardList){
-            b.draw(game.batch);
-        }
-        //Draws the back of the deck and the pile to the screen
-        deckButton.draw(game.batch);
-        pileButton.draw(game.batch);
-
-        if (cardSelected) {
-            wildBlue.draw(game.batch);
-            wildGreen.draw(game.batch);
-            wildRed.draw(game.batch);
-            wildYellow.draw(game.batch);
-        }
-
-        UnoButton.draw(game.batch);
-
-        //Draws the text of the AIs player info at the top of the screen
-        //p0Info.draw(game.batch, game.font);
-        p1Info.draw(game.batch, game.font);
-        p2Info.draw(game.batch, game.font);
-        p3Info.draw(game.batch, game.font);
-
-
-
-        if (currentPlayer.getId() == 0){
-            String info = "Your Turn!";
-            game.font.draw(game.batch, info, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/4+ 60);
-        }
-        else {
-            String info = currentPlayer.getName() + "'s Turn";
-            game.font.draw(game.batch, info, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/4+ 60);
-        }
 
         //Flushes the batch and draws everything to the screen
         game.batch.end();
@@ -342,6 +358,10 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         pileButton.setTexture(assMan.manager.get(s));
     }
 
+    public static void setPlayPileTex(Texture t){
+        pileButton.setTexture(t);
+    }
+
     public void updatePlayerInfo(){
         p0Info.updateCard(controller.getP0().getHandSize());
         p1Info.updateCard(controller.getP1().getHandSize());
@@ -355,15 +375,37 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             for (Button b : cardList) {
                 if (b.collision(Gdx.input.getX(), Gdx.input.getY()) && controller.getData().getTurn() == GameData.Turn.PLAYER0) {
                     if (controller.isValidCard(cardList.indexOf(b))) {
+                        if (controller.getP0().getHand().get(cardList.indexOf(b)).getNumber() >= 13)
+                        {
+                            cardSelected = true;
+                            if(controller.getP0().getHand().get(cardList.indexOf(b)).getNumber() == 14)
+                            {
+                                if(controller.getReversed())
+                                {
+                                    controller.getP3().drawFour();
+                                    controller.getP3().setSkipped(true);
+                                }
+                                else
+                                {
+                                    controller.getP1().drawFour();
+                                    controller.getP1().setSkipped(true);
+                                }
+                            }
+                        }
+
+
                         pileButton.setTexture(b.getTexture());
+
                         playedCard = b;
 
                         //When a card is selected to be played, we move the card in the hand as well
                         int index = cardList.indexOf(b);
                         controller.getP0().play(index);
+                        if(controller.getP0().getHandSize() == 0) controller.getData().setWinner();
                         controller.checkPlay(currentPlayer);
                         newTurn = true;
                         controller.getData().setTracker();
+                        controller.run();
                         //setIsPlayed(true);
                     }
                 }
@@ -377,33 +419,36 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
     }
 
-    public static String wildCardPick(){
+    public void wildCardPick(){
         if (wildBlue.collision(Gdx.input.getX(), Gdx.input.getY())){
-            cardSelected = true;
+            cardSelected = false;
             cardJustSelected = true;
-            return "Blue";
+            Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Blue");
+            setPlayPileTex(wildBlue.getTexture());
 
         }
 
         else if (wildRed.collision(Gdx.input.getX(), Gdx.input.getY())){
-            cardSelected = true;
+            cardSelected = false;
             cardJustSelected = true;
-            return "Red";
+            Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
+            setPlayPileTex(wildRed.getTexture());
         }
 
         else if (wildGreen.collision(Gdx.input.getX(), Gdx.input.getY())){
-            cardSelected = true;
+            cardSelected = false;
             cardJustSelected = true;
-            return "Green";
+            Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Green");
+            setPlayPileTex(wildGreen.getTexture());
         }
 
         else if  (wildYellow.collision(Gdx.input.getX(), Gdx.input.getY())){
-            cardSelected = true;
+            cardSelected = false;
             cardJustSelected = true;
-            return "Yellow";
+            Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Yellow");
+            setPlayPileTex(wildYellow.getTexture());
         }
 
-        else return null;
     }
 
 
@@ -465,7 +510,24 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         cardList.add(cardButton);
     }
 
+    public static void winnerFound(int i){
+        if(i == 0)
+        {
 
+        }
+        if(i == 1)
+        {
+
+        }
+        if(i == 2)
+        {
+
+        }
+        if(i == 3)
+        {
+
+        }
+    }
 
 
     public static ArrayList<Button> getCardList()
@@ -548,13 +610,13 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
     @Override
     public boolean tap(float x, float y, int count, int button){
-        if (currentPlayer.getId() == 0) {
-
+        if (turn == GameData.Turn.PLAYER0) {
             PlayCard();
             if (cardSelected) {
                 wildCardPick();
             }
         }
+
         return true;
     }
 

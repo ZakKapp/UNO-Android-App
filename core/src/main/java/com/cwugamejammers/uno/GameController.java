@@ -3,10 +3,7 @@
 
 package com.cwugamejammers.uno;
 
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class GameController {
@@ -251,108 +248,123 @@ public class GameController {
 	}
 
 
-	public void checkPlay(Player player)
-	{
+	public void checkPlay(Player player) {
 		Card temp = Card.getPlayField().get(Card.getPlayField().size() - 1);
 
 		//Skip
-		if(temp.getNumber() == 10)
-		{
+		if (temp.getNumber() == 10) {
 			data.getNextPlayer().setSkipped(true);
 			return;
 		}
 		//Reverse
-		if(temp.getNumber() == 11)
-		{
+		if (temp.getNumber() == 11) {
 			setReversed(!getReversed());
 			return;
 		}
 		//Draw 2
-		if(temp.getNumber() == 12)
-		{
+		if (temp.getNumber() == 12) {
 			data.getNextPlayer().setSkipped(true);
 			data.getNextPlayer().drawTwo();
 		}
+
 		//Wild Card
-		if(temp.getNumber() == 13)
-		{
+		if (temp.getNumber() == 13) {
+			/*
 			if(data.getTurn() == GameData.Turn.PLAYER0)
 			{
 				//Call the method for the Wildcard selection
 				String newColor = PlayScreen.wildCardPick();
-				while(newColor == null)
-				{
-					newColor = PlayScreen.wildCardPick();
-					while(PlayScreen.getCardSelected() == false)
-					{
-					}
-				}
+				if(newColor == null) newColor = "Red";
+				//newColor = PlayScreen.wildCardPick();
+
+
 				Card.getPlayField().get(Card.getPlayField().size() - 1).setColor(newColor);
 				if(newColor.equals("Red"))
 				{
-					screen.setWildCard("W13R.jpeg");
+					screen.setWildCard("cards/W13R.jpeg");
 				}
 				if(newColor.equals("Blue"))
 				{
-					screen.setWildCard("W13B.jpeg");
+					screen.setWildCard("cards/W13B.jpeg");
 				}
 				if(newColor.equals("Green"))
 				{
-					screen.setWildCard("W13G.jpeg");
+					screen.setWildCard("cards/W13G.jpeg");
 				}
 				if(newColor.equals("Yellow"))
 				{
-					screen.setWildCard("W13Y.jpeg");
+					screen.setWildCard("cards/W13Y.jpeg");
 				}
 			}
 			else
 			{
 				Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
 			}
-		}
-		//Wild Draw 4
-		if(temp.getNumber() == 14)
-		{
-			data.getNextPlayer().setSkipped(true);
-			data.getNextPlayer().drawFour();
-			if(data.getTurn() == GameData.Turn.PLAYER0)
-			{
-				//Call the method for the Wildcard selection
-				String newColor = PlayScreen.wildCardPick();
-				while(newColor == null)
-				{
-					newColor = PlayScreen.wildCardPick();
-					while(PlayScreen.getCardSelected() == false)
-					{
+			*/
+			if (player.getIsAI()) {
+				int numRed = 0;
+				int numBlue = 0;
+				int numYellow = 0;
+				int numGreen = 0;
+				int numWild = 0;
+
+				for (int i = 0; i < player.getHandSize(); i++) {
+					if (player.getHand().get(i).getColor().equals("Red")) numRed++;
+					if (player.getHand().get(i).getColor().equals("Blue")) numBlue++;
+					if (player.getHand().get(i).getColor().equals("Green")) numGreen++;
+					if (player.getHand().get(i).getColor().equals("Yellow")) numYellow++;
+				}
+
+				if (numRed > numBlue && numRed > numYellow && numRed > numGreen && numRed > numWild) {
+					Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
+				} else if (numBlue > numRed && numBlue > numYellow && numBlue > numGreen && numBlue > numWild) {
+					Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Blue");
+				} else if (numGreen > numBlue && numGreen > numYellow && numGreen > numRed && numGreen > numWild) {
+					Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Green");
+				} else if (numYellow > numBlue && numYellow > numRed && numYellow > numGreen && numYellow > numWild) {
+					Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Yellow");
+				} else {
+					Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
+				}
+			}
+
+			//Wild Draw 4
+			if (temp.getNumber() == 14) {
+				data.getNextPlayer().setSkipped(true);
+				data.getNextPlayer().drawFour();
+
+				if (player.getIsAI()) {
+					int numRed = 0;
+					int numBlue = 0;
+					int numYellow = 0;
+					int numGreen = 0;
+					int numWild = 0;
+
+					for (int i = 0; i < player.getHandSize(); i++) {
+						if (player.getHand().get(i).getColor().equals("Red")) numRed++;
+						if (player.getHand().get(i).getColor().equals("Blue")) numBlue++;
+						if (player.getHand().get(i).getColor().equals("Green")) numGreen++;
+						if (player.getHand().get(i).getColor().equals("Yellow")) numYellow++;
 					}
-				}
-				Card.getPlayField().get(Card.getPlayField().size() - 1).setColor(newColor);
-				if(newColor.equals("Red"))
-				{
-					screen.setWildCard("W14R.jpeg");
-				}
-				if(newColor.equals("Blue"))
-				{
-					screen.setWildCard("W14B.jpeg");
-				}
-				if(newColor.equals("Green"))
-				{
-					screen.setWildCard("W14G.jpeg");
-				}
-				if(newColor.equals("Yellow"))
-				{
-					screen.setWildCard("W14Y.jpeg");
+
+					if (numRed > numBlue && numRed > numYellow && numRed > numGreen && numRed > numWild) {
+						Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
+					} else if (numBlue > numRed && numBlue > numYellow && numBlue > numGreen && numBlue > numWild) {
+						Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Blue");
+					} else if (numGreen > numBlue && numGreen > numYellow && numGreen > numRed && numGreen > numWild) {
+						Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Green");
+					} else if (numYellow > numBlue && numYellow > numRed && numYellow > numGreen && numYellow > numWild) {
+						Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Yellow");
+					} else {
+						Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
+					}
+
 				}
 			}
-			else
-			{
-				Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
+			// if statement that check the hand size to see if they win
+			if (player.getHandSize() == 0) {
+				data.setWinner();
 			}
-		}
-		// if statement that check the hand size to see if they win
-		if(player.getHandSize() == 0)
-		{
-			data.setWinner();
 		}
 	}
 
