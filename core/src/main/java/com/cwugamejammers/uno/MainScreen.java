@@ -11,7 +11,7 @@ public class MainScreen implements Screen {
 
     //Textures for the title screen
     //////////////////////////////////////////////////////////////
-    private Texture unoTitle;
+    //private Texture unoTitle; //--
     private Texture menuStart;
     private Texture menuHowTo;
     private Texture menuQuit;
@@ -35,7 +35,7 @@ public class MainScreen implements Screen {
     public MainScreen (Uno game){
         this.game = game;
 
-        unoTitle = new Texture("UnoTitle.png");
+        //unoTitle = new Texture("UnoTitle.png"); //--
         menuStart = new Texture("StartGameButton.png");
         menuHowTo = new Texture("HowToPlayButton.png");
         menuQuit = new Texture("QuitButton.png");
@@ -44,7 +44,7 @@ public class MainScreen implements Screen {
         rules = new Texture("RulesPlaceHolder.png");
         backBanner = new Texture("BackBanner.png");
         blueBackground = new Texture("BlueBackground.png");
-        redBackground = new Texture("RedBackground.png");
+        redBackground = new Texture("TitleScreenTiltGlow.png");
 
 
         startButton = new Button(menuStart, Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()*6/10, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/9 );
@@ -119,7 +119,7 @@ public class MainScreen implements Screen {
         }
 
 
-        game.batch.draw(unoTitle, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //game.batch.draw(unoTitle, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); //--
         startButton.draw(game.batch);
         howToButton.draw(game.batch);
         quitButton.draw(game.batch);
@@ -152,7 +152,7 @@ public class MainScreen implements Screen {
 
     @Override
     public void dispose() {
-        unoTitle.dispose();
+        //unoTitle.dispose(); //--
         menuStart.dispose();
         menuHowTo.dispose();
         menuQuit.dispose();

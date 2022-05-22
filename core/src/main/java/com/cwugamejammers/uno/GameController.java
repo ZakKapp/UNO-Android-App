@@ -113,10 +113,10 @@ public class GameController {
 					int result = r.nextInt(high);
 					if(validPlays[result] == 1)
 					{
+						PlayScreen.setPlayPileTex(player.getHand().get(result).getTextureButton());
 						player.play(result);
 						checkPlay(player);
 						foundPlay = true;
-						//make a string from the card played
 
 					}
 				}
@@ -231,6 +231,10 @@ public class GameController {
 		if(temp.getNumber() == comp.getNumber() || Objects.equals(temp.getColor(), comp.getColor())){
 			esValid = true;
 		}
+		if(Objects.equals(comp.getColor(), "Wild")){
+			esValid = true;
+		}
+
 		// return the variable
 		return esValid;
 	}
@@ -317,14 +321,19 @@ public class GameController {
 
 				if (numRed > numBlue && numRed > numYellow && numRed > numGreen && numRed > numWild) {
 					Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
+					screen.setAiWildColor("Red");
 				} else if (numBlue > numRed && numBlue > numYellow && numBlue > numGreen && numBlue > numWild) {
 					Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Blue");
+					screen.setAiWildColor("Blue");
 				} else if (numGreen > numBlue && numGreen > numYellow && numGreen > numRed && numGreen > numWild) {
 					Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Green");
+					screen.setAiWildColor("Green");
 				} else if (numYellow > numBlue && numYellow > numRed && numYellow > numGreen && numYellow > numWild) {
 					Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Yellow");
+					screen.setAiWildColor("Yellow");
 				} else {
 					Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
+					screen.setAiWildColor("Red");
 				}
 			}
 
@@ -349,14 +358,19 @@ public class GameController {
 
 					if (numRed > numBlue && numRed > numYellow && numRed > numGreen && numRed > numWild) {
 						Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
+						screen.setAiWildColor("Red");
 					} else if (numBlue > numRed && numBlue > numYellow && numBlue > numGreen && numBlue > numWild) {
 						Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Blue");
+						screen.setAiWildColor("Blue");
 					} else if (numGreen > numBlue && numGreen > numYellow && numGreen > numRed && numGreen > numWild) {
 						Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Green");
+						screen.setAiWildColor("Green");
 					} else if (numYellow > numBlue && numYellow > numRed && numYellow > numGreen && numYellow > numWild) {
 						Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Yellow");
+						screen.setAiWildColor("Yellow");
 					} else {
 						Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
+						screen.setAiWildColor("Red");
 					}
 
 				}

@@ -14,9 +14,9 @@ public class Card implements Comparable<Card>
 	private static ArrayList<Card> playField = new ArrayList<Card>();
 
 	// What the number of our card is (0,1,2...9)
-	private static int number;
+	private int number;
 	// The color of our card (Red, Blue, Yellow, Green, Wild)
-	private static String cardColor;
+	private String cardColor;
 	// This boolean checks if the card is a special card or not (Draw 4, Draw 2,
 	// Wildcard
 	private boolean isSpecial;
@@ -139,7 +139,7 @@ public class Card implements Comparable<Card>
 		return deck;
 	}
 
-	public static void setColor(String newColor)
+	public void setColor(String newColor)
 	{
 		cardColor = newColor;
 	}

@@ -194,22 +194,25 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         currentPlayer = controller.getCurrentPlayer();
         GS = controller.getData().getState();
 
-        if (turn != controller.getData().getTurn()){
-            newTurn = true;
-            turn = controller.getData().getTurn();
-        }
+        if (GS == GameData.GameState.MIDDLE) {
 
-        if (newTurn && currentPlayer.getIsAI()){    //if new turn and if AI
-            controller.run();   //run AI move
-            newTurn = false;
-        }
-
-        if (currentPlayer.getId() == 0 && newTurn){    //if current player is human and is new turn
-            if (!controller.playableCards())            //if the player does not have playable cards
-            {
-                currentPlayer.draw();                   //draws card if no playable cards
-                controller.getData().setTracker();      //set next turn
+            if (turn != controller.getData().getTurn()) {
                 newTurn = true;
+                turn = controller.getData().getTurn();
+            }
+
+            if (newTurn && currentPlayer.getIsAI()) {    //if new turn and if AI
+                controller.run();   //run AI move
+                newTurn = false;
+            }
+
+            if (currentPlayer.getId() == 0 && newTurn) {    //if current player is human and is new turn
+                if (!controller.playableCards())            //if the player does not have playable cards
+                {
+                    currentPlayer.draw();                   //draws card if no playable cards
+                    controller.getData().setTracker();      //set next turn
+                    newTurn = true;
+                }
             }
         }
 
@@ -259,6 +262,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                 wildYellow.draw(game.batch);
             }
 
+            //Draws the Uno Button
             UnoButton.draw(game.batch);
 
             //Draws the text of the AIs player info at the top of the screen
@@ -279,16 +283,22 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
         if (GS == GameData.GameState.PLAYER0){
             game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            game.font.draw(game.batch, "YOU WON!", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
         }
         if (GS == GameData.GameState.PLAYER1){
             game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            game.font.draw(game.batch, "YOU LOST!" + "\n" + "AI1 Won", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
         }
         if (GS == GameData.GameState.PLAYER2){
             game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            game.font.draw(game.batch, "YOU LOST!" + "\n" + "AI2 Won", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
         }
         if (GS == GameData.GameState.PLAYER3){
             game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            game.font.draw(game.batch, "YOU LOST!" + "\n" + "AI3 Won", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
         }
+
+        //winner texts
 
 
 
@@ -370,6 +380,25 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
     }
 
+    public void setAiWildColor(String s){
+        if (s == "Red"){
+            pileButton.setTexture(rBlank);
+        }
+
+        if (s == "Blue"){
+            pileButton.setTexture(bBlank);
+        }
+
+        if (s == "Green"){
+            pileButton.setTexture(gBlank);
+        }
+        if (s == "Yellow"){
+            pileButton.setTexture(yBlank);
+        }
+
+    }
+
+
     public void PlayCard(){
         Button playedCard = null;
             for (Button b : cardList) {
@@ -403,9 +432,11 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                         controller.getP0().play(index);
                         if(controller.getP0().getHandSize() == 0) controller.getData().setWinner();
                         controller.checkPlay(currentPlayer);
-                        newTurn = true;
-                        controller.getData().setTracker();
-                        controller.run();
+                        if (!cardSelected) {
+                            newTurn = true;
+                            controller.getData().setTracker();
+                            controller.run();
+                        }
                         //setIsPlayed(true);
                     }
                 }
@@ -425,7 +456,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             cardJustSelected = true;
             Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Blue");
             setPlayPileTex(wildBlue.getTexture());
-
+            newTurn = true;
+            controller.getData().setTracker();
+            controller.run();
         }
 
         else if (wildRed.collision(Gdx.input.getX(), Gdx.input.getY())){
@@ -433,6 +466,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             cardJustSelected = true;
             Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
             setPlayPileTex(wildRed.getTexture());
+            newTurn = true;
+            controller.getData().setTracker();
+            controller.run();
         }
 
         else if (wildGreen.collision(Gdx.input.getX(), Gdx.input.getY())){
@@ -440,6 +476,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             cardJustSelected = true;
             Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Green");
             setPlayPileTex(wildGreen.getTexture());
+            newTurn = true;
+            controller.getData().setTracker();
+            controller.run();
         }
 
         else if  (wildYellow.collision(Gdx.input.getX(), Gdx.input.getY())){
@@ -447,6 +486,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             cardJustSelected = true;
             Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Yellow");
             setPlayPileTex(wildYellow.getTexture());
+            newTurn = true;
+            controller.getData().setTracker();
+            controller.run();
         }
 
     }
