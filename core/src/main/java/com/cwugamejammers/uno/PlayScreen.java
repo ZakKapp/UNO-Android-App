@@ -421,6 +421,41 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                                 }
                             }
                         }
+                        else if (controller.getP0().getHand().get(cardList.indexOf(b)).getNumber() >= 10)
+                        {
+                            if(controller.getReversed())
+                            {
+                                controller.getP3().setSkipped(true);
+                            }
+                            else
+                            {
+                                controller.getP1().setSkipped(true);
+                            }
+                        }
+                        else if (controller.getP0().getHand().get(cardList.indexOf(b)).getNumber() >= 11)
+                        {
+                            if(controller.getReversed())
+                            {
+                                controller.setReversed(false);
+                            }
+                            else
+                            {
+                                controller.setReversed(true);
+                            }
+                        }
+                        else if (controller.getP0().getHand().get(cardList.indexOf(b)).getNumber() >= 12)
+                        {
+                            if(controller.getReversed())
+                            {
+                                controller.getP3().drawTwo();
+                                controller.getP3().setSkipped(true);
+                            }
+                            else
+                            {
+                                controller.getP1().drawTwo();
+                                controller.getP1().setSkipped(true);
+                            }
+                        }
 
 
                         pileButton.setTexture(b.getTexture());
