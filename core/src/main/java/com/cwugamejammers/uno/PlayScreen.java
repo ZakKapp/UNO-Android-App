@@ -208,14 +208,14 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                 turnTimer += 1;
             }
 
-            //if (turnTimer % 400 == 0) {
+            if (turnTimer == 200) {
 
                 if (newTurn && currentPlayer.getIsAI()) {    //if new turn and if AI
                     controller.run();   //run AI move
                     newTurn = false;
                     turnTimer = 0;
                 }
-            //}
+            }
 
             if (currentPlayer.getId() == 0 && newTurn) {    //if current player is human and is new turn
                 if (!controller.playableCards())            //if the player does not have playable cards
