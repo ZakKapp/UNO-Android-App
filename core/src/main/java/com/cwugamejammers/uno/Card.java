@@ -108,6 +108,9 @@ public class Card implements Comparable<Card>
 		/////POSSIBLE CARD DUPLICATIONS Fix:  emptyshuffle and shuffle method is also the culprit
 		//Collections.shuffle(deck);
 		shuffle();
+		//shuffle deck over and over to make sure first card is not a wild card
+
+
 	}
 
 	public static void shuffle()

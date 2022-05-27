@@ -12,16 +12,10 @@ public class GameData {
 	//Turn Tracker
 	enum Turn
 	{
-		PLAYER0(0),
-		PLAYER1(1),
-		PLAYER2(2),
-		PLAYER3(3);
-		private int turnTrack;
-
-		Turn(int i)
-		{
-			turnTrack = i;
-		}
+		PLAYER0,
+		PLAYER1,
+		PLAYER2,
+		PLAYER3;
 	}
 
 	//States for WINNER, LOSER, or in progress
@@ -36,8 +30,13 @@ public class GameData {
 	public GameData() {
 		//Create the deck, and then place the top card of the deck into the playField.
 		Card.createDeck();
-		Card.getPlayField().add(Card.getDeck().remove(0));
-		Card temp = Card.getPlayField().get(0);
+		Card temp = Card.getDeck().remove(0);
+		while(temp.getColor() == "Wild")
+		{
+			Card.getDeck().add(temp);
+			temp = Card.getDeck().get(0);
+		}
+		Card.getPlayField().add(temp);
 		String name = "cards/";
 		if(temp.getColor().equals("Red")) name += "R";
 		if(temp.getColor().equals("Blue")) name += "B";
@@ -83,31 +82,31 @@ public class GameData {
 		{
 			turn = Turn.PLAYER1;
 		}
-		if(turn == Turn.PLAYER0 && GameController.getReversed() == true)
+		else if(turn == Turn.PLAYER0 && GameController.getReversed() == true)
 		{
 			turn = Turn.PLAYER3;
 		}
-		if(turn == Turn.PLAYER1 && GameController.getReversed() == false)
+		else if(turn == Turn.PLAYER1 && GameController.getReversed() == false)
 		{
 			turn = Turn.PLAYER2;
 		}
-		if(turn == Turn.PLAYER1 && GameController.getReversed() == true)
+		else if(turn == Turn.PLAYER1 && GameController.getReversed() == true)
 		{
 			turn = Turn.PLAYER0;
 		}
-		if(turn == Turn.PLAYER2 && GameController.getReversed() == false)
+		else if(turn == Turn.PLAYER2 && GameController.getReversed() == false)
 		{
 			turn = Turn.PLAYER3;
 		}
-		if(turn == Turn.PLAYER2 && GameController.getReversed() == true)
+		else if(turn == Turn.PLAYER2 && GameController.getReversed() == true)
 		{
-			turn = Turn.PLAYER2;
+			turn = Turn.PLAYER1;
 		}
-		if(turn == Turn.PLAYER3 && GameController.getReversed() == false)
+		else if(turn == Turn.PLAYER3 && GameController.getReversed() == false)
 		{
 			turn = Turn.PLAYER0;
 		}
-		if(turn == Turn.PLAYER3 && GameController.getReversed() == true)
+		else if(turn == Turn.PLAYER3 && GameController.getReversed() == true)
 		{
 			turn = Turn.PLAYER2;
 		}
@@ -128,34 +127,33 @@ public class GameData {
 		{
 			return GameController.getP1();
 		}
-		if(turn == Turn.PLAYER0 && GameController.getReversed() == true)
+		else if(turn == Turn.PLAYER0 && GameController.getReversed() == true)
 		{
 			return GameController.getP3();
 		}
-		if(turn == Turn.PLAYER1 && GameController.getReversed() == false)
+		else if(turn == Turn.PLAYER1 && GameController.getReversed() == false)
 		{
 			return GameController.getP2();
 		}
-		if(turn == Turn.PLAYER1 && GameController.getReversed() == true)
+		else if(turn == Turn.PLAYER1 && GameController.getReversed() == true)
 		{
 			return GameController.getP0();
 		}
-		if(turn == Turn.PLAYER2 && GameController.getReversed() == false)
+		else if(turn == Turn.PLAYER2 && GameController.getReversed() == false)
 		{
 			return GameController.getP3();
 		}
-		if(turn == Turn.PLAYER2 && GameController.getReversed() == true)
+		else if(turn == Turn.PLAYER2 && GameController.getReversed() == true)
 		{
 			return GameController.getP1();
 		}
-		if(turn == Turn.PLAYER3 && GameController.getReversed() == false)
+		else if(turn == Turn.PLAYER3 && GameController.getReversed() == false)
 		{
 			return GameController.getP0();
 		}
-		if(turn == Turn.PLAYER3 && GameController.getReversed() == true)
+		else//(turn == Turn.PLAYER3 && GameController.getReversed() == true)
 		{
 			return GameController.getP2();
 		}
-		return GameController.getP0();
 	}
 }

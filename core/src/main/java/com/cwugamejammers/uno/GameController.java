@@ -34,10 +34,13 @@ public class GameController {
 					break;
 				case PLAYER1:
 					aiPlay(p1);
+					data.setTracker();
 				case PLAYER2:
 					aiPlay(p2);
+					data.setTracker();
 				case PLAYER3:
 					aiPlay(p3);
+					data.setTracker();
 			}
 
 
@@ -73,16 +76,21 @@ public class GameController {
 				p3.draw();
 		}
 
+		setReversed(false);
 		//run();
 	}
 
+	/*
 	public void playerUpkeep(int index){
 		p0.play(index);
 		checkPlay(p0);
 		if (p0.getHandSize() == 0){
 			data.setWinner();
 		}
+
+
 	}
+	*/
 
 	public void aiPlay(Player player)
 	{
@@ -124,7 +132,7 @@ public class GameController {
 			//If no valid play was found, draw and end turn
 			else
 			{
-				player.draw();
+				if(!Card.getPlayField().get(Card.getPlayField().size() - 1).getColor().equals("Wild")) player.draw();
 			}
 		}
 
@@ -336,7 +344,7 @@ public class GameController {
 					screen.setAiWildColor("Red");
 				}
 			}
-
+		}
 			//Wild Draw 4
 			if (temp.getNumber() == 14) {
 				data.getNextPlayer().setSkipped(true);
@@ -380,7 +388,7 @@ public class GameController {
 				data.setWinner();
 			}
 		}
-	}
+
 
 	// player object that check who the current player
 	public Player getCurrentPlayer()
