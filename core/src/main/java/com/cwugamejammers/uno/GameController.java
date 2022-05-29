@@ -35,12 +35,15 @@ public class GameController {
 				case PLAYER1:
 					aiPlay(p1);
 					data.setTracker();
+					break;
 				case PLAYER2:
 					aiPlay(p2);
 					data.setTracker();
+					break;
 				case PLAYER3:
 					aiPlay(p3);
 					data.setTracker();
+					break;
 			}
 
 
@@ -125,6 +128,9 @@ public class GameController {
 						player.play(result);
 						checkPlay(player);
 						foundPlay = true;
+						if (player.getHand().size() == 0){
+							data.setWinner();
+						}
 
 					}
 				}

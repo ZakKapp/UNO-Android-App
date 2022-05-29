@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.DefaultListSelectionModel;
 
@@ -30,7 +31,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     private static float cardHeight = Gdx.graphics.getHeight()/4;
     private Button deckButton;
     static Button pileButton;
+
     private int turnTimer;
+    private int turnTimerMax;
 
 
     private Texture rBlank;
@@ -79,6 +82,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     private static boolean cardJustSelected = false;
     private static boolean newTurn = true;
 
+    private boolean isPaused;
 
 
 
@@ -99,6 +103,8 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         assMan.finishLoading();
 
         turnTimer = 0;
+        turnTimerMax = 150;
+        isPaused = false;
 
         InputMultiplexer im = new InputMultiplexer();
         GestureDetector gd = new GestureDetector(this);
@@ -173,7 +179,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
 
         //Initializes the AI players text info at the top of the screen
-        p0Info = new PlayerInfo(controller.getP1().getName(), controller.getP1().getHandSize(), 10, Gdx.graphics.getHeight()- 400, Gdx.graphics.getWidth()/3, 300);
+        p0Info = new PlayerInfo(controller.getP1().getName(), controller.getP1().getHandSize(), 10, Gdx.graphics.getHeight() / 4 + 60, Gdx.graphics.getWidth()/3, 300);
         p1Info = new PlayerInfo(controller.getP1().getName(), controller.getP1().getHandSize(), 10, Gdx.graphics.getHeight()- 10, Gdx.graphics.getWidth()/3, 300);
         p2Info = new PlayerInfo(controller.getP2().getName(), controller.getP2().getHandSize(), Gdx.graphics.getWidth()/3 + 10, Gdx.graphics.getHeight() - 10, Gdx.graphics.getWidth()/3, 300);
         p3Info = new PlayerInfo(controller.getP3().getName(), controller.getP3().getHandSize(), Gdx.graphics.getWidth()*2/3 + 10, Gdx.graphics.getHeight() - 10, Gdx.graphics.getWidth()/3, 300);
@@ -197,36 +203,55 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         currentPlayer = controller.getCurrentPlayer();
         GS = controller.getData().getState();
 
+
         if (GS == GameData.GameState.MIDDLE) {
 
             if (turn != controller.getData().getTurn()) {
                 newTurn = true;
                 turn = controller.getData().getTurn();
+                turnTimer = 0;
+                turnTimerMax = new Random().nextInt(100) + 100;
+                if (currentPlayer.getIsAI())
+                {
+                    isPaused = true;
+                }
             }
 
-            if (newTurn && currentPlayer.getIsAI()){
-                turnTimer += 1;
+            if (isPaused){
+                turnTimer++;
             }
 
-            if (turnTimer == 200) {
+            if (turnTimer == turnTimerMax){
+                isPaused = false;
+            }
+
+
+            if (!isPaused || currentPlayer.getSkipped()) {
 
                 if (newTurn && currentPlayer.getIsAI()) {    //if new turn and if AI
                     controller.run();   //run AI move
                     newTurn = false;
-                    turnTimer = 0;
+
                 }
             }
 
             if (currentPlayer.getId() == 0 && newTurn) {    //if current player is human and is new turn
-                if (!controller.playableCards())            //if the player does not have playable cards
-                {
-                    if (!cardSelected) {
-                        currentPlayer.draw();                   //draws card if no playable cards
-                        controller.getData().setTracker(); //set next turn
-                        controller.run();
+                if (!currentPlayer.getSkipped()) {
+                    if (!controller.playableCards())            //if the player does not have playable cards
+                    {
+                        if (!cardSelected) {
+                            currentPlayer.draw();                   //draws card if no playable cards
+                            controller.getData().setTracker(); //set next turn
+                            //controller.run();
 
-                        newTurn = true;
+                            newTurn = false;
+                        }
                     }
+                }
+                else
+                {
+                    currentPlayer.setSkipped(false);
+                    controller.getData().setTracker();
                 }
             }
         }
@@ -280,7 +305,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             UnoButton.draw(game.batch);
 
             //Draws the text of the AIs player info at the top of the screen
-            //p0Info.draw(game.batch, game.font);
+            p0Info.pDraw(game.batch, game.font);
             p1Info.draw(game.batch, game.font);
             p2Info.draw(game.batch, game.font);
             p3Info.draw(game.batch, game.font);
@@ -439,7 +464,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                                 }
                             }
                         }
-                        else if (controller.getP0().getHand().get(cardList.indexOf(b)).getNumber() >= 10)
+                        else if (controller.getP0().getHand().get(cardList.indexOf(b)).getNumber() == 10)
                         {
                             if(controller.getReversed())
                             {
@@ -450,7 +475,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                                 controller.getP1().setSkipped(true);
                             }
                         }
-                        else if (controller.getP0().getHand().get(cardList.indexOf(b)).getNumber() >= 11)
+                        else if (controller.getP0().getHand().get(cardList.indexOf(b)).getNumber() == 11)
                         {
                             if(controller.getReversed())
                             {
@@ -461,7 +486,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                                 controller.setReversed(true);
                             }
                         }
-                        else if (controller.getP0().getHand().get(cardList.indexOf(b)).getNumber() >= 12)
+                        else if (controller.getP0().getHand().get(cardList.indexOf(b)).getNumber() == 12)
                         {
                             if(controller.getReversed())
                             {
@@ -486,7 +511,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                         if(controller.getP0().getHandSize() == 0) controller.getData().setWinner();
                         //controller.checkPlay(currentPlayer);
                         if (!cardSelected) {
-                            newTurn = true;
+                            //newTurn = true;
                             controller.getData().setTracker();
                             //controller.run();
                         }
@@ -509,9 +534,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             cardJustSelected = true;
             Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Blue");
             setPlayPileTex(wildBlue.getTexture());
-            newTurn = true;
+            //newTurn = true;
             controller.getData().setTracker();
-            controller.run();
+            //controller.run();
         }
 
         else if (wildRed.collision(Gdx.input.getX(), Gdx.input.getY())){
@@ -519,9 +544,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             cardJustSelected = true;
             Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
             setPlayPileTex(wildRed.getTexture());
-            newTurn = true;
+            //newTurn = true;
             controller.getData().setTracker();
-            controller.run();
+            //controller.run();
         }
 
         else if (wildGreen.collision(Gdx.input.getX(), Gdx.input.getY())){
@@ -529,9 +554,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             cardJustSelected = true;
             Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Green");
             setPlayPileTex(wildGreen.getTexture());
-            newTurn = true;
+            //newTurn = true;
             controller.getData().setTracker();
-            controller.run();
+            //controller.run();
         }
 
         else if  (wildYellow.collision(Gdx.input.getX(), Gdx.input.getY())){
@@ -539,9 +564,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             cardJustSelected = true;
             Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Yellow");
             setPlayPileTex(wildYellow.getTexture());
-            newTurn = true;
+            //newTurn = true;
             controller.getData().setTracker();
-            controller.run();
+            //controller.run();
         }
 
     }
