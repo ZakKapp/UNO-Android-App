@@ -11,6 +11,9 @@ public class SettingScreen implements Screen {
     private Texture redBackground;
     private Texture backBanner;
     private Button backButton;
+    private Texture preciousBoy;
+    private Texture morning;
+
 
 
     public SettingScreen(Uno game){
@@ -18,6 +21,8 @@ public class SettingScreen implements Screen {
 
         redBackground = new Texture("RedBackground.png");
         backBanner = new Texture("BackBanner.png");
+        preciousBoy = new Texture("upcat.jpg");
+        morning = new Texture("img.png");
         backButton = new Button(0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/10);
     }
 
@@ -48,6 +53,8 @@ public class SettingScreen implements Screen {
 
         game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         game.batch.draw(backBanner,0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.draw(morning, 350, 650, 305, 124);
+        game.batch.draw(preciousBoy,350,800, 405, 405);
 
 
         game.batch.end();

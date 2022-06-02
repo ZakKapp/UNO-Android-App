@@ -123,7 +123,7 @@ public class MainScreen implements Screen {
         startButton.draw(game.batch);
         howToButton.draw(game.batch);
         quitButton.draw(game.batch);
-        settingsButton.draw(game.batch);
+        //settingsButton.draw(game.batch);
         creditsButton.draw(game.batch);
 
         game.batch.end();
