@@ -372,19 +372,19 @@ public class GameController {
 
 					if (numRed > numBlue && numRed > numYellow && numRed > numGreen && numRed > numWild) {
 						Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
-						screen.setAiWildColor("Red");
+						screen.setAiWild4Color("Red");
 					} else if (numBlue > numRed && numBlue > numYellow && numBlue > numGreen && numBlue > numWild) {
 						Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Blue");
-						screen.setAiWildColor("Blue");
+						screen.setAiWild4Color("Blue");
 					} else if (numGreen > numBlue && numGreen > numYellow && numGreen > numRed && numGreen > numWild) {
 						Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Green");
-						screen.setAiWildColor("Green");
+						screen.setAiWild4Color("Green");
 					} else if (numYellow > numBlue && numYellow > numRed && numYellow > numGreen && numYellow > numWild) {
 						Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Yellow");
-						screen.setAiWildColor("Yellow");
+						screen.setAiWild4Color("Yellow");
 					} else {
 						Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
-						screen.setAiWildColor("Red");
+						screen.setAiWild4Color("Red");
 					}
 
 				}

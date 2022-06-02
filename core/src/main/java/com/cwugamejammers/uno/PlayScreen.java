@@ -83,6 +83,8 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     private static boolean newTurn = true;
 
     private boolean isPaused;
+    private boolean unoButtonPressed;
+    private boolean is4;
 
 
 
@@ -105,6 +107,8 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         turnTimer = 0;
         turnTimerMax = 150;
         isPaused = false;
+        unoButtonPressed = false;
+        is4 = false;
 
         InputMultiplexer im = new InputMultiplexer();
         GestureDetector gd = new GestureDetector(this);
@@ -213,6 +217,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                 turnTimerMax = new Random().nextInt(100) + 100;
                 if (currentPlayer.getIsAI())
                 {
+                    unoButtonPressed = false;
                     isPaused = true;
                 }
             }
@@ -389,6 +394,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         gBlank.dispose();
         yBlank.dispose();
 
+
     }
 
     public void repositionHand(){
@@ -441,6 +447,24 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
     }
 
+    //////CHANGE TEXTURES TO THE +4 BLANK CARDS
+    public void setAiWild4Color(String s){
+        if (s == "Red"){
+            pileButton.setTexture(rBlank);
+        }
+
+        if (s == "Blue"){
+            pileButton.setTexture(bBlank);
+        }
+
+        if (s == "Green"){
+            pileButton.setTexture(gBlank);
+        }
+        if (s == "Yellow"){
+            pileButton.setTexture(yBlank);
+        }
+
+    }
 
     public void PlayCard(){
         Button playedCard = null;
@@ -452,6 +476,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                             cardSelected = true;
                             if(controller.getP0().getHand().get(cardList.indexOf(b)).getNumber() == 14)
                             {
+                                is4 = true;
                                 if(controller.getReversed())
                                 {
                                     controller.getP3().drawFour();
@@ -508,6 +533,10 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                         //When a card is selected to be played, we move the card in the hand as well
                         int index = cardList.indexOf(b);
                         controller.getP0().play(index);
+                        if (controller.getP0().getHandSize() == 1 && !unoButtonPressed)
+                        {
+                            controller.getP0().drawTwo();
+                        }
                         if(controller.getP0().getHandSize() == 0) controller.getData().setWinner();
                         //controller.checkPlay(currentPlayer);
                         if (!cardSelected) {
@@ -528,12 +557,19 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
     }
 
+    //////PUT TEXTURES IN FOR +4 WILDS
     public void wildCardPick(){
         if (wildBlue.collision(Gdx.input.getX(), Gdx.input.getY())){
             cardSelected = false;
             cardJustSelected = true;
             Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Blue");
-            setPlayPileTex(wildBlue.getTexture());
+            if (is4){
+                is4 = false;
+                setPlayPileTex(wildBlue.getTexture());
+            }
+            else {
+                setPlayPileTex(wildBlue.getTexture());
+            }
             //newTurn = true;
             controller.getData().setTracker();
             //controller.run();
@@ -543,7 +579,13 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             cardSelected = false;
             cardJustSelected = true;
             Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
-            setPlayPileTex(wildRed.getTexture());
+            if (is4){
+                is4 = false;
+                setPlayPileTex(wildRed.getTexture());
+            }
+            else {
+                setPlayPileTex(wildRed.getTexture());
+            }
             //newTurn = true;
             controller.getData().setTracker();
             //controller.run();
@@ -553,7 +595,13 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             cardSelected = false;
             cardJustSelected = true;
             Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Green");
-            setPlayPileTex(wildGreen.getTexture());
+            if (is4){
+                is4 = false;
+                setPlayPileTex(wildGreen.getTexture());
+            }
+            else {
+                setPlayPileTex(wildGreen.getTexture());
+            }
             //newTurn = true;
             controller.getData().setTracker();
             //controller.run();
@@ -563,7 +611,13 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             cardSelected = false;
             cardJustSelected = true;
             Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Yellow");
-            setPlayPileTex(wildYellow.getTexture());
+            if (is4){
+                is4 = false;
+                setPlayPileTex(wildYellow.getTexture());
+            }
+            else {
+                setPlayPileTex(wildYellow.getTexture());
+            }
             //newTurn = true;
             controller.getData().setTracker();
             //controller.run();
@@ -724,6 +778,9 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
 
     @Override
     public boolean touchDown(float x, float y, int pointer, int button){
+        if (UnoButton.collision(Gdx.input.getX(), Gdx.input.getY())){
+            unoButtonPressed = true;
+        }
         return true;
     }
 
@@ -735,6 +792,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             if (cardSelected) {
                 wildCardPick();
             }
+
         }
 
         return true;
