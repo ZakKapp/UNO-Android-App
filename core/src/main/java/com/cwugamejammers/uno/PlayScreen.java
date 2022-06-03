@@ -42,6 +42,20 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     private Texture yBlank;
     private Texture uButt;
 
+    private Texture r4Blank;
+    private Texture b4Blank;
+    private Texture g4Blank;
+    private Texture y4Blank;
+
+    private Texture winScreen;
+    private Texture lose1;
+    private Texture lose2;
+    private Texture lose3;
+
+    private Texture unoTexture50;
+    private Texture unoTexture75;
+
+
     private static Button wildRed;
     private  static Button wildBlue;
     private static Button wildGreen;
@@ -85,6 +99,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     private boolean isPaused;
     private boolean unoButtonPressed;
     private boolean is4;
+    private boolean canPress;
 
 
 
@@ -109,6 +124,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         isPaused = false;
         unoButtonPressed = false;
         is4 = false;
+        canPress = false;
 
         InputMultiplexer im = new InputMultiplexer();
         GestureDetector gd = new GestureDetector(this);
@@ -130,6 +146,19 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         gBlank = new Texture("cards/GBlank.jpeg");
         yBlank = new Texture("cards/YBlank.jpeg");
         uButt = new Texture("UNOButton.png");
+        unoTexture50 = new Texture("UNOButton50.png");
+        unoTexture75 = new Texture("UNOButton75.png");
+
+
+        b4Blank = new Texture("W14B.jpeg");
+        r4Blank = new Texture("W14R.jpeg");
+        g4Blank = new Texture("W14G.jpeg");
+        y4Blank = new Texture("W14Y.jpeg");
+
+        winScreen = new Texture("YouWin.png");
+        lose1 = new Texture("AI1Won.png");
+        lose2 = new Texture("AI2Won.png");
+        lose3 = new Texture("AI3Won.png");
 
         wildBlue = new Button(bBlank, Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/2 + 300, cardWidth, cardHeight);
         wildRed = new Button(rBlank, Gdx.graphics.getWidth()/4 + cardWidth, Gdx.graphics.getHeight()/2 + 300, cardWidth, cardHeight);
@@ -240,8 +269,13 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                 }
             }
 
+            canPress = false;
             if (currentPlayer.getId() == 0 && newTurn) {    //if current player is human and is new turn
                 if (!currentPlayer.getSkipped()) {
+                    if (cardList.size() == 2)
+                    {
+                        canPress = true;
+                    }
                     if (!controller.playableCards())            //if the player does not have playable cards
                     {
                         if (!cardSelected) {
@@ -261,6 +295,18 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             }
         }
 
+        if (cardSelected) {
+
+        }
+        else {
+            if (unoButtonPressed) {
+                UnoButton.setTexture(unoTexture50);
+            } else if (canPress) {
+                UnoButton.setTexture(uButt);
+            } else {
+                UnoButton.setTexture(unoTexture75);
+            }
+        }
 
         
         //touchDown(Gdx.input.getX(),Gdx.input.getY(), 0, 0);
@@ -315,35 +361,35 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             p2Info.draw(game.batch, game.font);
             p3Info.draw(game.batch, game.font);
             String reverse = "";
-            if(controller.getReversed()) reverse = "-------->";
-            else reverse = "<---------";
-            game.font.draw(game.batch, reverse, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 4 + 120);
+            if(controller.getReversed()) reverse = "Counterclockwise";
+            else reverse = "Clockwise";
+            game.font.draw(game.batch, reverse, 10, Gdx.graphics.getHeight() / 4 + 180);
 
 
             if (currentPlayer.getId() == 0) {
                 String info = "Your Turn!";
-                game.font.draw(game.batch, info, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 4 + 60);
+                game.font.draw(game.batch, info, 10, Gdx.graphics.getHeight() / 4 + 120);
             } else {
                 String info = currentPlayer.getName() + "'s Turn";
-                game.font.draw(game.batch, info, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 4 + 60);
+                game.font.draw(game.batch, info, 10, Gdx.graphics.getHeight() / 4 + 120);
             }
         }
 
         if (GS == GameData.GameState.PLAYER0){
-            game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            game.font.draw(game.batch, "YOU WON!", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+            game.batch.draw(winScreen, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            //game.font.draw(game.batch, "YOU WON!", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
         }
         if (GS == GameData.GameState.PLAYER1){
-            game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            game.font.draw(game.batch, "YOU LOST!" + "\n" + "AI1 Won", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+            game.batch.draw(lose1, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            //game.font.draw(game.batch, "YOU LOST!" + "\n" + "AI1 Won", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
         }
         if (GS == GameData.GameState.PLAYER2){
-            game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            game.font.draw(game.batch, "YOU LOST!" + "\n" + "AI2 Won", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+            game.batch.draw(lose2, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            //game.font.draw(game.batch, "YOU LOST!" + "\n" + "AI2 Won", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
         }
         if (GS == GameData.GameState.PLAYER3){
-            game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            game.font.draw(game.batch, "YOU LOST!" + "\n" + "AI3 Won", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+            game.batch.draw(lose3, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            //game.font.draw(game.batch, "YOU LOST!" + "\n" + "AI3 Won", Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
         }
 
         //winner texts
@@ -393,6 +439,16 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
         rBlank.dispose();
         gBlank.dispose();
         yBlank.dispose();
+        b4Blank.dispose();
+        r4Blank.dispose();
+        g4Blank.dispose();
+        y4Blank.dispose();
+        winScreen.dispose();
+        lose1.dispose();
+        lose2.dispose();
+        lose3.dispose();
+        unoTexture50.dispose();
+        unoTexture75.dispose();
 
 
     }
@@ -450,18 +506,18 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
     //////CHANGE TEXTURES TO THE +4 BLANK CARDS
     public void setAiWild4Color(String s){
         if (s == "Red"){
-            pileButton.setTexture(rBlank);
+            pileButton.setTexture(r4Blank);
         }
 
         if (s == "Blue"){
-            pileButton.setTexture(bBlank);
+            pileButton.setTexture(b4Blank);
         }
 
         if (s == "Green"){
-            pileButton.setTexture(gBlank);
+            pileButton.setTexture(g4Blank);
         }
         if (s == "Yellow"){
-            pileButton.setTexture(yBlank);
+            pileButton.setTexture(y4Blank);
         }
 
     }
@@ -565,7 +621,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Blue");
             if (is4){
                 is4 = false;
-                setPlayPileTex(wildBlue.getTexture());
+                setPlayPileTex(b4Blank);
             }
             else {
                 setPlayPileTex(wildBlue.getTexture());
@@ -581,7 +637,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Red");
             if (is4){
                 is4 = false;
-                setPlayPileTex(wildRed.getTexture());
+                setPlayPileTex(r4Blank);
             }
             else {
                 setPlayPileTex(wildRed.getTexture());
@@ -597,7 +653,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Green");
             if (is4){
                 is4 = false;
-                setPlayPileTex(wildGreen.getTexture());
+                setPlayPileTex(g4Blank);
             }
             else {
                 setPlayPileTex(wildGreen.getTexture());
@@ -613,7 +669,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
             Card.getPlayField().get(Card.getPlayField().size() - 1).setColor("Yellow");
             if (is4){
                 is4 = false;
-                setPlayPileTex(wildYellow.getTexture());
+                setPlayPileTex(y4Blank);
             }
             else {
                 setPlayPileTex(wildYellow.getTexture());

@@ -50,7 +50,7 @@ public class MainScreen implements Screen {
         startButton = new Button(menuStart, Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()*6/10, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/9 );
         howToButton = new Button(menuHowTo,Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()*4.5f/10, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/9);
         quitButton = new Button(menuQuit, Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()*3/10, Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/9);
-        settingsButton = new Button(menuSettings,0, 0, 300, 300);
+        settingsButton = new Button(menuSettings,0, 0, 50, 50);
         creditsButton = new Button(menuCredits, Gdx.graphics.getWidth() - 200, 0, 200, 200);
         backButton = new Button(0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/10);
 

@@ -47,6 +47,10 @@ public class CreditScreen implements Screen {
         game.batch.begin();
 
         game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.font.getData().setScale(3);
+        game.font.draw(game.batch, "VERSION: 1.0 \n\nDEVELOPERS: \nJaden Martinez\nMarshall Anderson\nJonathan Licea\nTanner Slick\nKeane Wesselius\nZak Kappenman", Gdx.graphics.getWidth()/2 - 350, Gdx.graphics.getHeight()/2 + 500);
+        game.font.getData().setScale(2);
+        game.font.draw(game.batch, "THANKS FOR PLAYING!", Gdx.graphics.getWidth()/2 - 350, Gdx.graphics.getHeight()/2 - 650);
         game.batch.draw(backBanner,0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         game.batch.end();

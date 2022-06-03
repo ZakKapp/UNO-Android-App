@@ -12,7 +12,10 @@ public class SettingScreen implements Screen {
     private Texture backBanner;
     private Button backButton;
     private Texture preciousBoy;
-    private Texture morning;
+    private Texture lessGo;
+    private Texture scrungus;
+    private Texture choose;
+
 
 
 
@@ -22,7 +25,9 @@ public class SettingScreen implements Screen {
         redBackground = new Texture("RedBackground.png");
         backBanner = new Texture("BackBanner.png");
         preciousBoy = new Texture("upcat.jpg");
-        morning = new Texture("img.png");
+        lessGo = new Texture("img_1.png");
+        scrungus = new Texture("img_2.png");
+        choose = new Texture("img_3.png");
         backButton = new Button(0, Gdx.graphics.getHeight() - Gdx.graphics.getHeight()/10, Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()/10);
     }
 
@@ -53,8 +58,10 @@ public class SettingScreen implements Screen {
 
         game.batch.draw(redBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         game.batch.draw(backBanner,0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        game.batch.draw(morning, 350, 650, 305, 124);
+        game.batch.draw(choose, 350, 650, 305, 124);
         game.batch.draw(preciousBoy,350,800, 405, 405);
+        game.batch.draw(lessGo, 375, 460, 150, 405);
+        game.batch.draw(scrungus, 320, 180, 300, 405);
 
 
         game.batch.end();
