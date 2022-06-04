@@ -589,10 +589,7 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                         //When a card is selected to be played, we move the card in the hand as well
                         int index = cardList.indexOf(b);
                         controller.getP0().play(index);
-                        if (controller.getP0().getHandSize() == 1 && !unoButtonPressed)
-                        {
-                            controller.getP0().drawTwo();
-                        }
+
                         if(controller.getP0().getHandSize() == 0) controller.getData().setWinner();
                         //controller.checkPlay(currentPlayer);
                         if (!cardSelected) {
@@ -605,6 +602,10 @@ public class PlayScreen implements Screen, GestureDetector.GestureListener, Inpu
                 }
             }
             if (playedCard != null) {
+                if (controller.getP0().getHandSize() == 1 && !unoButtonPressed)
+                {
+                    controller.getP0().drawTwo();
+                }
                 cardList.remove(playedCard);
                 if (cardList.size() > 0) {
                     cardList.get(0).reposition(0, 0);
