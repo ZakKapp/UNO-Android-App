@@ -1,27 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "E:\\Documents\\GitHub\\Uno\\Uno\\android\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "outputFile": "C:\\Users\\Werto\\Desktop\\Uno\\android\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
             "map": [
                 {
-                    "source": "E:\\Documents\\GitHub\\Uno\\Uno\\android\\res\\values\\strings.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "57",
-                        "endColumns": "40",
-                        "endOffsets": "93"
-                    },
-                    "to": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "40",
-                        "endOffsets": "91"
-                    }
-                },
-                {
-                    "source": "E:\\Documents\\GitHub\\Uno\\Uno\\android\\res\\values\\styles.xml",
+                    "source": "C:\\Users\\Werto\\Desktop\\Uno\\android\\res\\values\\styles.xml",
                     "from": {
                         "startLines": "1",
                         "startColumns": "4",
@@ -37,6 +20,23 @@
                         "endLines": "10",
                         "endColumns": "12",
                         "endOffsets": "554"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Werto\\Desktop\\Uno\\android\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "57",
+                        "endColumns": "40",
+                        "endOffsets": "93"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "40",
+                        "endOffsets": "91"
                     }
                 }
             ]
