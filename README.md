@@ -4,6 +4,10 @@ A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://git
 
 This project was generated with a template including simple application launchers and an `ApplicationAdapter` extension that draws libGDX logo.
 
+## Note
+
+I (Zak Kappenman) did not have a github when this project was being worked on. I created all of the assets used in the mobile application, designed the UI, and helped with debugging the code of my teammates.
+
 ## Gradle
 
 This project uses [Gradle](http://gradle.org/) to manage dependencies.
